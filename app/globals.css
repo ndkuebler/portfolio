@@ -1,0 +1,106 @@
+@import "tailwindcss";
+
+/* ---------- Base ---------- */
+html,
+body {
+  background: #000;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ---------- NAV VISIBILITY ---------- */
+.nk-intro-active .nk-nav {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.nk-nav {
+  transition: opacity 400ms ease;
+}
+
+/* ---------- INTRO OVERLAY ---------- */
+.nk-intro-overlay {
+  position: fixed;
+  inset: 0;
+  background: black;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+/* ---------- LIGHTNING ---------- */
+.nk-line {
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.nk-dash {
+  stroke-dasharray: 520;
+  stroke-dashoffset: 520;
+}
+
+/* ---------- ANIMATIONS ---------- */
+@keyframes nk-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes nk-pop {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes nk-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+.nk-anim {
+  animation: nk-draw 600ms ease-out forwards;
+}
+
+.nk-logo {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  animation: nk-pop 200ms ease-out forwards;
+  animation-delay: 520ms;
+}
+
+.nk-overlay-fade {
+  animation: nk-fade-out 400ms ease-out forwards;
+  animation-delay: 1100ms;
+}
+
+/* ---------- CONTENT REVEAL ---------- */
+.nk-content-hidden {
+  opacity: 0;
+}
+
+.nk-content-reveal {
+  animation: nk-pop 420ms ease-out forwards;
+}
+.nk-intro-active .nk-nav {
+  opacity: 0;
+  pointer-events: none;
+
+
+
+}
