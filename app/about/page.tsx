@@ -20,8 +20,7 @@ export default function AboutPage() {
           <div className="space-y-6 text-lg text-neutral-300 leading-relaxed">
             <p>
               I’m Nick — a designer & engineer focused on physical products and
-              clean digital experiences. I like building things that feel
-              obvious to use, but took real thought to make.
+              clean digital experiences. I enjoy building products that are aesthetically pleasing, address real user needs, and improve quality of life.
             </p>
 
             <p>
