@@ -121,17 +121,64 @@ export default function HomePage() {
     };
   }, []);
 
+  /* ================= SPARK SHOWER ON EXISTING TOP-RIGHT NAV =================
+     - Does NOT add new nav links (prevents double text)
+     - Enhances existing <a> tags whose text is Portfolio / About / Contact
+     - Namespaced classes so it does NOT conflict with your intro SVG .spark paths
+  */
+  useEffect(() => {
+    const labels = new Set(["Portfolio", "About", "Contact"]);
+
+    const sparkDefs = [
+      { sx: "12%", sy: "38%", dx: "34px", dy: "-18px", delayMs: 0 },
+      { sx: "84%", sy: "48%", dx: "-30px", dy: "-24px", delayMs: 160 },
+      { sx: "56%", sy: "22%", dx: "18px", dy: "22px", delayMs: 320 },
+    ] as const;
+
+    const anchors = Array.from(document.querySelectorAll("a")) as HTMLAnchorElement[];
+
+    anchors.forEach((a) => {
+      const txt = (a.textContent || "").trim();
+      if (!labels.has(txt)) return;
+
+      // Prevent re-wrapping
+      if ((a as any).dataset?.nkSparkified === "1") return;
+      (a as any).dataset.nkSparkified = "1";
+
+      // Apply class to existing anchor (no duplicate nav)
+      a.classList.add("sparkLink");
+
+      // Rebuild inner content to include sparks
+      a.innerHTML = "";
+      const span = document.createElement("span");
+      span.className = "sparkText";
+      span.textContent = txt;
+
+      sparkDefs.forEach((s, i) => {
+        const dot = document.createElement("span");
+        dot.className = `navSpark s${i + 1}`;
+        dot.setAttribute("aria-hidden", "true");
+
+        dot.style.setProperty("--sx", s.sx);
+        dot.style.setProperty("--sy", s.sy);
+        dot.style.setProperty("--dx", s.dx);
+        dot.style.setProperty("--dy", s.dy);
+        dot.style.setProperty("--delay", `${s.delayMs}ms`);
+
+        span.appendChild(dot);
+      });
+
+      a.appendChild(span);
+    });
+  }, []);
+
   return (
     <main className="relative min-h-screen bg-black overflow-hidden text-white">
       {/* ================= INTRO ================= */}
       {showIntro && (
         <div className="fixed inset-0 z-50 bg-black overflow-hidden overlay-fade">
           <div className="absolute inset-0 flex items-center justify-center">
-            <svg
-              className="w-full"
-              viewBox="0 0 1200 200"
-              preserveAspectRatio="none"
-            >
+            <svg className="w-full" viewBox="0 0 1200 200" preserveAspectRatio="none">
               {/* LEFT BOLT */}
               <path
                 className="bolt core draw-left"
@@ -156,14 +203,8 @@ export default function HomePage() {
               />
 
               {/* NK */}
-              <path
-                className="bolt core draw-nk"
-                d="M520,150 L520,50 L570,150 L570,50"
-              />
-              <path
-                className="bolt glow draw-nk"
-                d="M520,150 L520,50 L570,150 L570,50"
-              />
+              <path className="bolt core draw-nk" d="M520,150 L520,50 L570,150 L570,50" />
+              <path className="bolt glow draw-nk" d="M520,150 L520,50 L570,150 L570,50" />
 
               <path
                 className="bolt core draw-nk2"
@@ -199,55 +240,30 @@ export default function HomePage() {
 
               {/* SPARKS */}
               <path className="spark flash-1" d="M260,45 L240,30 L255,18" />
-              <path
-                className="spark flash-1 delay-60"
-                d="M340,165 L320,182 L330,196"
-              />
-              <path
-                className="spark flash-1 delay-90"
-                d="M425,80 L450,66 L440,48"
-              />
-              <path
-                className="spark flash-1 delay-120"
-                d="M500,120 L525,135 L545,128"
-              />
+              <path className="spark flash-1 delay-60" d="M340,165 L320,182 L330,196" />
+              <path className="spark flash-1 delay-90" d="M425,80 L450,66 L440,48" />
+              <path className="spark flash-1 delay-120" d="M500,120 L525,135 L545,128" />
 
               <path className="spark flash-2" d="M570,95 L590,85 L595,70" />
-              <path
-                className="spark flash-2 delay-60"
-                d="M610,120 L635,132 L640,150"
-              />
-              <path
-                className="spark flash-2 delay-90"
-                d="M680,150 L700,162 L712,178"
-              />
+              <path className="spark flash-2 delay-60" d="M610,120 L635,132 L640,150" />
+              <path className="spark flash-2 delay-90" d="M680,150 L700,162 L712,178" />
 
               <path className="spark flash-3" d="M875,45 L855,30 L865,16" />
-              <path
-                className="spark flash-3 delay-70"
-                d="M960,165 L980,182 L970,196"
-              />
-              <path
-                className="spark flash-3 delay-110"
-                d="M1040,80 L1065,66 L1055,48"
-              />
+              <path className="spark flash-3 delay-70" d="M960,165 L980,182 L970,196" />
+              <path className="spark flash-3 delay-110" d="M1040,80 L1065,66 L1055,48" />
             </svg>
           </div>
         </div>
       )}
 
       {/* ================= CONTENT ================= */}
-      <div
-        className={`transition-opacity duration-700 ${
-          showIntro ? "opacity-0" : "opacity-100"
-        }`}
-      >
+      <div className={`transition-opacity duration-700 ${showIntro ? "opacity-0" : "opacity-100"}`}>
         <section className="mx-auto max-w-6xl px-6 pt-28 pb-24">
           <h1 className="text-5xl font-bold tracking-tight mb-6">Nick Kuebler</h1>
 
           <p className="text-lg text-white/75 max-w-2xl">
-            Designer & engineer focused on aesthetic systems, physical products,
-            and clean digital experiences.
+            Designer & engineer focused on aesthetic systems, physical products, and clean digital
+            experiences.
           </p>
 
           <h2 className="mt-20 mb-6 text-xs uppercase tracking-[0.25em] text-white/50">
@@ -324,6 +340,95 @@ export default function HomePage() {
 
       {/* ================= STYLES ================= */}
       <style jsx>{`
+        /* ===== Spark Shower Hover (applies to existing links after JS adds classes) ===== */
+        :global(.sparkLink) {
+          position: relative;
+          display: inline-block;
+          padding: 10px 10px;
+          border-radius: 14px;
+          cursor: pointer;
+          user-select: none;
+          text-decoration: none;
+          color: rgba(255, 255, 255, 0.86);
+          background: transparent;
+          transition: color 140ms ease, transform 160ms ease;
+          outline: none;
+          -webkit-tap-highlight-color: transparent;
+        }
+
+        :global(.sparkLink:hover) {
+          color: rgba(255, 255, 255, 1);
+          background: transparent;
+          transform: translateY(-1px);
+        }
+
+        :global(.sparkLink:focus-visible) {
+          box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.22), 0 0 0 6px rgba(255, 255, 255, 0.08);
+        }
+
+        :global(.sparkText) {
+          position: relative;
+          display: inline-block;
+          font-size: 16px; /* keep your top-right size */
+          letter-spacing: -0.02em;
+          line-height: 1;
+          padding: 2px 2px;
+        }
+
+        /* ✅ Namespaced sparks so it DOES NOT affect your intro SVG .spark paths */
+        :global(.navSpark) {
+          position: absolute;
+          width: 6px;
+          height: 6px;
+          border-radius: 9999px;
+          background: rgba(255, 255, 255, 0.92);
+          box-shadow: 0 0 10px rgba(255, 255, 255, 0.25);
+          opacity: 0; /* stay invisible unless animation shows it */
+          pointer-events: none;
+
+          left: var(--sx);
+          top: var(--sy);
+          transform: translate(-50%, -50%);
+          will-change: transform, opacity;
+        }
+
+        /* ✅ No opacity:1 on hover => no “start dot” during delay */
+        :global(.sparkLink:hover .navSpark) {
+          animation: navSparkBurst 620ms ease-out infinite;
+          animation-delay: var(--delay);
+          animation-fill-mode: backwards;
+        }
+
+        @keyframes navSparkBurst {
+          0% {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.75);
+          }
+          12% {
+            opacity: 0.9;
+          }
+          45% {
+            opacity: 0.95;
+          }
+          100% {
+            opacity: 0;
+            transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0.2);
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          :global(.sparkLink),
+          :global(.sparkLink:hover) {
+            transform: none !important;
+            transition: none !important;
+          }
+          :global(.sparkLink:hover .navSpark) {
+            animation: none !important;
+            opacity: 0.7;
+          }
+        }
+
+        /* ===== YOUR ORIGINAL STYLES (UNCHANGED) ===== */
         .nk-track {
           overflow: hidden;
         }
