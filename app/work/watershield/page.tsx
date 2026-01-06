@@ -60,7 +60,9 @@ export default function WaterShieldPage() {
 
         {/* HERO */}
         <section
-          ref={(el) => (sectionsRef.current[0] = el)}
+          ref={(el) => {
+            sectionsRef.current[0] = el;
+          }}
           className="fade-section mt-6"
         >
           <h1 className="text-4xl font-semibold tracking-tight">
@@ -75,7 +77,9 @@ export default function WaterShieldPage() {
 
         {/* PROBLEM */}
         <section
-          ref={(el) => (sectionsRef.current[1] = el)}
+          ref={(el) => {
+            sectionsRef.current[1] = el;
+          }}
           className="fade-section mt-12"
         >
           <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-500">
@@ -90,7 +94,9 @@ export default function WaterShieldPage() {
 
         {/* SOLUTION */}
         <section
-          ref={(el) => (sectionsRef.current[2] = el)}
+          ref={(el) => {
+            sectionsRef.current[2] = el;
+          }}
           className="fade-section mt-12"
         >
           <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-500">
@@ -106,7 +112,9 @@ export default function WaterShieldPage() {
 
         {/* DESIGN DEVELOPMENT */}
         <section
-          ref={(el) => (sectionsRef.current[3] = el)}
+          ref={(el) => {
+            sectionsRef.current[3] = el;
+          }}
           className="fade-section mt-12"
         >
           <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-500">
@@ -125,7 +133,9 @@ export default function WaterShieldPage() {
 
         {/* TESTING */}
         <section
-          ref={(el) => (sectionsRef.current[4] = el)}
+          ref={(el) => {
+            sectionsRef.current[4] = el;
+          }}
           className="fade-section mt-12"
         >
           <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-500">
@@ -153,7 +163,9 @@ export default function WaterShieldPage() {
 
         {/* DEMO */}
         <section
-          ref={(el) => (sectionsRef.current[5] = el)}
+          ref={(el) => {
+            sectionsRef.current[5] = el;
+          }}
           className="fade-section mt-16"
         >
           <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-500">
@@ -177,7 +189,9 @@ export default function WaterShieldPage() {
 
         {/* WHAT I DID */}
         <section
-          ref={(el) => (sectionsRef.current[6] = el)}
+          ref={(el) => {
+            sectionsRef.current[6] = el;
+          }}
           className="fade-section mt-12"
         >
           <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-500">
@@ -193,7 +207,9 @@ export default function WaterShieldPage() {
 
         {/* TAKEAWAYS */}
         <section
-          ref={(el) => (sectionsRef.current[7] = el)}
+          ref={(el) => {
+            sectionsRef.current[7] = el;
+          }}
           className="fade-section mt-12"
         >
           <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-500">
