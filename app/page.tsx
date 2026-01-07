@@ -275,13 +275,11 @@ export default function HomePage() {
             <div className="pointer-events-none absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-black to-transparent z-10" />
             <div className="pointer-events-none absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-black to-transparent z-10" />
 
-            {/* ✅ NEW: hover handlers on wrapper */}
             <div
               className="nk-track"
               onPointerEnter={() => setIsHovering(true)}
               onPointerLeave={() => setIsHovering(false)}
             >
-              {/* ✅ NEW: ref for rAF transform */}
               <div className="nk-row" ref={rowRef}>
                 {/* SET A */}
                 <a href="/work/ringallets" className="nk-item">
@@ -375,7 +373,6 @@ export default function HomePage() {
           padding: 2px 2px;
         }
 
-        /* ✅ Namespaced sparks so it DOES NOT affect your intro SVG .spark paths */
         :global(.navSpark) {
           position: absolute;
           width: 6px;
@@ -383,7 +380,7 @@ export default function HomePage() {
           border-radius: 9999px;
           background: rgba(255, 255, 255, 0.92);
           box-shadow: 0 0 10px rgba(255, 255, 255, 0.25);
-          opacity: 0; /* stay invisible unless animation shows it */
+          opacity: 0;
           pointer-events: none;
 
           left: var(--sx);
@@ -392,7 +389,6 @@ export default function HomePage() {
           will-change: transform, opacity;
         }
 
-        /* ✅ No opacity:1 on hover => no “start dot” during delay */
         :global(.sparkLink:hover .navSpark) {
           animation: navSparkBurst 620ms ease-out infinite;
           animation-delay: var(--delay);
@@ -428,7 +424,7 @@ export default function HomePage() {
           }
         }
 
-        /* ===== YOUR ORIGINAL STYLES (UNCHANGED) ===== */
+        /* ===== YOUR ORIGINAL STYLES (ONLY CHANGE: FULL-COVER MASK) ===== */
         .nk-track {
           overflow: hidden;
         }
@@ -436,11 +432,6 @@ export default function HomePage() {
         .nk-row {
           display: flex;
           width: max-content;
-
-          /* ✅ IMPORTANT: remove CSS animation to prevent hover glitches */
-          /* animation: nk-scroll 12s linear infinite; */
-
-          /* ✅ Smooth GPU transform driven by rAF */
           will-change: transform;
         }
 
@@ -449,6 +440,10 @@ export default function HomePage() {
           flex-shrink: 0;
           margin-right: 3rem;
           display: inline-flex;
+
+          /* ✅ ensures the mask clips perfectly to the same rounded corners */
+          border-radius: 0.75rem;
+          overflow: hidden;
         }
 
         .nk-row > .nk-item:last-child {
@@ -468,10 +463,26 @@ export default function HomePage() {
           transform: scale(1.06);
         }
 
-        .nk-overlay {
+        /* ✅ FULL-COVER GREY MASK (covers entire image on hover) */
+        .nk-item::after {
+          content: "";
           position: absolute;
           inset: 0;
           background: rgba(0, 0, 0, 0.55);
+          opacity: 0;
+          transition: opacity 0.3s ease;
+          pointer-events: none;
+          z-index: 1;
+        }
+
+        .nk-item:hover::after {
+          opacity: 1;
+        }
+
+        /* overlay now just holds text (mask is handled by ::after) */
+        .nk-overlay {
+          position: absolute;
+          inset: 0;
           border-radius: 0.75rem;
           padding: 1rem;
           opacity: 0;
@@ -480,20 +491,12 @@ export default function HomePage() {
           justify-content: flex-end;
           transition: opacity 0.3s ease;
           pointer-events: none;
+          background: transparent;
+          z-index: 2;
         }
 
         .nk-item:hover .nk-overlay {
           opacity: 1;
-        }
-
-        /* keep keyframes (unused now), harmless */
-        @keyframes nk-scroll {
-          from {
-            transform: translateX(0);
-          }
-          to {
-            transform: translateX(-50%);
-          }
         }
 
         /* ===== INTRO ANIMATIONS (UNCHANGED) ===== */
