@@ -12,9 +12,7 @@ function useScrollProgress() {
   useEffect(() => {
     const onScroll = () => {
       const scrollTop = window.scrollY;
-      const docHeight =
-        document.documentElement.scrollHeight -
-        window.innerHeight;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
 
       if (docHeight <= 0) return;
 
@@ -95,16 +93,8 @@ function Figure({
   return (
     <FadeIn>
       <figure className="mx-auto mt-12 max-w-2xl">
-        <Image
-          src={src}
-          alt={alt}
-          width={1600}
-          height={1000}
-          className="w-full rounded-sm"
-        />
-        <figcaption className="mt-3 text-xs text-neutral-400">
-          {caption}
-        </figcaption>
+        <Image src={src} alt={alt} width={1600} height={1000} className="w-full rounded-sm" />
+        <figcaption className="mt-3 text-xs text-neutral-400">{caption}</figcaption>
       </figure>
     </FadeIn>
   );
@@ -113,6 +103,37 @@ function Figure({
 /* ---------------- Page ---------------- */
 
 export default function RingalletsPage() {
+  // ✅ MOBILE-ONLY: hide top-right nav (Portfolio / About / Contact) after scroll
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 639px)"); // Tailwind "sm" breakpoint
+    if (!mq.matches) return;
+
+    const labels = new Set(["Portfolio", "About", "Contact"]);
+
+    // Tag the existing top-right nav anchors so CSS can target them safely
+    const anchors = Array.from(document.querySelectorAll("a")) as HTMLAnchorElement[];
+    anchors.forEach((a) => {
+      const txt = (a.textContent || "").trim();
+      if (!labels.has(txt)) return;
+      (a as any).dataset.nkTopnav = "1";
+    });
+
+    const THRESHOLD = 24; // px scrolled before hiding
+
+    const onScroll = () => {
+      if (window.scrollY > THRESHOLD) document.body.classList.add("nk-mobile-nav-hidden");
+      else document.body.classList.remove("nk-mobile-nav-hidden");
+    };
+
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      document.body.classList.remove("nk-mobile-nav-hidden");
+    };
+  }, []);
+
   return (
     <main className="relative min-h-screen bg-black px-6 py-16 text-white md:px-16">
       {/* Scroll Progress */}
@@ -120,22 +141,16 @@ export default function RingalletsPage() {
 
       <div className="mx-auto max-w-3xl">
         <FadeIn>
-          <Link
-            href="/"
-            className="text-sm text-neutral-400 hover:text-white transition"
-          >
+          <Link href="/" className="text-sm text-neutral-400 hover:text-white transition">
             ← Back to work
           </Link>
         </FadeIn>
 
         <FadeIn>
-          <h1 className="mt-6 text-4xl font-semibold tracking-tight">
-            Ringallets
-          </h1>
+          <h1 className="mt-6 text-4xl font-semibold tracking-tight">Ringallets</h1>
           <p className="mt-4 text-lg text-neutral-300">
-            A gymnastics training tool that bridges the gap between parallettes
-            and rings by preserving correct mechanics without introducing
-            instability.
+            A gymnastics training tool that bridges the gap between parallettes and rings by
+            preserving correct mechanics without introducing instability.
           </p>
         </FadeIn>
 
@@ -147,40 +162,26 @@ export default function RingalletsPage() {
 
         <FadeIn>
           <section className="mt-16">
-            <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-400">
-              Problem
-            </h2>
+            <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-400">Problem</h2>
             <p className="mt-4 text-neutral-300">
-              Rings are one of the most effective tools for developing upper-body
-              strength, but their instability makes them inaccessible for many
-              athletes.
+              Rings are one of the most effective tools for developing upper-body strength, but
+              their instability makes them inaccessible for many athletes.
             </p>
           </section>
         </FadeIn>
 
         <FadeIn>
           <section className="mt-12">
-            <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-400">
-              Solution
-            </h2>
+            <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-400">Solution</h2>
             <p className="mt-4 text-neutral-300">
-              Ringallets replicate standard ring spacing while maintaining
-              parallette stability.
+              Ringallets replicate standard ring spacing while maintaining parallette stability.
             </p>
           </section>
         </FadeIn>
 
-        <Figure
-          src="/work/ringallets-sketch.png"
-          alt="Sketch"
-          caption="Early sketches"
-        />
+        <Figure src="/work/ringallets-sketch.png" alt="Sketch" caption="Early sketches" />
 
-        <Figure
-          src="/work/ringallets-cad.png"
-          alt="CAD"
-          caption="CAD model"
-        />
+        <Figure src="/work/ringallets-cad.png" alt="CAD" caption="CAD model" />
 
         <Figure
           src="/work/ringallets-prototype.png"
@@ -190,9 +191,7 @@ export default function RingalletsPage() {
 
         <FadeIn>
           <section className="mt-16">
-            <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-400">
-              Process
-            </h2>
+            <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-400">Process</h2>
             <ul className="mt-4 list-disc pl-5 space-y-2 text-neutral-300">
               <li>Failure point analysis</li>
               <li>Geometry locking</li>
@@ -205,47 +204,36 @@ export default function RingalletsPage() {
         <FadeIn>
           <div className="mx-auto mt-12 grid max-w-2xl gap-10 md:grid-cols-2">
             <div>
-              <Image
-                src="/work/ringallets-testing1.png"
-                alt="Testing 1"
-                width={800}
-                height={600}
-              />
-              <p className="mt-3 text-xs text-neutral-400">
-                Stability testing
-              </p>
+              <Image src="/work/ringallets-testing1.png" alt="Testing 1" width={800} height={600} />
+              <p className="mt-3 text-xs text-neutral-400">Stability testing</p>
             </div>
             <div>
-              <Image
-                src="/work/ringallets-testing2.png"
-                alt="Testing 2"
-                width={800}
-                height={600}
-              />
-              <p className="mt-3 text-xs text-neutral-400">
-                Iteration feedback
-              </p>
+              <Image src="/work/ringallets-testing2.png" alt="Testing 2" width={800} height={600} />
+              <p className="mt-3 text-xs text-neutral-400">Iteration feedback</p>
             </div>
           </div>
         </FadeIn>
 
         <FadeIn>
           <section className="mt-16">
-            <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-400">
-              Takeaways
-            </h2>
-            <p className="mt-4 text-neutral-300">
-              The right constraints unlock accessibility.
-            </p>
+            <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-400">Takeaways</h2>
+            <p className="mt-4 text-neutral-300">The right constraints unlock accessibility.</p>
           </section>
         </FadeIn>
 
-        <Figure
-          src="/work/ringallets-final-alt.png"
-          alt="Final assembly"
-          caption="Final components"
-        />
+        <Figure src="/work/ringallets-final-alt.png" alt="Final assembly" caption="Final components" />
       </div>
+
+      {/* ✅ MOBILE-ONLY: hide top-right nav after scroll */}
+      <style jsx>{`
+        @media (max-width: 639px) {
+          :global(body.nk-mobile-nav-hidden a[data-nk-topnav="1"]) {
+            opacity: 0;
+            transform: translateY(-10px);
+            pointer-events: none;
+          }
+        }
+      `}</style>
     </main>
   );
 }

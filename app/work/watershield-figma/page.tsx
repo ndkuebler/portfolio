@@ -8,14 +8,9 @@ export default function WaterShieldFigmaPage() {
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
-      const docHeight =
-        document.documentElement.scrollHeight -
-        window.innerHeight;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
 
-      const percent = Math.min(
-        100,
-        Math.max(0, (scrollTop / docHeight) * 100)
-      );
+      const percent = Math.min(100, Math.max(0, (scrollTop / docHeight) * 100));
 
       setProgress(percent);
     };
@@ -23,8 +18,42 @@ export default function WaterShieldFigmaPage() {
     window.addEventListener("scroll", handleScroll);
     handleScroll();
 
-    return () =>
-      window.removeEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  /* ================= MOBILE-ONLY: MARK TOP-RIGHT NAV LINKS ================= */
+  useEffect(() => {
+    const labels = new Set(["Portfolio", "About", "Contact"]);
+    const anchors = Array.from(document.querySelectorAll("a")) as HTMLAnchorElement[];
+
+    anchors.forEach((a) => {
+      const txt = (a.textContent || "").trim();
+      if (!labels.has(txt)) return;
+
+      // ✅ mark these as top-right nav links so we can hide them on mobile scroll
+      (a as any).dataset.nkTopnav = "1";
+    });
+  }, []);
+
+  /* ================= MOBILE-ONLY: HIDE TOP-RIGHT NAV ON SCROLL ================= */
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 639px)"); // Tailwind "sm"
+    if (!mq.matches) return;
+
+    const THRESHOLD = 24;
+
+    const onScroll = () => {
+      if (window.scrollY > THRESHOLD) document.body.classList.add("nk-mobile-nav-hidden");
+      else document.body.classList.remove("nk-mobile-nav-hidden");
+    };
+
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      document.body.classList.remove("nk-mobile-nav-hidden");
+    };
   }, []);
 
   return (
@@ -38,32 +67,24 @@ export default function WaterShieldFigmaPage() {
       </div>
 
       <div className="mx-auto max-w-3xl space-y-24">
-        <a
-          href="/"
-          className="text-sm text-neutral-400 transition hover:text-white"
-        >
+        <a href="/" className="text-sm text-neutral-400 transition hover:text-white">
           ← Back to work
         </a>
 
         {/* Overview */}
         <section className="space-y-4">
-          <h1 className="text-4xl font-semibold tracking-tight">
-            WaterShield — Figma Website
-          </h1>
+          <h1 className="text-4xl font-semibold tracking-tight">WaterShield — Figma Website</h1>
           <p className="text-lg text-neutral-300">
-            A Figma website concept designed to showcase WaterShield
-            and drive purchases with a clean, product-first flow.
+            A Figma website concept designed to showcase WaterShield and drive purchases with a
+            clean, product-first flow.
           </p>
         </section>
         {/* Goal */}
         <section className="animate-fade-in">
-          <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-500">
-            Goal
-          </h2>
+          <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-500">Goal</h2>
           <p className="mt-4 text-neutral-300">
-            Present the product clearly, explain the problem in seconds,
-            and make the path to purchase obvious without overwhelming
-            the user.
+            Present the product clearly, explain the problem in seconds, and make the path to
+            purchase obvious without overwhelming the user.
           </p>
         </section>
         {/* Images */}
@@ -102,14 +123,9 @@ export default function WaterShieldFigmaPage() {
           </figure>
         </section>
 
-       
-      
-
         {/* Key Decisions */}
         <section className="animate-fade-in">
-          <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-500">
-            Key decisions
-          </h2>
+          <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-500">Key decisions</h2>
           <ul className="mt-4 list-disc space-y-2 pl-5 text-neutral-300">
             <li>Strong hero image and single-sentence value prop</li>
             <li>Problem/solution explained with minimal scrolling</li>
@@ -120,9 +136,7 @@ export default function WaterShieldFigmaPage() {
 
         {/* Process */}
         <section className="animate-fade-in">
-          <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-500">
-            What I did
-          </h2>
+          <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-500">What I did</h2>
           <ul className="mt-4 list-disc space-y-2 pl-5 text-neutral-300">
             <li>Designed site layout and hierarchy</li>
             <li>Created UI components and spacing system</li>
@@ -132,14 +146,8 @@ export default function WaterShieldFigmaPage() {
 
         {/* Demo */}
         <section className="animate-fade-in">
-          <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-500">
-            Demo
-          </h2>
-          <video
-            src="/work/watershield-figma-demo.mp4"
-            controls
-            className="mt-6 w-full rounded-lg"
-          />
+          <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-500">Demo</h2>
+          <video src="/work/watershield-figma-demo.mp4" controls className="mt-6 w-full rounded-lg" />
           <p className="mt-2 text-sm text-neutral-500">
             Walkthrough of the Figma prototype and user flow.
           </p>
@@ -147,16 +155,26 @@ export default function WaterShieldFigmaPage() {
 
         {/* Takeaways */}
         <section className="animate-fade-in">
-          <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-500">
-            Takeaways
-          </h2>
+          <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-500">Takeaways</h2>
           <p className="mt-4 text-neutral-300">
-            For a product like this, clarity beats persuasion.
-            Reducing uncertainty around fit, install, and real-world
-            effectiveness mattered more than flashy marketing.
+            For a product like this, clarity beats persuasion. Reducing uncertainty around fit,
+            install, and real-world effectiveness mattered more than flashy marketing.
           </p>
         </section>
       </div>
+
+      {/* ✅ added: mobile-only hide top-right nav on scroll */}
+      <style jsx>{`
+        @media (max-width: 639px) {
+          :global(body.nk-mobile-nav-hidden a[data-nk-topnav="1"]),
+          :global(body.nk-mobile-nav-hidden .sparkLink[data-nk-topnav="1"]) {
+            opacity: 0;
+            transform: translateY(-10px);
+            pointer-events: none;
+            transition: opacity 180ms ease, transform 180ms ease;
+          }
+        }
+      `}</style>
     </main>
   );
 }

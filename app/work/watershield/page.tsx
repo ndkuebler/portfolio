@@ -40,6 +40,41 @@ export default function WaterShieldPage() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  /* ================= MOBILE-ONLY: MARK TOP-RIGHT NAV LINKS ================= */
+  useEffect(() => {
+    const labels = new Set(["Portfolio", "About", "Contact"]);
+    const anchors = Array.from(document.querySelectorAll("a")) as HTMLAnchorElement[];
+
+    anchors.forEach((a) => {
+      const txt = (a.textContent || "").trim();
+      if (!labels.has(txt)) return;
+
+      // ✅ mark these as top-right nav links so we can hide them on mobile scroll
+      (a as any).dataset.nkTopnav = "1";
+    });
+  }, []);
+
+  /* ================= MOBILE-ONLY: HIDE TOP-RIGHT NAV ON SCROLL ================= */
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 639px)"); // Tailwind "sm"
+    if (!mq.matches) return;
+
+    const THRESHOLD = 24;
+
+    const onScroll = () => {
+      if (window.scrollY > THRESHOLD) document.body.classList.add("nk-mobile-nav-hidden");
+      else document.body.classList.remove("nk-mobile-nav-hidden");
+    };
+
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      document.body.classList.remove("nk-mobile-nav-hidden");
+    };
+  }, []);
+
   return (
     <main className="relative min-h-screen px-6 py-16 md:px-16">
       {/* Scroll indicator (RIGHT SIDE) */}
@@ -51,10 +86,7 @@ export default function WaterShieldPage() {
       </div>
 
       <div className="mx-auto max-w-3xl">
-        <a
-          href="/"
-          className="text-sm text-neutral-400 transition hover:text-white"
-        >
+        <a href="/" className="text-sm text-neutral-400 transition hover:text-white">
           ← Back to work
         </a>
 
@@ -65,13 +97,11 @@ export default function WaterShieldPage() {
           }}
           className="fade-section mt-6"
         >
-          <h1 className="text-4xl font-semibold tracking-tight">
-            WaterShield
-          </h1>
+          <h1 className="text-4xl font-semibold tracking-tight">WaterShield</h1>
 
           <p className="mt-4 text-lg text-neutral-300">
-            A longboard wheel “fender” attachment designed to prevent water
-            from spraying up onto the rider in wet conditions.
+            A longboard wheel “fender” attachment designed to prevent water from spraying up onto
+            the rider in wet conditions.
           </p>
         </section>
 
@@ -82,13 +112,11 @@ export default function WaterShieldPage() {
           }}
           className="fade-section mt-12"
         >
-          <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-500">
-            Problem
-          </h2>
+          <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-500">Problem</h2>
           <p className="mt-4 text-neutral-300">
-            Riding a longboard in the rain quickly soaks the rider because the
-            wheels kick water upward. Existing solutions were either bulky,
-            not designed for longboards, or inconvenient to install/remove.
+            Riding a longboard in the rain quickly soaks the rider because the wheels kick water
+            upward. Existing solutions were either bulky, not designed for longboards, or
+            inconvenient to install/remove.
           </p>
         </section>
 
@@ -99,14 +127,11 @@ export default function WaterShieldPage() {
           }}
           className="fade-section mt-12"
         >
-          <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-500">
-            Solution
-          </h2>
+          <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-500">Solution</h2>
           <p className="mt-4 text-neutral-300">
-            WaterShield is a compact, attachable wheel cover that blocks
-            splash-up at the source. The design focuses on a secure mount,
-            simple installation, and a form factor that fits common longboard
-            setups without getting in the way of riding.
+            WaterShield is a compact, attachable wheel cover that blocks splash-up at the source.
+            The design focuses on a secure mount, simple installation, and a form factor that fits
+            common longboard setups without getting in the way of riding.
           </p>
         </section>
 
@@ -138,9 +163,7 @@ export default function WaterShieldPage() {
           }}
           className="fade-section mt-12"
         >
-          <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-500">
-            Testing
-          </h2>
+          <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-500">Testing</h2>
 
           <img
             src="/work/watershield-testing1-new.png"
@@ -168,9 +191,7 @@ export default function WaterShieldPage() {
           }}
           className="fade-section mt-16"
         >
-          <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-500">
-            Demo
-          </h2>
+          <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-500">Demo</h2>
 
           <div className="mt-6 overflow-hidden rounded-xl border border-neutral-800">
             <video
@@ -194,9 +215,7 @@ export default function WaterShieldPage() {
           }}
           className="fade-section mt-12"
         >
-          <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-500">
-            What I did
-          </h2>
+          <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-500">What I did</h2>
           <ul className="mt-4 list-disc space-y-2 pl-5 text-neutral-300">
             <li>Defined the user pain point and usage scenarios</li>
             <li>Designed the attachment concept and mounting approach</li>
@@ -212,15 +231,26 @@ export default function WaterShieldPage() {
           }}
           className="fade-section mt-12"
         >
-          <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-500">
-            Takeaways
-          </h2>
+          <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-500">Takeaways</h2>
           <p className="mt-4 text-neutral-300">
-            Small accessories succeed or fail on install friction. The design had
-            to feel immediately worth using the moment conditions turned wet.
+            Small accessories succeed or fail on install friction. The design had to feel
+            immediately worth using the moment conditions turned wet.
           </p>
         </section>
       </div>
+
+      {/* ✅ added: mobile-only hide top-right nav on scroll */}
+      <style jsx>{`
+        @media (max-width: 639px) {
+          :global(body.nk-mobile-nav-hidden a[data-nk-topnav="1"]),
+          :global(body.nk-mobile-nav-hidden .sparkLink[data-nk-topnav="1"]) {
+            opacity: 0;
+            transform: translateY(-10px);
+            pointer-events: none;
+            transition: opacity 180ms ease, transform 180ms ease;
+          }
+        }
+      `}</style>
     </main>
   );
 }
