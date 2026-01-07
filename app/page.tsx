@@ -17,8 +17,10 @@ export default function HomePage() {
   const lastTimeRef = useRef<number | null>(null);
   const rafRef = useRef<number | null>(null);
 
-  // ✅ swipe/drag refs
-  const isDraggingRef = useRef(false);
+  // ✅ swipe/drag refs (fixed so clicks still work)
+  const isDraggingRef = useRef(false); // only true AFTER user actually drags
+  const pointerIdRef = useRef<number | null>(null);
+  const dragOwnerRef = useRef<HTMLDivElement | null>(null);
   const dragStartXRef = useRef(0);
   const dragStartOffsetRef = useRef(0);
   const didDragRef = useRef(false);
@@ -169,17 +171,16 @@ export default function HomePage() {
 
   /* ================= MOBILE-ONLY: HIDE TOP-RIGHT NAV ON SCROLL ================= */
   useEffect(() => {
-    const mq = window.matchMedia("(max-width: 639px)"); // Tailwind "sm" breakpoint
+    const mq = window.matchMedia("(max-width: 639px)");
     if (!mq.matches) return;
 
-    const THRESHOLD = 24; // px scrolled before hiding
+    const THRESHOLD = 24;
 
     const onScroll = () => {
       if (window.scrollY > THRESHOLD) document.body.classList.add("nk-mobile-nav-hidden");
       else document.body.classList.remove("nk-mobile-nav-hidden");
     };
 
-    // run once in case page loads mid-scroll
     onScroll();
 
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -189,31 +190,53 @@ export default function HomePage() {
     };
   }, []);
 
-  // ✅ swipe/drag handlers
+  // ✅ swipe/drag handlers (FIXED: do NOT pointer-capture until user actually drags,
+  // so desktop clicks on <a> still work)
   const onTrackPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     if (e.pointerType === "mouse" && e.button !== 0) return;
 
-    isDraggingRef.current = true;
+    pointerIdRef.current = e.pointerId;
+    dragOwnerRef.current = e.currentTarget as HTMLDivElement;
+
+    isDraggingRef.current = false;
     didDragRef.current = false;
+
     dragStartXRef.current = e.clientX;
     dragStartOffsetRef.current = offsetRef.current;
 
+    // avoid dt jump after interaction
     lastTimeRef.current = null;
-
-    (e.currentTarget as HTMLDivElement).setPointerCapture(e.pointerId);
   };
 
   const onTrackPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (!isDraggingRef.current) return;
+    if (pointerIdRef.current == null) return;
 
     const row = rowRef.current;
     if (!row) return;
 
     const dx = e.clientX - dragStartXRef.current;
-    if (Math.abs(dx) > 8) didDragRef.current = true;
+    const DRAG_START_PX = 10;
+
+    // Only become a "drag" after threshold (keeps taps/clicks working)
+    if (!isDraggingRef.current) {
+      if (Math.abs(dx) < DRAG_START_PX) return;
+
+      isDraggingRef.current = true;
+      didDragRef.current = true;
+
+      // capture now that we know it's a drag
+      try {
+        dragOwnerRef.current?.setPointerCapture(pointerIdRef.current);
+      } catch {}
+
+      // reset timing so auto-scroll resumes smoothly later
+      lastTimeRef.current = null;
+    }
+
+    // while dragging: update offset
+    e.preventDefault();
 
     let next = dragStartOffsetRef.current - dx;
-
     const hw = halfWidthRef.current;
     if (hw > 0) next = ((next % hw) + hw) % hw;
 
@@ -221,18 +244,27 @@ export default function HomePage() {
     row.style.transform = `translate3d(${-offsetRef.current}px, 0, 0)`;
   };
 
-  const endDrag = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (!isDraggingRef.current) return;
-    isDraggingRef.current = false;
+  const endPointer = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (pointerIdRef.current == null) return;
 
-    try {
-      (e.currentTarget as HTMLDivElement).releasePointerCapture(e.pointerId);
-    } catch {}
+    const pid = pointerIdRef.current;
+
+    // if we were dragging, release capture
+    if (isDraggingRef.current) {
+      try {
+        (e.currentTarget as HTMLDivElement).releasePointerCapture(pid);
+      } catch {}
+    }
+
+    pointerIdRef.current = null;
+    dragOwnerRef.current = null;
+    isDraggingRef.current = false;
 
     lastTimeRef.current = null;
   };
 
   const onTrackClickCapture = (e: React.MouseEvent<HTMLDivElement>) => {
+    // If user dragged, don't navigate links.
     if (didDragRef.current) {
       e.preventDefault();
       e.stopPropagation();
@@ -326,18 +358,21 @@ export default function HomePage() {
 
       {/* ================= CONTENT ================= */}
       <div className={`transition-opacity duration-700 ${showIntro ? "opacity-0" : "opacity-100"}`}>
-        {/* ✅ MOBILE-ONLY: extra right padding so title doesn't sit under top-right nav */}
-        <section className="mx-auto max-w-6xl px-6 pr-28 sm:pr-6 pt-28 pb-24">
-          <h1 className="text-5xl font-bold tracking-tight mb-6">Nick Kuebler</h1>
+        {/* ✅ FIX: only the HEADER gets extra right padding on mobile (not the carousel)
+            so the carousel stays centered/full-width on mobile */}
+        <section className="mx-auto max-w-6xl px-6 pt-28 pb-24">
+          <div className="pr-28 sm:pr-0">
+            <h1 className="text-5xl font-bold tracking-tight mb-6">Nick Kuebler</h1>
 
-          <p className="text-lg text-white/75 max-w-2xl">
-            Designer & engineer focused on aesthetic systems, physical products, and clean digital
-            experiences.
-          </p>
+            <p className="text-lg text-white/75 max-w-2xl">
+              Designer & engineer focused on aesthetic systems, physical products, and clean digital
+              experiences.
+            </p>
 
-          <h2 className="mt-20 mb-6 text-xs uppercase tracking-[0.25em] text-white/50">
-            Selected work
-          </h2>
+            <h2 className="mt-20 mb-6 text-xs uppercase tracking-[0.25em] text-white/50">
+              Selected work
+            </h2>
+          </div>
 
           {/* ================= CAROUSEL ================= */}
           <div className="relative mt-6 overflow-hidden">
@@ -350,8 +385,8 @@ export default function HomePage() {
               onPointerLeave={() => setIsHovering(false)}
               onPointerDown={onTrackPointerDown}
               onPointerMove={onTrackPointerMove}
-              onPointerUp={endDrag}
-              onPointerCancel={endDrag}
+              onPointerUp={endPointer}
+              onPointerCancel={endPointer}
               onClickCapture={onTrackClickCapture}
             >
               <div className="nk-row" ref={rowRef}>
@@ -510,6 +545,8 @@ export default function HomePage() {
         /* ===== CAROUSEL ===== */
         .nk-track {
           overflow: hidden;
+
+          /* ✅ enables vertical scroll while still allowing horizontal drag */
           touch-action: pan-y;
         }
 
