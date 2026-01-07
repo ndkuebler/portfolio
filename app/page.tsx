@@ -1,20 +1,27 @@
 "use client";
 
+import type React from "react";
 import { useEffect, useRef, useState } from "react";
 
 export default function HomePage() {
   const [showIntro, setShowIntro] = useState(true);
 
-  // ✅ NEW: hover control
+  // ✅ hover control (desktop)
   const [isHovering, setIsHovering] = useState(false);
   const hoverRef = useRef(false);
 
-  // ✅ NEW: marquee refs
+  // ✅ marquee refs
   const rowRef = useRef<HTMLDivElement | null>(null);
   const halfWidthRef = useRef(0);
   const offsetRef = useRef(0);
   const lastTimeRef = useRef<number | null>(null);
   const rafRef = useRef<number | null>(null);
+
+  // ✅ swipe/drag refs
+  const isDraggingRef = useRef(false);
+  const dragStartXRef = useRef(0);
+  const dragStartOffsetRef = useRef(0);
+  const didDragRef = useRef(false);
 
   /* ================= INTRO SESSION LOGIC ================= */
   useEffect(() => {
@@ -38,21 +45,19 @@ export default function HomePage() {
     return () => document.body.classList.remove("nk-intro-active");
   }, [showIntro]);
 
-  // ✅ NEW: keep hover state in a ref (so rAF loop never resets)
   useEffect(() => {
     hoverRef.current = isHovering;
   }, [isHovering]);
 
-  // ✅ NEW: requestAnimationFrame marquee (speed changes on hover without visual bugs)
+  // ✅ requestAnimationFrame marquee (pauses while dragging)
   useEffect(() => {
     const row = rowRef.current;
     if (!row) return;
 
-    const BASE_SPEED = 70; // px/sec (tweak if you want)
-    const HOVER_MULT = 2 / 3; // 33% slower
+    const BASE_SPEED = 70; // px/sec
+    const HOVER_MULT = 2 / 3;
 
     const measure = () => {
-      // halfWidth is width of one set (since you duplicated A+B)
       const hw = row.scrollWidth / 2;
       halfWidthRef.current = Number.isFinite(hw) ? hw : 0;
     };
@@ -74,19 +79,15 @@ export default function HomePage() {
         }
       });
 
-      // If all were already complete, measure immediately
       if (remaining === 0) measure();
     };
 
-    // Initial measure + re-measure after assets load
     measure();
     attachImageListeners();
 
-    // Re-measure on resize (and when fonts/images can affect layout)
     const onResize = () => measure();
     window.addEventListener("resize", onResize);
 
-    // ResizeObserver catches layout changes inside the row
     const ro = new ResizeObserver(() => measure());
     ro.observe(row);
 
@@ -97,15 +98,13 @@ export default function HomePage() {
 
       const hw = halfWidthRef.current;
 
-      // If not measured yet, keep trying
       if (hw > 0) {
-        const speed = hoverRef.current ? BASE_SPEED * HOVER_MULT : BASE_SPEED;
-        offsetRef.current += speed * dt;
+        if (!isDraggingRef.current) {
+          const speed = hoverRef.current ? BASE_SPEED * HOVER_MULT : BASE_SPEED;
+          offsetRef.current += speed * dt;
+          if (offsetRef.current >= hw) offsetRef.current -= hw;
+        }
 
-        // Wrap seamlessly
-        if (offsetRef.current >= hw) offsetRef.current -= hw;
-
-        // Apply transform
         row.style.transform = `translate3d(${-offsetRef.current}px, 0, 0)`;
       }
 
@@ -121,11 +120,7 @@ export default function HomePage() {
     };
   }, []);
 
-  /* ================= SPARK SHOWER ON EXISTING TOP-RIGHT NAV =================
-     - Does NOT add new nav links (prevents double text)
-     - Enhances existing <a> tags whose text is Portfolio / About / Contact
-     - Namespaced classes so it does NOT conflict with your intro SVG .spark paths
-  */
+  /* ================= SPARK SHOWER ON EXISTING TOP-RIGHT NAV ================= */
   useEffect(() => {
     const labels = new Set(["Portfolio", "About", "Contact"]);
 
@@ -141,14 +136,14 @@ export default function HomePage() {
       const txt = (a.textContent || "").trim();
       if (!labels.has(txt)) return;
 
-      // Prevent re-wrapping
       if ((a as any).dataset?.nkSparkified === "1") return;
       (a as any).dataset.nkSparkified = "1";
 
-      // Apply class to existing anchor (no duplicate nav)
+      // ✅ mark these as the top-right nav links so we can hide them on mobile scroll
+      (a as any).dataset.nkTopnav = "1";
+
       a.classList.add("sparkLink");
 
-      // Rebuild inner content to include sparks
       a.innerHTML = "";
       const span = document.createElement("span");
       span.className = "sparkText";
@@ -171,6 +166,79 @@ export default function HomePage() {
       a.appendChild(span);
     });
   }, []);
+
+  /* ================= MOBILE-ONLY: HIDE TOP-RIGHT NAV ON SCROLL ================= */
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 639px)"); // Tailwind "sm" breakpoint
+    if (!mq.matches) return;
+
+    const THRESHOLD = 24; // px scrolled before hiding
+
+    const onScroll = () => {
+      if (window.scrollY > THRESHOLD) document.body.classList.add("nk-mobile-nav-hidden");
+      else document.body.classList.remove("nk-mobile-nav-hidden");
+    };
+
+    // run once in case page loads mid-scroll
+    onScroll();
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      document.body.classList.remove("nk-mobile-nav-hidden");
+    };
+  }, []);
+
+  // ✅ swipe/drag handlers
+  const onTrackPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType === "mouse" && e.button !== 0) return;
+
+    isDraggingRef.current = true;
+    didDragRef.current = false;
+    dragStartXRef.current = e.clientX;
+    dragStartOffsetRef.current = offsetRef.current;
+
+    lastTimeRef.current = null;
+
+    (e.currentTarget as HTMLDivElement).setPointerCapture(e.pointerId);
+  };
+
+  const onTrackPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isDraggingRef.current) return;
+
+    const row = rowRef.current;
+    if (!row) return;
+
+    const dx = e.clientX - dragStartXRef.current;
+    if (Math.abs(dx) > 8) didDragRef.current = true;
+
+    let next = dragStartOffsetRef.current - dx;
+
+    const hw = halfWidthRef.current;
+    if (hw > 0) next = ((next % hw) + hw) % hw;
+
+    offsetRef.current = next;
+    row.style.transform = `translate3d(${-offsetRef.current}px, 0, 0)`;
+  };
+
+  const endDrag = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isDraggingRef.current) return;
+    isDraggingRef.current = false;
+
+    try {
+      (e.currentTarget as HTMLDivElement).releasePointerCapture(e.pointerId);
+    } catch {}
+
+    lastTimeRef.current = null;
+  };
+
+  const onTrackClickCapture = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (didDragRef.current) {
+      e.preventDefault();
+      e.stopPropagation();
+      didDragRef.current = false;
+    }
+  };
 
   return (
     <main className="relative min-h-screen bg-black overflow-hidden text-white">
@@ -258,7 +326,8 @@ export default function HomePage() {
 
       {/* ================= CONTENT ================= */}
       <div className={`transition-opacity duration-700 ${showIntro ? "opacity-0" : "opacity-100"}`}>
-        <section className="mx-auto max-w-6xl px-6 pt-28 pb-24">
+        {/* ✅ MOBILE-ONLY: extra right padding so title doesn't sit under top-right nav */}
+        <section className="mx-auto max-w-6xl px-6 pr-28 sm:pr-6 pt-28 pb-24">
           <h1 className="text-5xl font-bold tracking-tight mb-6">Nick Kuebler</h1>
 
           <p className="text-lg text-white/75 max-w-2xl">
@@ -279,6 +348,11 @@ export default function HomePage() {
               className="nk-track"
               onPointerEnter={() => setIsHovering(true)}
               onPointerLeave={() => setIsHovering(false)}
+              onPointerDown={onTrackPointerDown}
+              onPointerMove={onTrackPointerMove}
+              onPointerUp={endDrag}
+              onPointerCancel={endDrag}
+              onClickCapture={onTrackClickCapture}
             >
               <div className="nk-row" ref={rowRef}>
                 {/* SET A */}
@@ -338,7 +412,7 @@ export default function HomePage() {
 
       {/* ================= STYLES ================= */}
       <style jsx>{`
-        /* ===== Spark Shower Hover (applies to existing links after JS adds classes) ===== */
+        /* ===== Spark Shower Hover ===== */
         :global(.sparkLink) {
           position: relative;
           display: inline-block;
@@ -349,7 +423,7 @@ export default function HomePage() {
           text-decoration: none;
           color: rgba(255, 255, 255, 0.86);
           background: transparent;
-          transition: color 140ms ease, transform 160ms ease;
+          transition: color 140ms ease, transform 160ms ease, opacity 180ms ease;
           outline: none;
           -webkit-tap-highlight-color: transparent;
         }
@@ -367,7 +441,7 @@ export default function HomePage() {
         :global(.sparkText) {
           position: relative;
           display: inline-block;
-          font-size: 16px; /* keep your top-right size */
+          font-size: 16px;
           letter-spacing: -0.02em;
           line-height: 1;
           padding: 2px 2px;
@@ -424,9 +498,19 @@ export default function HomePage() {
           }
         }
 
-        /* ===== YOUR ORIGINAL STYLES (ONLY CHANGE: FULL-COVER MASK) ===== */
+        /* ✅ MOBILE-ONLY: hide top-right nav after scroll */
+        @media (max-width: 639px) {
+          :global(body.nk-mobile-nav-hidden .sparkLink[data-nk-topnav="1"]) {
+            opacity: 0;
+            transform: translateY(-10px);
+            pointer-events: none;
+          }
+        }
+
+        /* ===== CAROUSEL ===== */
         .nk-track {
           overflow: hidden;
+          touch-action: pan-y;
         }
 
         .nk-row {
@@ -440,8 +524,6 @@ export default function HomePage() {
           flex-shrink: 0;
           margin-right: 3rem;
           display: inline-flex;
-
-          /* ✅ ensures the mask clips perfectly to the same rounded corners */
           border-radius: 0.75rem;
           overflow: hidden;
         }
@@ -463,7 +545,6 @@ export default function HomePage() {
           transform: scale(1.06);
         }
 
-        /* ✅ FULL-COVER GREY MASK (covers entire image on hover) */
         .nk-item::after {
           content: "";
           position: absolute;
@@ -479,7 +560,6 @@ export default function HomePage() {
           opacity: 1;
         }
 
-        /* overlay now just holds text (mask is handled by ::after) */
         .nk-overlay {
           position: absolute;
           inset: 0;
@@ -580,27 +660,21 @@ export default function HomePage() {
         .delay-40 {
           animation-delay: 40ms;
         }
-
         .delay-60 {
           animation-delay: 60ms;
         }
-
         .delay-70 {
           animation-delay: 70ms;
         }
-
         .delay-80 {
           animation-delay: 80ms;
         }
-
         .delay-90 {
           animation-delay: 90ms;
         }
-
         .delay-110 {
           animation-delay: 110ms;
         }
-
         .delay-120 {
           animation-delay: 120ms;
         }

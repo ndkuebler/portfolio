@@ -23,6 +23,9 @@ export default function ContactPage() {
       if ((a as any).dataset?.nkSparkified === "1") return;
       (a as any).dataset.nkSparkified = "1";
 
+      // ✅ mark these as the top-right nav links so we can hide them on mobile scroll
+      (a as any).dataset.nkTopnav = "1";
+
       a.classList.add("sparkLink");
 
       a.innerHTML = "";
@@ -46,6 +49,27 @@ export default function ContactPage() {
 
       a.appendChild(span);
     });
+  }, []);
+
+  // ✅ MOBILE-ONLY: HIDE TOP-RIGHT NAV ON SCROLL (Contact page too)
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 639px)"); // Tailwind "sm" breakpoint
+    if (!mq.matches) return;
+
+    const THRESHOLD = 24; // px scrolled before hiding
+
+    const onScroll = () => {
+      if (window.scrollY > THRESHOLD) document.body.classList.add("nk-mobile-nav-hidden");
+      else document.body.classList.remove("nk-mobile-nav-hidden");
+    };
+
+    onScroll();
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      document.body.classList.remove("nk-mobile-nav-hidden");
+    };
   }, []);
 
   return (
@@ -119,7 +143,7 @@ export default function ContactPage() {
           text-decoration: none;
           color: rgba(255, 255, 255, 0.86);
           background: transparent;
-          transition: color 140ms ease, transform 160ms ease;
+          transition: color 140ms ease, transform 160ms ease, opacity 180ms ease;
           outline: none;
           -webkit-tap-highlight-color: transparent;
         }
@@ -193,6 +217,15 @@ export default function ContactPage() {
           :global(.sparkLink:hover .navSpark) {
             animation: none !important;
             opacity: 0.7;
+          }
+        }
+
+        /* ✅ MOBILE-ONLY: hide top-right nav after scroll */
+        @media (max-width: 639px) {
+          :global(body.nk-mobile-nav-hidden .sparkLink[data-nk-topnav="1"]) {
+            opacity: 0;
+            transform: translateY(-10px);
+            pointer-events: none;
           }
         }
       `}</style>
