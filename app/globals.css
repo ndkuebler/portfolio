@@ -97,10 +97,100 @@ body {
 .nk-content-reveal {
   animation: nk-pop 420ms ease-out forwards;
 }
-.nk-intro-active .nk-nav {
+
+/* ===== Spark Shower Hover (GLOBAL so it doesn't flicker on route change) ===== */
+.sparkLink {
+  position: relative;
+  display: inline-block;
+  padding: 10px 10px;
+  border-radius: 14px;
+  cursor: pointer;
+  user-select: none;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.86);
+  background: transparent;
+  transition: color 140ms ease, transform 160ms ease, opacity 180ms ease;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sparkLink:hover {
+  color: rgba(255, 255, 255, 1);
+  background: transparent;
+  transform: translateY(-1px);
+}
+
+.sparkLink:focus-visible {
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.22),
+    0 0 0 6px rgba(255, 255, 255, 0.08);
+}
+
+.sparkText {
+  position: relative;
+  display: inline-block;
+  font-size: 16px;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  padding: 2px 2px;
+}
+
+.navSpark {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.25);
   opacity: 0;
   pointer-events: none;
 
+  left: var(--sx);
+  top: var(--sy);
+  transform: translate(-50%, -50%);
+  will-change: transform, opacity;
+}
 
+.sparkLink:hover .navSpark {
+  animation: navSparkBurst 620ms ease-out infinite;
+  animation-delay: var(--delay);
+  animation-fill-mode: backwards;
+}
 
+@keyframes navSparkBurst {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.75);
+  }
+  12% {
+    opacity: 0.9;
+  }
+  45% {
+    opacity: 0.95;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy)))
+      scale(0.2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sparkLink,
+  .sparkLink:hover {
+    transform: none !important;
+    transition: none !important;
+  }
+  .sparkLink:hover .navSpark {
+    animation: none !important;
+    opacity: 0.7;
+  }
+}
+
+/* ✅ MOBILE-ONLY: hide top-right nav after scroll */
+@media (max-width: 639px) {
+  body.nk-mobile-nav-hidden .sparkLink[data-nk-topnav="1"] {
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+  }
 }

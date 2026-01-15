@@ -124,7 +124,7 @@ export default function HomePage() {
 
   /* ================= SPARK SHOWER ON EXISTING TOP-RIGHT NAV ================= */
   useEffect(() => {
-    const labels = new Set(["Portfolio", "About", "Contact"]);
+    const labels = new Set(["Portfolio", "Concepts", "About", "Contact"]);
 
     const sparkDefs = [
       { sx: "12%", sy: "38%", dx: "34px", dy: "-18px", delayMs: 0 },
@@ -132,6 +132,7 @@ export default function HomePage() {
       { sx: "56%", sy: "22%", dx: "18px", dy: "22px", delayMs: 320 },
     ] as const;
 
+    // ✅ Sparkify the nav that already exists
     const anchors = Array.from(document.querySelectorAll("a")) as HTMLAnchorElement[];
 
     anchors.forEach((a) => {

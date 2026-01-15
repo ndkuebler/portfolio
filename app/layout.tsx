@@ -7,8 +7,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en">
       <body className="bg-black text-white antialiased min-h-screen">
         {/* NAV */}
-        <nav className="fixed top-6 right-8 z-40 flex gap-6 text-sm tracking-wide nk-nav">
+        <nav className="fixed top-6 left-1/2 -translate-x-1/2 sm:left-auto sm:translate-x-0 sm:right-8 z-40 flex gap-6 text-sm tracking-wide nk-nav">
           <Link href="/">Portfolio</Link>
+          <Link href="/concepts">Concepts</Link>
           <Link href="/about">About</Link>
           <Link href="/contact">Contact</Link>
         </nav>
