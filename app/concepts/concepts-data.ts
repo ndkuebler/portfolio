@@ -62,4 +62,13 @@ export const CONCEPTS: Concept[] = [
     mediaType: "image",
     mediaSrc: "/concepts/chairprojwoman.png",
   },
+
+  {
+    title: "Athlete recovery gum",
+    subtitle:
+      "Gum sticks made with recovery-forward ingredients like turmeric, vitamin C, and tart cherry.",
+    thumb: "/concepts/gumstyxclosed.png",
+    mediaType: "image",
+    mediaSrc: "/concepts/gumopened.png",
+  },
 ];

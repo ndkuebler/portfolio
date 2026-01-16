@@ -292,7 +292,7 @@ export default function ConceptsPage() {
           <h1 className="text-4xl font-semibold tracking-tight mb-4">Concepts</h1>
           <p className="text-lg text-neutral-300 mb-12 max-w-2xl" />
 
-          <div ref={gridRef} className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div ref={gridRef} className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {concepts.map((c, i) => (
               <button
                 key={c.mediaSrc}
@@ -300,7 +300,7 @@ export default function ConceptsPage() {
                   tileRefs.current[i] = el;
                 }}
                 type="button"
-                className="nk-tile group relative overflow-hidden rounded-2xl bg-white/5 text-left focus:outline-none"
+                className="nk-tile group relative overflow-hidden rounded-2xl bg-white/[0.03] text-left focus:outline-none transition-all duration-300 ease-out"
                 onClick={() => open(i)}
                 aria-label={c.title}
               >
@@ -309,7 +309,7 @@ export default function ConceptsPage() {
                   <img
                     src={c.thumb}
                     alt=""
-                    className={`nk-thumb block w-full h-full aspect-[4/3] ${
+                    className={`nk-thumb block w-full h-full aspect-[4/3] transition-transform duration-500 ease-out ${
                       ((c.title || "").toLowerCase().includes("fridge") ||
                         (c.thumb || "").toLowerCase().includes("fridge") ||
                         (c.mediaSrc || "").toLowerCase().includes("fridge"))
@@ -319,11 +319,11 @@ export default function ConceptsPage() {
                     draggable={false}
                   />
                 ) : (
-                  <div className="nk-tile-blank" aria-hidden="true" />
+                  <div className="nk-tile-blank aspect-[4/3]" aria-hidden="true" />
                 )}
 
-                {/* subtle hover tint */}
-                <div className="pointer-events-none absolute inset-0 bg-black/30 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                {/* refined hover overlay */}
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100" />
               </button>
             ))}
           </div>
@@ -544,19 +544,29 @@ export default function ConceptsPage() {
           }
         }
 
-        /* ===== Tile styling (NO always-on border) ===== */
+        /* ===== Tile styling - Apple-inspired ===== */
         .nk-tile {
-          box-shadow: 0 18px 60px rgba(0, 0, 0, 0.55);
-          transition: transform 180ms ease, box-shadow 220ms ease;
+          box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+          transition: transform 280ms cubic-bezier(0.2, 0, 0, 1), 
+                      box-shadow 280ms cubic-bezier(0.2, 0, 0, 1);
+          will-change: transform, box-shadow;
         }
 
         .nk-tile:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 24px 80px rgba(0, 0, 0, 0.65);
+          transform: translateY(-4px) scale(1.01);
+          box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5);
+        }
+
+        .nk-tile:active {
+          transform: translateY(-2px) scale(1.005);
+          transition-duration: 120ms;
         }
 
         .nk-tile:focus-visible {
-          box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.22), 0 24px 80px rgba(0, 0, 0, 0.65);
+          outline: none;
+          box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5),
+                      0 0 0 2px rgba(255, 255, 255, 0.3),
+                      0 0 0 4px rgba(255, 255, 255, 0.1);
         }
 
         /* ✅ make sure previews clip perfectly (kills faint edge/halo) */
@@ -564,6 +574,10 @@ export default function ConceptsPage() {
           border-radius: inherit; /* ✅ always match the tile's rounding */
           transform: translateZ(0);
           display: block;
+        }
+
+        .nk-tile:hover .nk-thumb {
+          transform: translateZ(0) scale(1.05);
         }
 
         /* ===== Blank tile look ===== */
@@ -576,6 +590,7 @@ export default function ConceptsPage() {
               transparent 60%
             ),
             rgba(255, 255, 255, 0.02);
+          border-radius: inherit;
         }
 
         /* ===== Lightbox expand/collapse ===== */

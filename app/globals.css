@@ -19,6 +19,30 @@ body {
 
 .nk-nav {
   transition: opacity 400ms ease;
+  /* ✅ Ensure nav container never scales - keep uniform across all pages */
+  transform: none !important;
+}
+
+/* ✅ Ensure nav links maintain consistent size - uniform like concepts page */
+.nk-nav a,
+.nk-nav .sparkLink {
+  /* Match sparkLink padding so links are same size whether sparkified or not */
+  padding: 10px 10px !important;
+  border-radius: 14px;
+  font-size: 16px !important; /* Match sparkText font-size */
+  line-height: 1 !important;
+  letter-spacing: -0.02em !important;
+  display: inline-block;
+  position: relative;
+  transition: color 140ms ease, transform 160ms ease, opacity 180ms ease;
+  color: rgba(255, 255, 255, 0.86) !important;
+  text-decoration: none !important;
+}
+
+/* ✅ Ensure sparkText matches nav link size */
+.sparkText {
+  font-size: 16px !important;
+  letter-spacing: -0.02em !important;
 }
 
 /* ---------- INTRO OVERLAY ---------- */
