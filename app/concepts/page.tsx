@@ -312,7 +312,10 @@ export default function ConceptsPage() {
                     className={`nk-thumb block w-full h-full aspect-[4/3] transition-transform duration-500 ease-out ${
                       ((c.title || "").toLowerCase().includes("fridge") ||
                         (c.thumb || "").toLowerCase().includes("fridge") ||
-                        (c.mediaSrc || "").toLowerCase().includes("fridge"))
+                        (c.mediaSrc || "").toLowerCase().includes("fridge")) ||
+                      ((c.title || "").toLowerCase().includes("lightning") ||
+                        (c.title || "").toLowerCase().includes("table") ||
+                        (c.thumb || "").toLowerCase().includes("tablelightning"))
                         ? "object-contain bg-black"
                         : "object-cover"
                     } rounded-2xl`}

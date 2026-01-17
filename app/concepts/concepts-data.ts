@@ -15,8 +15,8 @@ export type Concept = {
 export const CONCEPTS: Concept[] = [
   {
     title: "DJ Glasses",
-    subtitle: "Glasses that pulse to the song’s instrumental",
-    thumb: "/concepts/djglasses.png",
+    subtitle: "Glasses that pulse to the song's instrumental",
+    thumb: "/concepts/djglasses1.png",
     mediaType: "video",
     mediaSrc: "/concepts/djglassesloop.mp4",
   },
@@ -24,8 +24,8 @@ export const CONCEPTS: Concept[] = [
   {
     title: "Conversational Plant",
     subtitle:
-      "Pot with soil sensors + tiny thermal printer that prints receipts like “I’m thirsty”",
-    thumb: "/concepts/plantr.png",
+      "Pot with soil sensors + tiny thermal printer that prints receipts like \"I'm thirsty\"",
+    thumb: "/concepts/plantr1.png",
     mediaType: "image",
     mediaSrc: "/concepts/plantr.png",
   },
@@ -42,7 +42,7 @@ export const CONCEPTS: Concept[] = [
     title: "Lightning Connection Table",
     subtitle:
       "A table with conductive veins of lightning that briefly arc when someone touches two points",
-    thumb: "/concepts/lightningtable.png",
+    thumb: "/concepts/tablelightning.png",
     mediaType: "video",
     mediaSrc: "/concepts/lightningtableaction.mp4",
   },
@@ -50,7 +50,7 @@ export const CONCEPTS: Concept[] = [
   {
     title: "Intuitive Fridge",
     subtitle: "Interior fridge lighting that gradually darkens as food ages",
-    thumb: "/concepts/fridgeclosed.png",
+    thumb: "/concepts/fridge1.png",
     mediaType: "image",
     mediaSrc: "/concepts/fridgeopen.png",
   },
@@ -58,7 +58,7 @@ export const CONCEPTS: Concept[] = [
   {
     title: "Posture Chair",
     subtitle: "Each person who sits leaves a silhouette of their posture",
-    thumb: "/concepts/chairproj.png",
+    thumb: "/concepts/chairproj1.png",
     mediaType: "image",
     mediaSrc: "/concepts/chairprojwoman.png",
   },
@@ -70,5 +70,21 @@ export const CONCEPTS: Concept[] = [
     thumb: "/concepts/gumstyxclosed.png",
     mediaType: "image",
     mediaSrc: "/concepts/gumopened.png",
+  },
+
+  {
+    title: "Living Album Cover",
+    subtitle: "A wall display that creates living album art from the music you play",
+    thumb: "/concepts/musicframe.png",
+    mediaType: "image",
+    mediaSrc: "/concepts/musicframe.png",
+  },
+
+  {
+    title: "Micro-LED Freckles",
+    subtitle: "temporary freckle stickers that glow like constellations in low light",
+    thumb: "/concepts/freckles.png",
+    mediaType: "image",
+    mediaSrc: "/concepts/womanfreckles.png",
   },
 ];
