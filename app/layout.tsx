@@ -1,6 +1,7 @@
 import "./globals.css";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import NavIndicator from "./components/NavIndicator";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
@@ -13,6 +14,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <Link href="/about">About</Link>
           <Link href="/contact">Contact</Link>
         </nav>
+
+        {/* Minimal nav indicator (shown when nav is hidden) */}
+        <NavIndicator />
 
         {children}
       </body>

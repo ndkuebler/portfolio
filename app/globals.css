@@ -218,3 +218,109 @@ body {
     pointer-events: none;
   }
 }
+
+/* ✅ Nav Indicator (minimal aesthetic replacement when nav is hidden) */
+.nk-nav-indicator {
+  position: fixed;
+  top: 24px;
+  right: 32px;
+  z-index: 41;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 400ms ease;
+  cursor: pointer;
+  width: 200px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 0;
+}
+
+/* Ensure indicator is hoverable when visible */
+body.nk-desktop-nav-hidden .nk-nav-indicator {
+  pointer-events: auto;
+}
+
+.nk-nav-indicator-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  transition: background 300ms ease, transform 300ms ease;
+}
+
+.nk-nav-indicator:hover .nk-nav-indicator-dot {
+  background: rgba(255, 255, 255, 0.7);
+  transform: scale(1.3);
+}
+
+/* ✅ DESKTOP-ONLY: hide top-right nav on scroll (work pages) */
+@media (min-width: 640px) {
+  body.nk-desktop-nav-hidden .nk-nav {
+    opacity: 0 !important;
+    transform: translateY(-10px) !important;
+    transition: opacity 500ms ease, transform 500ms ease !important;
+    pointer-events: auto !important;
+  }
+
+  body.nk-desktop-nav-hidden .nk-nav a,
+  body.nk-desktop-nav-hidden .nk-nav .sparkLink {
+    opacity: 0 !important;
+    transform: translateY(-10px) !important;
+    transition: opacity 500ms ease, transform 500ms ease !important;
+    pointer-events: auto;
+  }
+
+  /* Show nav indicator when nav is hidden */
+  body.nk-desktop-nav-hidden .nk-nav-indicator {
+    opacity: 1;
+    pointer-events: auto;
+    transition: opacity 300ms ease;
+    animation: nk-indicator-fade-in 400ms ease-out forwards;
+  }
+
+  @keyframes nk-indicator-fade-in {
+    from {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* Hide indicator when nav is visible (not scrolled) */
+  body:not(.nk-desktop-nav-hidden) .nk-nav-indicator {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Show nav when hovering over the nav container or links */
+  body.nk-desktop-nav-hidden .nk-nav:hover,
+  body.nk-desktop-nav-hidden.nk-indicator-hover .nk-nav {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    pointer-events: auto !important;
+  }
+
+  body.nk-desktop-nav-hidden .nk-nav:hover a,
+  body.nk-desktop-nav-hidden .nk-nav:hover .sparkLink,
+  body.nk-desktop-nav-hidden .nk-nav a:hover,
+  body.nk-desktop-nav-hidden .nk-nav .sparkLink:hover,
+  body.nk-desktop-nav-hidden.nk-indicator-hover .nk-nav a,
+  body.nk-desktop-nav-hidden.nk-indicator-hover .nk-nav .sparkLink {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    pointer-events: auto !important;
+  }
+
+  /* Hide indicator when hovering over nav area or when indicator-hover is active (nav is showing) */
+  body.nk-desktop-nav-hidden .nk-nav:hover ~ .nk-nav-indicator,
+  body.nk-desktop-nav-hidden.nk-indicator-hover .nk-nav-indicator {
+    opacity: 0 !important;
+    pointer-events: none;
+    transition: opacity 300ms ease;
+  }
+}

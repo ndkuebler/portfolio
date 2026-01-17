@@ -89,6 +89,33 @@ export default function WaterShieldFigmaPage() {
     };
   }, []);
 
+  /* ================= DESKTOP-ONLY: HIDE TOP-RIGHT NAV ON SCROLL ================= */
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 640px)"); // Desktop only
+    if (!mq.matches) return;
+
+    const THRESHOLD = 48;
+
+    const onScroll = () => {
+      if (window.scrollY > THRESHOLD) {
+        document.body.classList.add("nk-desktop-nav-hidden");
+      } else {
+        document.body.classList.remove("nk-desktop-nav-hidden");
+        // Also remove indicator-hover class when scrolling to top
+        document.body.classList.remove("nk-indicator-hover");
+      }
+    };
+
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      document.body.classList.remove("nk-desktop-nav-hidden");
+      document.body.classList.remove("nk-indicator-hover");
+    };
+  }, []);
+
   return (
     <main className="relative min-h-screen px-6 py-16 md:px-16">
       {/* Scroll Progress Bar */}
