@@ -1,8 +1,24 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function AboutPage() {
+  // Image rotation state
+  const images = [
+    "/nick.jpeg",
+    "/concepts/nkhbar.jpeg",
+    "/concepts/nkhike.jpg",
+  ];
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  // Rotate images every 5.5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % images.length);
+    }, 5500);
+
+    return () => clearInterval(interval);
+  }, [images.length]);
   useEffect(() => {
     const labels = new Set(["Portfolio", "Concepts", "About", "Contact"]);
 
@@ -78,13 +94,18 @@ export default function AboutPage() {
         <h1 className="mb-12 text-4xl font-semibold tracking-tight">About</h1>
 
         <div className="grid gap-12 md:grid-cols-2 md:items-start">
-          {/* Image */}
-          <div>
-            <img
-              src="/nick.jpeg"
-              alt="Nick working in the shop"
-              className="w-full max-w-md rounded-xl"
-            />
+          {/* Image with rotation */}
+          <div className="relative w-full max-w-md aspect-[3/4] overflow-hidden rounded-xl">
+            {images.map((src, index) => (
+              <img
+                key={src}
+                src={src}
+                alt="Nick"
+                className={`absolute inset-0 w-full h-full object-cover rounded-xl transition-opacity duration-1000 ease-in-out ${
+                  index === currentImageIndex ? "opacity-100" : "opacity-0"
+                }`}
+              />
+            ))}
           </div>
 
           {/* Text */}
