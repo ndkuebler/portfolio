@@ -393,7 +393,7 @@ export default function HomePage() {
               <div className="nk-row" ref={rowRef}>
                 {/* SET A */}
                 <a href="/work/ringallets" className="nk-item">
-                  <img src="/work/ringallets.png" className="nk-img" />
+                  <img src="/work/ringalletsbbg.png" className="nk-img" />
                   <div className="nk-overlay">
                     <h3>Ringallets</h3>
                     <p>Rings training tool</p>
@@ -401,7 +401,7 @@ export default function HomePage() {
                 </a>
 
                 <a href="/work/watershield" className="nk-item">
-                  <img src="/work/watershield.png" className="nk-img" />
+                  <img src="/work/watershieldbbg.png" className="nk-img" />
                   <div className="nk-overlay">
                     <h3>WaterShield</h3>
                     <p>Longboard wheel fender</p>
@@ -418,7 +418,7 @@ export default function HomePage() {
 
                 {/* SET B (IDENTICAL COPY) */}
                 <a href="/work/ringallets" className="nk-item">
-                  <img src="/work/ringallets.png" className="nk-img" />
+                  <img src="/work/ringalletsbbg.png" className="nk-img" />
                   <div className="nk-overlay">
                     <h3>Ringallets</h3>
                     <p>Rings training tool</p>
@@ -426,7 +426,7 @@ export default function HomePage() {
                 </a>
 
                 <a href="/work/watershield" className="nk-item">
-                  <img src="/work/watershield.png" className="nk-img" />
+                  <img src="/work/watershieldbbg.png" className="nk-img" />
                   <div className="nk-overlay">
                     <h3>WaterShield</h3>
                     <p>Longboard wheel fender</p>
@@ -562,12 +562,10 @@ export default function HomePage() {
           flex-shrink: 0;
           margin-right: 3rem;
           display: inline-flex;
+          align-items: center;
+          justify-content: center;
           border-radius: 0.75rem;
           overflow: hidden;
-        }
-
-        .nk-row > .nk-item:last-child {
-          margin-right: 0;
         }
 
         .nk-img {
@@ -579,8 +577,24 @@ export default function HomePage() {
           background: rgba(255, 255, 255, 0.05);
         }
 
+        .nk-img[src="/work/watershieldbbg.png"] {
+          height: 260px;
+        }
+
+        .nk-img[src="/work/ringalletsbbg.png"] {
+          height: 250px;
+        }
+
         .nk-item:hover .nk-img {
           transform: scale(1.06);
+        }
+
+        .nk-item:hover .nk-img[src="/work/watershieldbbg.png"] {
+          transform: scale(1.06) translateY(35px);
+        }
+
+        .nk-img[src="/work/watershieldbbg.png"] {
+          transform: translateY(35px);
         }
 
         .nk-item::after {

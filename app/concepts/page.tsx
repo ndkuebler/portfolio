@@ -318,7 +318,10 @@ export default function ConceptsPage() {
                         (c.thumb || "").toLowerCase().includes("tablelightning")) ||
                       ((c.title || "").toLowerCase().includes("tank") ||
                         (c.thumb || "").toLowerCase().includes("tank") ||
-                        (c.mediaSrc || "").toLowerCase().includes("tank"))
+                        (c.mediaSrc || "").toLowerCase().includes("tank")) ||
+                      ((c.title || "").toLowerCase().includes("plant") ||
+                        (c.thumb || "").toLowerCase().includes("plant") ||
+                        (c.mediaSrc || "").toLowerCase().includes("plant"))
                         ? "object-contain bg-black"
                         : "object-cover"
                     } rounded-2xl`}
