@@ -87,4 +87,28 @@ export const CONCEPTS: Concept[] = [
     mediaType: "image",
     mediaSrc: "/concepts/womanfreckles.png",
   },
+
+  {
+    title: "Companion Bench",
+    subtitle: "A bench that warms only when two strangers sit on it",
+    thumb: "/concepts/bench.png",
+    mediaType: "image",
+    mediaSrc: "/concepts/bench glow.png",
+  },
+
+  {
+    title: "Think Tank",
+    subtitle: "A pod with sensory deprivation technologies",
+    thumb: "/concepts/tank.png",
+    mediaType: "image",
+    mediaSrc: "/concepts/tankbg.png",
+  },
+
+  {
+    title: "Drone Shepherd",
+    subtitle: "Drone that herds sheep",
+    thumb: "/concepts/dogdrone.png",
+    mediaType: "image",
+    mediaSrc: "/concepts/dognsheep.png",
+  },
 ];

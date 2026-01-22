@@ -315,7 +315,10 @@ export default function ConceptsPage() {
                         (c.mediaSrc || "").toLowerCase().includes("fridge")) ||
                       ((c.title || "").toLowerCase().includes("lightning") ||
                         (c.title || "").toLowerCase().includes("table") ||
-                        (c.thumb || "").toLowerCase().includes("tablelightning"))
+                        (c.thumb || "").toLowerCase().includes("tablelightning")) ||
+                      ((c.title || "").toLowerCase().includes("tank") ||
+                        (c.thumb || "").toLowerCase().includes("tank") ||
+                        (c.mediaSrc || "").toLowerCase().includes("tank"))
                         ? "object-contain bg-black"
                         : "object-cover"
                     } rounded-2xl`}
