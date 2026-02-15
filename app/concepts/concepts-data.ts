@@ -107,8 +107,8 @@ export const CONCEPTS: Concept[] = [
   {
     title: "Drone Shepherd",
     subtitle: "Drone that herds sheep",
-    thumb: "/concepts/dogdrone.png",
+    thumb: "/concepts/dogdronev2.png",
     mediaType: "image",
-    mediaSrc: "/concepts/dognsheep.png",
+    mediaSrc: "/concepts/dognsheepv2.png",
   },
 ];

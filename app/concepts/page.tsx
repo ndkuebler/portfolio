@@ -291,7 +291,10 @@ export default function ConceptsPage() {
                         (c.mediaSrc || "").toLowerCase().includes("tank")) ||
                       ((c.title || "").toLowerCase().includes("plant") ||
                         (c.thumb || "").toLowerCase().includes("plant") ||
-                        (c.mediaSrc || "").toLowerCase().includes("plant"))
+                        (c.mediaSrc || "").toLowerCase().includes("plant")) ||
+                      ((c.title || "").toLowerCase().includes("drone") ||
+                        (c.thumb || "").toLowerCase().includes("drone") ||
+                        (c.mediaSrc || "").toLowerCase().includes("drone"))
                         ? "object-contain bg-black"
                         : "object-cover"
                     } rounded-2xl`}
