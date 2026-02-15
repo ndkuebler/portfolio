@@ -7,7 +7,7 @@ export default function AboutPage() {
   const images = [
     "/nick.jpeg",
     "/concepts/nkhbar.jpeg",
-    "/concepts/nkhike.jpg",
+    "/concepts/nickcube.jpeg",
   ];
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 

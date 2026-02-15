@@ -264,6 +264,7 @@ export default function HomePage() {
               onClickCapture={onTrackClickCapture}
             >
               <div className="nk-row" ref={rowRef}>
+                {/* INFINITE LOOP CAROUSEL - 3 products (Ringallets, WaterShield, MarbleLaunch) */}
                 {/* SET A */}
                 <a href="/work/ringallets" className="nk-item">
                   <img src="/work/ringalletsbbg.png" className="nk-img" />
@@ -281,15 +282,15 @@ export default function HomePage() {
                   </div>
                 </a>
 
-                <a href="/work/watershield-figma" className="nk-item">
-                  <img src="/work/watershield-figma.png" className="nk-img" />
+                <a href="/work/marblelaunch" className="nk-item nk-item-marblelaunch">
+                  <img src="/work/marblelaunch.png" className="nk-img" />
                   <div className="nk-overlay">
-                    <h3>WaterShield Figma</h3>
-                    <p>Purchase flow prototype</p>
+                    <h3>Marble Launcher</h3>
+                    <p>ME102 project</p>
                   </div>
                 </a>
 
-                {/* SET B (IDENTICAL COPY) */}
+                {/* SET B (IDENTICAL COPY for seamless loop) */}
                 <a href="/work/ringallets" className="nk-item">
                   <img src="/work/ringalletsbbg.png" className="nk-img" />
                   <div className="nk-overlay">
@@ -306,13 +307,50 @@ export default function HomePage() {
                   </div>
                 </a>
 
-                <a href="/work/watershield-figma" className="nk-item">
-                  <img src="/work/watershield-figma.png" className="nk-img" />
+                <a href="/work/marblelaunch" className="nk-item nk-item-marblelaunch">
+                  <img src="/work/marblelaunch.png" className="nk-img" />
                   <div className="nk-overlay">
-                    <h3>WaterShield Figma</h3>
-                    <p>Purchase flow prototype</p>
+                    <h3>Marble Launcher</h3>
+                    <p>ME102 project</p>
                   </div>
                 </a>
+
+                {/* SET C (THIRD COPY for faster marble launcher reappearance) */}
+                <a href="/work/ringallets" className="nk-item">
+                  <img src="/work/ringalletsbbg.png" className="nk-img" />
+                  <div className="nk-overlay">
+                    <h3>Ringallets</h3>
+                    <p>Rings training tool</p>
+                  </div>
+                </a>
+
+                <a href="/work/watershield" className="nk-item">
+                  <img src="/work/watershieldbbg.png" className="nk-img" />
+                  <div className="nk-overlay">
+                    <h3>WaterShield</h3>
+                    <p>Longboard wheel fender</p>
+                  </div>
+                </a>
+
+                <a href="/work/marblelaunch" className="nk-item nk-item-marblelaunch">
+                  <img src="/work/marblelaunch.png" className="nk-img" />
+                  <div className="nk-overlay">
+                    <h3>Marble Launcher</h3>
+                    <p>ME102 project</p>
+                  </div>
+                </a>
+
+                {/* OLD CAROUSEL STRUCTURE (preserved for reference) */}
+                {/* 
+                TWO-ITEM CAROUSEL (Ringallets, WaterShield):
+                SET A: Ringallets, WaterShield
+                SET B: Ringallets, WaterShield
+                SET C: Ringallets, WaterShield
+                
+                THREE-ITEM CAROUSEL WITH WATERSHIELD FIGMA:
+                SET A: Ringallets, WaterShield, WaterShield Figma
+                SET B: Ringallets, WaterShield, WaterShield Figma
+                */}
               </div>
             </div>
           </div>
@@ -349,29 +387,48 @@ export default function HomePage() {
         .nk-item {
           position: relative;
           flex-shrink: 0;
-          margin-right: 3rem;
           display: inline-flex;
           align-items: center;
           justify-content: center;
           border-radius: 0.75rem;
           overflow: hidden;
+          box-sizing: border-box;
+          margin-right: 3rem;
+        }
+        
+        /* Reduce spacing before marble launcher to compensate for wider image and ensure uniform visual spacing */
+        .nk-item-marblelaunch {
+          margin-left: -3.5rem;
         }
 
         .nk-img {
-          height: 220px;
+          height: 250px;
           width: auto;
           display: block;
           border-radius: 0.75rem;
           background: rgba(255, 255, 255, 0.05);
+          /* Ensure images don't affect container width inconsistently */
+          max-width: 100%;
+          object-fit: contain;
         }
 
+        /* MarbleLaunch - make bigger but keep container consistent */
+        .nk-img[src="/work/marblelaunch.png"] {
+          height: 342px;
+          width: auto;
+        }
+
+        /* WaterShield - move down to align with other images on same plane */
         .nk-img[src="/work/watershieldbbg.png"] {
-          height: 260px;
-          transform: translateY(35px);
+          transform: translateY(30px);
+          height: 250px;
+          width: auto;
         }
-
+        
+        /* Ringallets - ensure consistent sizing */
         .nk-img[src="/work/ringalletsbbg.png"] {
           height: 250px;
+          width: auto;
         }
 
         .nk-item:hover .nk-img {
@@ -379,9 +436,10 @@ export default function HomePage() {
           transform: scale(1.06);
         }
 
+        /* Preserve translateY on hover for WaterShield */
         .nk-item:hover .nk-img[src="/work/watershieldbbg.png"] {
           transition: transform 0.5s ease;
-          transform: scale(1.06) translateY(35px);
+          transform: scale(1.06) translateY(30px);
         }
 
         .nk-item::after {
