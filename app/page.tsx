@@ -238,8 +238,7 @@ export default function HomePage() {
             <h1 className="text-5xl font-bold tracking-tight mb-6">Nick Kuebler</h1>
 
             <p className="text-lg text-white/75 max-w-2xl">
-              Designer & engineer focused on aesthetic systems, physical products, and clean digital
-              experiences.
+              Product designer focused on building QOL upgrades, tech forward physical products and aesthetics
             </p>
 
             <h2 className="mt-20 mb-6 text-xs uppercase tracking-[0.25em] text-white/50">
