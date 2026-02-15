@@ -212,13 +212,13 @@ export default function MarbleLaunchPage() {
             <li>Focused on exploring mechanism possibilities.</li>
             <li>Goal: maximize idea quantity before narrowing down.</li>
           </ul>
-          <div className="mt-6">
-            <Image src="/work/mlsketch.png" alt="Ideation sketches" width={1600} height={1000} className="w-full rounded-sm" />
+          <div className="mt-6 -ml-5">
+            <Image src="/work/mlsketches.png" alt="Ideation sketches" width={1600} height={1000} className="w-full rounded-sm" />
           </div>
         </section>
 
         <section className="mt-12">
-          <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-400">Component-Level Prototyping + Testing</h2>
+          <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-400">Prototyping + Testing</h2>
           
           <div className="mt-6 space-y-6">
             <div>
