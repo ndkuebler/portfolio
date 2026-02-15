@@ -12,207 +12,38 @@ body {
 }
 
 /* ---------- NAV VISIBILITY ---------- */
-.nk-intro-active .nk-nav {
-  opacity: 0;
-  pointer-events: none;
-}
-
 .nk-nav {
   transition: opacity 400ms ease;
   /* ✅ Ensure nav container never scales - keep uniform across all pages */
   transform: none !important;
 }
 
-/* ✅ Ensure nav links maintain consistent size - uniform like concepts page */
+/* ✅ Ensure nav links maintain consistent size */
 .nk-nav a,
-.nk-nav .sparkLink {
-  /* Match sparkLink padding so links are same size whether sparkified or not */
+.nk-nav .nk-nav-link {
   padding: 10px 10px !important;
   border-radius: 14px;
-  font-size: 16px !important; /* Match sparkText font-size */
+  font-size: 16px !important;
   line-height: 1 !important;
   letter-spacing: -0.02em !important;
   display: inline-block;
   position: relative;
-  transition: color 140ms ease, transform 160ms ease, opacity 180ms ease;
+  transition: color 140ms ease, transform 160ms ease, opacity 180ms ease, text-shadow 200ms ease;
   color: rgba(255, 255, 255, 0.86) !important;
   text-decoration: none !important;
 }
 
-/* ✅ Ensure sparkText matches nav link size */
-.sparkText {
-  font-size: 16px !important;
-  letter-spacing: -0.02em !important;
-}
-
-/* ---------- INTRO OVERLAY ---------- */
-.nk-intro-overlay {
-  position: fixed;
-  inset: 0;
-  background: black;
-  z-index: 9999;
-  pointer-events: none;
-}
-
-/* ---------- LIGHTNING ---------- */
-.nk-line {
-  fill: none;
-  stroke: #ffffff;
-  stroke-width: 6;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.nk-dash {
-  stroke-dasharray: 520;
-  stroke-dashoffset: 520;
-}
-
-/* ---------- ANIMATIONS ---------- */
-@keyframes nk-draw {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-@keyframes nk-pop {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
-}
-
-@keyframes nk-fade-out {
-  to {
-    opacity: 0;
-  }
-}
-
-.nk-anim {
-  animation: nk-draw 600ms ease-out forwards;
-}
-
-.nk-logo {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  font-weight: 700;
-  letter-spacing: -0.04em;
-  opacity: 0;
-  transform: translate(-50%, -50%);
-  animation: nk-pop 200ms ease-out forwards;
-  animation-delay: 520ms;
-}
-
-.nk-overlay-fade {
-  animation: nk-fade-out 400ms ease-out forwards;
-  animation-delay: 1100ms;
-}
-
-/* ---------- CONTENT REVEAL ---------- */
-.nk-content-hidden {
-  opacity: 0;
-}
-
-.nk-content-reveal {
-  animation: nk-pop 420ms ease-out forwards;
-}
-
-/* ===== Spark Shower Hover (GLOBAL so it doesn't flicker on route change) ===== */
-.sparkLink {
-  position: relative;
-  display: inline-block;
-  padding: 10px 10px;
-  border-radius: 14px;
-  cursor: pointer;
-  user-select: none;
-  text-decoration: none;
-  color: rgba(255, 255, 255, 0.86);
-  background: transparent;
-  transition: color 140ms ease, transform 160ms ease, opacity 180ms ease;
-  outline: none;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.sparkLink:hover {
-  color: rgba(255, 255, 255, 1);
-  background: transparent;
+.nk-nav a:hover,
+.nk-nav .nk-nav-link:hover {
+  color: rgba(255, 255, 255, 1) !important;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.3), 0 0 12px rgba(255, 255, 255, 0.15);
   transform: translateY(-1px);
-}
-
-.sparkLink:focus-visible {
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.22),
-    0 0 0 6px rgba(255, 255, 255, 0.08);
-}
-
-.sparkText {
-  position: relative;
-  display: inline-block;
-  font-size: 16px;
-  letter-spacing: -0.02em;
-  line-height: 1;
-  padding: 2px 2px;
-}
-
-.navSpark {
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.92);
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.25);
-  opacity: 0;
-  pointer-events: none;
-
-  left: var(--sx);
-  top: var(--sy);
-  transform: translate(-50%, -50%);
-  will-change: transform, opacity;
-}
-
-.sparkLink:hover .navSpark {
-  animation: navSparkBurst 620ms ease-out infinite;
-  animation-delay: var(--delay);
-  animation-fill-mode: backwards;
-}
-
-@keyframes navSparkBurst {
-  0% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.75);
-  }
-  12% {
-    opacity: 0.9;
-  }
-  45% {
-    opacity: 0.95;
-  }
-  100% {
-    opacity: 0;
-    transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy)))
-      scale(0.2);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .sparkLink,
-  .sparkLink:hover {
-    transform: none !important;
-    transition: none !important;
-  }
-  .sparkLink:hover .navSpark {
-    animation: none !important;
-    opacity: 0.7;
-  }
 }
 
 /* ✅ MOBILE-ONLY: hide top-right nav after scroll */
 @media (max-width: 639px) {
-  body.nk-mobile-nav-hidden .sparkLink[data-nk-topnav="1"] {
+  body.nk-mobile-nav-hidden .nk-nav-link[data-nk-topnav="1"],
+  body.nk-mobile-nav-hidden a[data-nk-topnav="1"] {
     opacity: 0;
     transform: translateY(-10px);
     pointer-events: none;
@@ -246,12 +77,12 @@ body.nk-desktop-nav-hidden .nk-nav-indicator {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 1);
   transition: background 300ms ease, transform 300ms ease;
 }
 
 .nk-nav-indicator:hover .nk-nav-indicator-dot {
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 1);
   transform: scale(1.3);
 }
 
@@ -265,7 +96,7 @@ body.nk-desktop-nav-hidden .nk-nav-indicator {
   }
 
   body.nk-desktop-nav-hidden .nk-nav a,
-  body.nk-desktop-nav-hidden .nk-nav .sparkLink {
+  body.nk-desktop-nav-hidden .nk-nav .nk-nav-link {
     opacity: 0 !important;
     transform: translateY(-10px) !important;
     transition: opacity 500ms ease, transform 500ms ease !important;
@@ -306,11 +137,11 @@ body.nk-desktop-nav-hidden .nk-nav-indicator {
   }
 
   body.nk-desktop-nav-hidden .nk-nav:hover a,
-  body.nk-desktop-nav-hidden .nk-nav:hover .sparkLink,
+  body.nk-desktop-nav-hidden .nk-nav:hover .nk-nav-link,
   body.nk-desktop-nav-hidden .nk-nav a:hover,
-  body.nk-desktop-nav-hidden .nk-nav .sparkLink:hover,
+  body.nk-desktop-nav-hidden .nk-nav .nk-nav-link:hover,
   body.nk-desktop-nav-hidden.nk-indicator-hover .nk-nav a,
-  body.nk-desktop-nav-hidden.nk-indicator-hover .nk-nav .sparkLink {
+  body.nk-desktop-nav-hidden.nk-indicator-hover .nk-nav .nk-nav-link {
     opacity: 1 !important;
     transform: translateY(0) !important;
     pointer-events: auto !important;
