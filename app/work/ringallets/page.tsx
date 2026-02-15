@@ -255,6 +255,16 @@ export default function RingalletsPage() {
         </FadeIn>
 
         <Figure src="/work/ringallets-final-alt.png" alt="Final assembly" caption="Final components" />
+
+        <FadeIn>
+          <section className="mt-16">
+            <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-400">Product in action</h2>
+          </section>
+        </FadeIn>
+
+        <Figure src="/work/ringalleths.JPG" alt="Ringallets in action" caption="" />
+        <Figure src="/work/ringalletl.jpg" alt="Ringallets in action" caption="" />
+        <Figure src="/work/ringalletplanche.jpg" alt="Ringallets in action" caption="" />
       </div>
 
       {/* ✅ MOBILE-ONLY: hide top-right nav after scroll */}
