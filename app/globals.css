@@ -66,32 +66,23 @@ body {
     padding: 0;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 300ms ease, transform 300ms ease;
+    transform: scale(0.8);
+    transition: opacity 400ms ease-out, transform 400ms ease-out;
+    will-change: opacity, transform;
   }
 
   body.nk-mobile-nav-hidden .nk-mobile-nav-button {
     opacity: 1;
     pointer-events: auto;
-    animation: nk-mobile-nav-button-fade-in 400ms ease-out forwards;
-  }
-
-  @keyframes nk-mobile-nav-button-fade-in {
-    from {
-      opacity: 0;
-      transform: scale(0.8);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
+    transform: scale(1);
   }
 
   .nk-mobile-nav-button:hover {
-    transform: scale(1.1);
+    transform: scale(1.1) !important;
   }
 
   .nk-mobile-nav-button:active {
-    transform: scale(0.95);
+    transform: scale(0.95) !important;
   }
 
   .nk-mobile-nav-button svg {
