@@ -910,7 +910,7 @@ export default function ConceptsPage() {
           /* Subtitle uses desktop left-to-right reveal animation */
           .nk-mobile-botcap.cap-in .nk-mcap-sub {
             animation: nkRevealLR 560ms cubic-bezier(0.2, 0.9, 0.2, 1) forwards;
-            animation-delay: 500ms;
+            animation-delay: 250ms; /* 50% faster than before (was 500ms) */
           }
 
           @keyframes nkFadeUp {

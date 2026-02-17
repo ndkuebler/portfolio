@@ -91,12 +91,10 @@ function Figure({
   caption: string;
 }) {
   return (
-    <FadeIn>
-      <figure className="mx-auto mt-12 max-w-2xl">
-        <Image src={src} alt={alt} width={1600} height={1000} className="w-full rounded-sm" />
-        <figcaption className="mt-3 text-xs text-neutral-400">{caption}</figcaption>
-      </figure>
-    </FadeIn>
+    <figure className="mx-auto mt-12 max-w-2xl">
+      <Image src={src} alt={alt} width={1600} height={1000} className="w-full rounded-sm" />
+      <figcaption className="mt-3 text-xs text-neutral-400">{caption}</figcaption>
+    </figure>
   );
 }
 
@@ -173,19 +171,15 @@ export default function RingalletsPage() {
       <ScrollIndicator />
 
       <div className="mx-auto max-w-3xl">
-        <FadeIn>
-          <Link href="/" className="text-sm text-neutral-400 hover:text-white transition">
-            ← Back to work
-          </Link>
-        </FadeIn>
+        <Link href="/" className="text-sm text-neutral-400 hover:text-white transition">
+          ← Back to work
+        </Link>
 
-        <FadeIn>
-          <h1 className="mt-6 text-4xl font-semibold tracking-tight">Ringallets</h1>
-          <p className="mt-4 text-lg text-neutral-300">
-            A gymnastics training tool that bridges the gap between parallettes and rings by
-            preserving correct mechanics without introducing instability.
-          </p>
-        </FadeIn>
+        <h1 className="mt-6 text-4xl font-semibold tracking-tight">Ringallets</h1>
+        <p className="mt-4 text-lg text-neutral-300">
+          A gymnastics training tool that bridges the gap between parallettes and rings by
+          preserving correct mechanics without introducing instability.
+        </p>
 
         <Figure
           src="/work/ringallets-final.png"
@@ -193,24 +187,20 @@ export default function RingalletsPage() {
           caption="Final Ringallets configuration"
         />
 
-        <FadeIn>
-          <section className="mt-16">
-            <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-400">Problem</h2>
-            <p className="mt-4 text-neutral-300">
-              Rings are one of the most effective tools for developing upper-body strength, but
-              their instability makes them inaccessible for many athletes.
-            </p>
-          </section>
-        </FadeIn>
+        <section className="mt-16">
+          <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-400">Problem</h2>
+          <p className="mt-4 text-neutral-300">
+            Rings are one of the most effective tools for developing upper-body strength, but
+            their instability makes them inaccessible for many athletes.
+          </p>
+        </section>
 
-        <FadeIn>
-          <section className="mt-12">
-            <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-400">Solution</h2>
-            <p className="mt-4 text-neutral-300">
-              Ringallets replicate standard ring spacing while maintaining parallette stability.
-            </p>
-          </section>
-        </FadeIn>
+        <section className="mt-12">
+          <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-400">Solution</h2>
+          <p className="mt-4 text-neutral-300">
+            Ringallets replicate standard ring spacing while maintaining parallette stability.
+          </p>
+        </section>
 
         <Figure src="/work/ringallets-sketch.png" alt="Sketch" caption="Early sketches" />
 
@@ -222,45 +212,37 @@ export default function RingalletsPage() {
           caption="Physical prototype"
         />
 
-        <FadeIn>
-          <section className="mt-16">
-            <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-400">Process</h2>
-            <ul className="mt-4 list-disc pl-5 space-y-2 text-neutral-300">
-              <li>Failure point analysis</li>
-              <li>Geometry locking</li>
-              <li>Prototype iteration</li>
-              <li>Real athlete testing</li>
-            </ul>
-          </section>
-        </FadeIn>
+        <section className="mt-16">
+          <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-400">Process</h2>
+          <ul className="mt-4 list-disc pl-5 space-y-2 text-neutral-300">
+            <li>Failure point analysis</li>
+            <li>Geometry locking</li>
+            <li>Prototype iteration</li>
+            <li>Real athlete testing</li>
+          </ul>
+        </section>
 
-        <FadeIn>
-          <div className="mx-auto mt-12 grid max-w-2xl gap-10 md:grid-cols-2">
-            <div>
-              <Image src="/work/ringallets-testing1.png" alt="Testing 1" width={800} height={600} />
-              <p className="mt-3 text-xs text-neutral-400">Stability testing</p>
-            </div>
-            <div>
-              <Image src="/work/ringallets-testing2.png" alt="Testing 2" width={800} height={600} />
-              <p className="mt-3 text-xs text-neutral-400">Iteration feedback</p>
-            </div>
+        <div className="mx-auto mt-12 grid max-w-2xl gap-10 md:grid-cols-2">
+          <div>
+            <Image src="/work/ringallets-testing1.png" alt="Testing 1" width={800} height={600} />
+            <p className="mt-3 text-xs text-neutral-400">Stability testing</p>
           </div>
-        </FadeIn>
+          <div>
+            <Image src="/work/ringallets-testing2.png" alt="Testing 2" width={800} height={600} />
+            <p className="mt-3 text-xs text-neutral-400">Iteration feedback</p>
+          </div>
+        </div>
 
-        <FadeIn>
-          <section className="mt-16">
-            <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-400">Takeaways</h2>
-            <p className="mt-4 text-neutral-300">The right constraints unlock accessibility.</p>
-          </section>
-        </FadeIn>
+        <section className="mt-16">
+          <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-400">Takeaways</h2>
+          <p className="mt-4 text-neutral-300">The right constraints unlock accessibility.</p>
+        </section>
 
         <Figure src="/work/ringallets-final-alt.png" alt="Final assembly" caption="Final components" />
 
-        <FadeIn>
-          <section className="mt-16">
-            <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-400">Product in action</h2>
-          </section>
-        </FadeIn>
+        <section className="mt-16">
+          <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-400">Product in action</h2>
+        </section>
 
         <Figure src="/work/ringalleths.JPG" alt="Ringallets in action" caption="" />
         <Figure src="/work/ringalletl.jpg" alt="Ringallets in action" caption="" />
