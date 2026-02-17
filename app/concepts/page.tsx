@@ -709,6 +709,21 @@ export default function ConceptsPage() {
           .nk-lightbox-frame {
             overflow: visible;
             background: transparent; /* stage black stays on media element */
+            /* Keep original timing for entrance */
+            transition: top 520ms cubic-bezier(0.2, 0.9, 0.2, 1),
+              left 520ms cubic-bezier(0.2, 0.9, 0.2, 1),
+              width 520ms cubic-bezier(0.2, 0.9, 0.2, 1),
+              height 520ms cubic-bezier(0.2, 0.9, 0.2, 1),
+              border-radius 520ms cubic-bezier(0.2, 0.9, 0.2, 1);
+          }
+
+          /* Faster transition on mobile for quicker close */
+          .nk-lightbox-root.is-closed .nk-lightbox-frame {
+            transition: top 250ms cubic-bezier(0.2, 0.9, 0.2, 1),
+              left 250ms cubic-bezier(0.2, 0.9, 0.2, 1),
+              width 250ms cubic-bezier(0.2, 0.9, 0.2, 1),
+              height 250ms cubic-bezier(0.2, 0.9, 0.2, 1),
+              border-radius 250ms cubic-bezier(0.2, 0.9, 0.2, 1);
           }
 
           /* keep media stage black + rounded */
@@ -758,19 +773,23 @@ export default function ConceptsPage() {
             font-weight: 500;
             color: #ffffff;
             opacity: 0;
-            transform: translateY(6px);
+            transform: translateX(-10px);
+            clip-path: inset(0 100% 0 0);
+            will-change: clip-path, transform, opacity;
             text-shadow: 0 14px 40px rgba(0, 0, 0, 0.6);
             max-width: 38ch;
           }
 
-          /* simple fade-in synced with your open animation */
+          /* Title uses original fade-up animation */
           .nk-mobile-topcap.cap-in .nk-mcap-title {
             animation: nkFadeUp 420ms cubic-bezier(0.2, 0.9, 0.2, 1) forwards;
-            animation-delay: 160ms;
+            animation-delay: 0ms;
           }
+          
+          /* Subtitle uses desktop left-to-right reveal animation */
           .nk-mobile-botcap.cap-in .nk-mcap-sub {
-            animation: nkFadeUp 420ms cubic-bezier(0.2, 0.9, 0.2, 1) forwards;
-            animation-delay: 240ms;
+            animation: nkRevealLR 560ms cubic-bezier(0.2, 0.9, 0.2, 1) forwards;
+            animation-delay: 500ms;
           }
 
           @keyframes nkFadeUp {
@@ -781,11 +800,16 @@ export default function ConceptsPage() {
           }
 
           @media (prefers-reduced-motion: reduce) {
-            .nk-mobile-topcap.cap-in .nk-mcap-title,
+            .nk-mobile-topcap.cap-in .nk-mcap-title {
+              animation: none !important;
+              opacity: 1 !important;
+              transform: none !important;
+            }
             .nk-mobile-botcap.cap-in .nk-mcap-sub {
               animation: none !important;
               opacity: 1 !important;
               transform: none !important;
+              clip-path: none !important;
             }
           }
         }
