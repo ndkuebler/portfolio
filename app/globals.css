@@ -48,6 +48,56 @@ body {
     transform: translateY(-10px);
     pointer-events: none;
   }
+
+  /* Mobile nav button (white circle) */
+  .nk-mobile-nav-button {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 42;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 300ms ease, transform 300ms ease;
+  }
+
+  body.nk-mobile-nav-hidden .nk-mobile-nav-button {
+    opacity: 1;
+    pointer-events: auto;
+    animation: nk-mobile-nav-button-fade-in 400ms ease-out forwards;
+  }
+
+  @keyframes nk-mobile-nav-button-fade-in {
+    from {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .nk-mobile-nav-button:hover {
+    transform: scale(1.1);
+  }
+
+  .nk-mobile-nav-button:active {
+    transform: scale(0.95);
+  }
+
+  .nk-mobile-nav-button svg {
+    width: 24px;
+    height: 24px;
+  }
 }
 
 /* ✅ Nav Indicator (minimal aesthetic replacement when nav is hidden) */

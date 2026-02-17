@@ -2,6 +2,7 @@ import "./globals.css";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import NavIndicator from "./components/NavIndicator";
+import MobileNavButton from "./components/MobileNavButton";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
@@ -17,6 +18,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
         {/* Minimal nav indicator (shown when nav is hidden) */}
         <NavIndicator />
+
+        {/* Mobile nav button (shown when nav is hidden on mobile) */}
+        <MobileNavButton />
 
         {children}
       </body>

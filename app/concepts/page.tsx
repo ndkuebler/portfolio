@@ -358,6 +358,34 @@ export default function ConceptsPage() {
               }
             }}
           >
+            {/* ✅ MOBILE: Back button */}
+            <button
+              type="button"
+              className="nk-mobile-back-btn"
+              onClick={(e) => {
+                e.stopPropagation();
+                close();
+              }}
+              aria-label="Back to concepts"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle cx="12" cy="12" r="11" stroke="white" strokeWidth="1" />
+                <path
+                  d="M14 8L10 12L14 16"
+                  stroke="white"
+                  strokeWidth="1"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+
             {/* ✅ MOBILE: title above the stage (centered) */}
             <div className={`nk-mobile-topcap ${expanded ? "cap-in" : "cap-out"}`}>
               <div className="nk-mcap-title">{active.title}</div>
@@ -634,7 +662,44 @@ export default function ConceptsPage() {
           display: none;
         }
 
+        /* Hide back button on desktop */
+        .nk-mobile-back-btn {
+          display: none;
+        }
+
         @media (max-width: 639px) {
+          /* Mobile back button */
+          .nk-mobile-back-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: calc(var(--to-h) + 14px + 60px); /* halfway between previous and current */
+            left: -20px;
+            z-index: 10;
+            width: 88px;
+            height: 88px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            pointer-events: auto;
+            transition: opacity 0.2s ease;
+          }
+
+          .nk-mobile-back-btn:hover {
+            opacity: 0.8;
+          }
+
+          .nk-mobile-back-btn:active {
+            opacity: 0.6;
+          }
+
+          .nk-mobile-back-btn svg {
+            width: 48px;
+            height: 48px;
+          }
+
           /* hide desktop overlay caption on mobile */
           .nk-lightbox-caption {
             display: none;
