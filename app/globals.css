@@ -55,8 +55,8 @@ body {
     top: 24px;
     right: 24px;
     z-index: 42;
-    width: 44px;
-    height: 44px;
+    width: 44px; /* Larger hitbox for easier tapping */
+    height: 44px; /* Larger hitbox for easier tapping */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -86,8 +86,8 @@ body {
   }
 
   .nk-mobile-nav-button svg {
-    width: 24px;
-    height: 24px;
+    width: 12px;
+    height: 12px;
   }
 }
 
