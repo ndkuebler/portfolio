@@ -263,16 +263,8 @@ export default function HomePage() {
               onClickCapture={onTrackClickCapture}
             >
               <div className="nk-row" ref={rowRef}>
-                {/* INFINITE LOOP CAROUSEL - 3 products (Ringallets, WaterShield, MarbleLaunch) */}
+                {/* INFINITE LOOP CAROUSEL - 3 products (WaterShield, MarbleLaunch, Ringallets) */}
                 {/* SET A */}
-                <a href="/work/ringallets" className="nk-item">
-                  <img src="/work/ringalletsbbg.png" className="nk-img" />
-                  <div className="nk-overlay">
-                    <h3>Ringallets</h3>
-                    <p>Rings training tool</p>
-                  </div>
-                </a>
-
                 <a href="/work/watershield" className="nk-item">
                   <img src="/work/watershieldbbg.png" className="nk-img" />
                   <div className="nk-overlay">
@@ -286,18 +278,18 @@ export default function HomePage() {
                   <div className="nk-overlay">
                     <h3>Marble Launcher</h3>
                     <p>ME102 project</p>
+                  </div>
+                </a>
+
+                <a href="/work/ringallets" className="nk-item">
+                  <img src="/work/ringalletsbbg.png" className="nk-img" />
+                  <div className="nk-overlay">
+                    <h3>Ringallets</h3>
+                    <p>Rings training tool</p>
                   </div>
                 </a>
 
                 {/* SET B (IDENTICAL COPY for seamless loop) */}
-                <a href="/work/ringallets" className="nk-item">
-                  <img src="/work/ringalletsbbg.png" className="nk-img" />
-                  <div className="nk-overlay">
-                    <h3>Ringallets</h3>
-                    <p>Rings training tool</p>
-                  </div>
-                </a>
-
                 <a href="/work/watershield" className="nk-item">
                   <img src="/work/watershieldbbg.png" className="nk-img" />
                   <div className="nk-overlay">
@@ -311,18 +303,18 @@ export default function HomePage() {
                   <div className="nk-overlay">
                     <h3>Marble Launcher</h3>
                     <p>ME102 project</p>
+                  </div>
+                </a>
+
+                <a href="/work/ringallets" className="nk-item">
+                  <img src="/work/ringalletsbbg.png" className="nk-img" />
+                  <div className="nk-overlay">
+                    <h3>Ringallets</h3>
+                    <p>Rings training tool</p>
                   </div>
                 </a>
 
                 {/* SET C (THIRD COPY for faster marble launcher reappearance) */}
-                <a href="/work/ringallets" className="nk-item">
-                  <img src="/work/ringalletsbbg.png" className="nk-img" />
-                  <div className="nk-overlay">
-                    <h3>Ringallets</h3>
-                    <p>Rings training tool</p>
-                  </div>
-                </a>
-
                 <a href="/work/watershield" className="nk-item">
                   <img src="/work/watershieldbbg.png" className="nk-img" />
                   <div className="nk-overlay">
@@ -336,6 +328,14 @@ export default function HomePage() {
                   <div className="nk-overlay">
                     <h3>Marble Launcher</h3>
                     <p>ME102 project</p>
+                  </div>
+                </a>
+
+                <a href="/work/ringallets" className="nk-item">
+                  <img src="/work/ringalletsbbg.png" className="nk-img" />
+                  <div className="nk-overlay">
+                    <h3>Ringallets</h3>
+                    <p>Rings training tool</p>
                   </div>
                 </a>
 

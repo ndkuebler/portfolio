@@ -5,6 +5,29 @@ import { useEffect, useRef, useState } from "react";
 import { CONCEPTS, type Concept } from "./concepts-data";
 
 export default function ConceptsPage() {
+  /* ================= PRELOAD CRITICAL IMAGES ================= */
+  useEffect(() => {
+    // Preload the first 3 images for faster initial render
+    const criticalImages = CONCEPTS.slice(0, 3).filter((c) => c.thumb);
+    criticalImages.forEach((c) => {
+      const link = document.createElement("link");
+      link.rel = "preload";
+      link.as = "image";
+      link.href = c.thumb!;
+      document.head.appendChild(link);
+    });
+
+    return () => {
+      // Cleanup preload links on unmount
+      criticalImages.forEach((c) => {
+        const existingLink = document.querySelector(`link[href="${c.thumb}"]`);
+        if (existingLink) {
+          document.head.removeChild(existingLink);
+        }
+      });
+    };
+  }, []);
+
   /* ================= MARK TOP-RIGHT NAV LINKS ================= */
   useEffect(() => {
     const labels = new Set(["Portfolio", "Concepts", "About", "Contact"]);
@@ -66,6 +89,7 @@ export default function ConceptsPage() {
 
   const [expanded, setExpanded] = useState(false);
   const closingRef = useRef(false);
+  const [showBackButton, setShowBackButton] = useState(false);
 
   // ✅ NEW: refs to measure media so caption stays inside the visible media box
   const imgRef = useRef<HTMLImageElement | null>(null);
@@ -76,6 +100,19 @@ export default function ConceptsPage() {
     bottom: number;
     maxW: number;
   } | null>(null);
+
+  const [mediaLoaded, setMediaLoaded] = useState(false);
+
+  // Check if back button should be shown (media loaded AND expansion complete)
+  useEffect(() => {
+    if (expanded && mediaLoaded && activeIndex !== null) {
+      // Wait for expansion animation to complete (20ms - reduced by 500ms)
+      const timer = setTimeout(() => {
+        setShowBackButton(true);
+      }, 20);
+      return () => clearTimeout(timer);
+    }
+  }, [expanded, mediaLoaded, activeIndex]);
 
   const lockScroll = (lock: boolean) => {
     if (lock) {
@@ -194,12 +231,16 @@ export default function ConceptsPage() {
     setFromRect({ top: rect.top, left: rect.left, width: rect.width, height: rect.height });
     setToRect(computeToRect());
     closingRef.current = false;
+    setShowBackButton(false); // Reset back button visibility
+    setMediaLoaded(false); // Reset media loaded state
 
     document.body.classList.add("nk-concepts-overlay-open");
     lockScroll(true);
 
     requestAnimationFrame(() => {
-      requestAnimationFrame(() => setExpanded(true));
+      requestAnimationFrame(() => {
+        setExpanded(true);
+      });
     });
   };
 
@@ -214,6 +255,8 @@ export default function ConceptsPage() {
 
     closingRef.current = true;
     setExpanded(false);
+    setShowBackButton(false); // Hide back button when closing
+    setMediaLoaded(false); // Reset media loaded state
 
     // ✅ smooth return: let the page/nav start coming back immediately
     document.body.classList.remove("nk-concepts-overlay-open");
@@ -299,6 +342,9 @@ export default function ConceptsPage() {
                         : "object-cover"
                     } rounded-2xl`}
                     draggable={false}
+                    loading={i < 6 ? "eager" : "lazy"}
+                    fetchPriority={i < 3 ? "high" : "auto"}
+                    decoding="async"
                   />
                 ) : (
                   <div className="nk-tile-blank aspect-[4/3]" aria-hidden="true" />
@@ -386,6 +432,34 @@ export default function ConceptsPage() {
               </svg>
             </button>
 
+            {/* ✅ DESKTOP: Back button */}
+            <button
+              type="button"
+              className={`nk-desktop-back-btn ${showBackButton ? "show" : ""}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                close();
+              }}
+              aria-label="Back to concepts"
+            >
+              <svg
+                width="48"
+                height="48"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle cx="12" cy="12" r="11" stroke="white" strokeWidth="1" />
+                <path
+                  d="M14 8L10 12L14 16"
+                  stroke="white"
+                  strokeWidth="1"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+
             {/* ✅ MOBILE: title above the stage (centered) */}
             <div className={`nk-mobile-topcap ${expanded ? "cap-in" : "cap-out"}`}>
               <div className="nk-mcap-title">{active.title}</div>
@@ -404,6 +478,7 @@ export default function ConceptsPage() {
                 preload="auto"
                 onLoadedMetadata={() => {
                   recomputeCaptionVars();
+                  setMediaLoaded(true);
                 }}
                 onClick={(e) => {
                   e.stopPropagation();
@@ -418,6 +493,7 @@ export default function ConceptsPage() {
                 className="nk-lightbox-img"
                 onLoad={() => {
                   recomputeCaptionVars();
+                  setMediaLoaded(true);
                 }}
                 onClick={(e) => {
                   e.stopPropagation();
@@ -662,9 +738,54 @@ export default function ConceptsPage() {
           display: none;
         }
 
-        /* Hide back button on desktop */
+        /* Hide mobile back button on desktop */
         .nk-mobile-back-btn {
           display: none;
+        }
+
+        /* Desktop back button */
+        .nk-desktop-back-btn {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: fixed;
+          top: 148px;
+          left: 196px;
+          z-index: 70;
+          width: 88px;
+          height: 88px;
+          background: transparent;
+          border: none;
+          cursor: pointer;
+          padding: 0;
+          opacity: 0;
+          pointer-events: none;
+          transition: opacity 300ms ease, transform 300ms ease;
+        }
+
+        .nk-desktop-back-btn.show {
+          opacity: 1;
+          pointer-events: auto;
+        }
+
+        .nk-desktop-back-btn:hover {
+          transform: scale(1.1);
+        }
+
+        .nk-desktop-back-btn:active {
+          transform: scale(0.95);
+        }
+
+        .nk-desktop-back-btn svg {
+          width: 48px;
+          height: 48px;
+        }
+
+        /* Hide desktop back button on mobile */
+        @media (max-width: 639px) {
+          .nk-desktop-back-btn {
+            display: none !important;
+          }
         }
 
         @media (max-width: 639px) {

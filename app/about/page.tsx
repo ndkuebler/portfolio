@@ -79,15 +79,11 @@ export default function AboutPage() {
           {/* Text */}
           <div className="space-y-6 text-lg text-neutral-300 leading-relaxed">
             <p>
-              I’m Nick — a designer & engineer focused on physical products and clean digital
-              experiences. I enjoy building products that are aesthetically pleasing, address real
-              user needs, and improve quality of life. When I'm not working, I'm competing gymnastics
-              for Stanford, playing board games with friends, and mixing music.
+              I'm Nick. I am a product designer engineer and focus on physical products. I enjoy building things that are aesthetically pleasing, address real user needs, and improve quality of life. I also compete on the Stanford gymnastics team. I like playing board games with friends, and mixing music. I used to be really good at Origami.
             </p>
 
             <p>
-              This site is a home for selected work: product design, prototyping, and systems
-              thinking. If you want to collaborate or talk through a project, hit Contact.
+              If you want to collaborate or talk through a project, please contact me.
             </p>
 
             <p className="text-neutral-400">Based in the US · Open to new projects</p>

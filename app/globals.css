@@ -40,6 +40,11 @@ body {
   transform: translateY(-1px);
 }
 
+/* ✅ Mobile nav button - hidden by default, only shown on mobile */
+.nk-mobile-nav-button {
+  display: none !important;
+}
+
 /* ✅ MOBILE-ONLY: hide top-right nav after scroll */
 @media (max-width: 639px) {
   body.nk-mobile-nav-hidden .nk-nav-link[data-nk-topnav="1"],
@@ -49,8 +54,9 @@ body {
     pointer-events: none;
   }
 
-  /* Mobile nav button (white circle) */
+  /* Mobile nav button (white circle) - only visible on mobile */
   .nk-mobile-nav-button {
+    display: flex !important;
     position: fixed;
     top: 24px;
     right: 24px;
@@ -92,6 +98,7 @@ body {
 }
 
 /* ✅ Nav Indicator (minimal aesthetic replacement when nav is hidden) */
+/* Hide on mobile, show on desktop when nav is hidden */
 .nk-nav-indicator {
   position: fixed;
   top: 24px;
@@ -109,14 +116,21 @@ body {
   padding-right: 0;
 }
 
+/* Hide nav indicator on mobile */
+@media (max-width: 639px) {
+  .nk-nav-indicator {
+    display: none !important;
+  }
+}
+
 /* Ensure indicator is hoverable when visible */
 body.nk-desktop-nav-hidden .nk-nav-indicator {
   pointer-events: auto;
 }
 
 .nk-nav-indicator-dot {
-  width: 6px;
-  height: 6px;
+  width: 4px;
+  height: 4px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 1);
   transition: background 300ms ease, transform 300ms ease;
