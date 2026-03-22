@@ -5,6 +5,19 @@ import { useEffect, useState } from "react";
 export default function WaterShieldFigmaPage() {
   const [progress, setProgress] = useState(0);
 
+  /* ================= PRELOAD FIRST IMAGE ================= */
+  useEffect(() => {
+    const link = document.createElement("link");
+    link.rel = "preload";
+    link.as = "image";
+    link.href = "/work/watershield-figma-nav.png";
+    document.head.appendChild(link);
+    return () => {
+      const existingLink = document.querySelector('link[href="/work/watershield-figma-nav.png"]');
+      if (existingLink) document.head.removeChild(existingLink);
+    };
+  }, []);
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
@@ -123,6 +136,8 @@ export default function WaterShieldFigmaPage() {
               src="/work/watershield-figma-nav.png"
               alt="Navigation design"
               className="rounded-lg"
+              loading="eager"
+              fetchPriority="high"
             />
             <figcaption className="mt-2 text-sm text-neutral-500">
               Navigation system and brand expression.
@@ -134,6 +149,7 @@ export default function WaterShieldFigmaPage() {
               src="/work/watershield-figma-hero.png"
               alt="Hero section"
               className="rounded-lg"
+              loading="lazy"
             />
             <figcaption className="mt-2 text-sm text-neutral-500">
               Hero section focused on immediate problem recognition.
@@ -145,6 +161,7 @@ export default function WaterShieldFigmaPage() {
               src="/work/watershield-figma-product.png"
               alt="Product page"
               className="rounded-lg"
+              loading="lazy"
             />
             <figcaption className="mt-2 text-sm text-neutral-500">
               Product page optimized for clarity and low purchase friction.

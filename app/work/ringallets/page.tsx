@@ -85,14 +85,24 @@ function Figure({
   src,
   alt,
   caption,
+  priority = false,
 }: {
   src: string;
   alt: string;
   caption: string;
+  priority?: boolean;
 }) {
   return (
     <figure className="mx-auto mt-12 max-w-2xl">
-      <Image src={src} alt={alt} width={1600} height={1000} className="w-full rounded-sm" />
+      <Image 
+        src={src} 
+        alt={alt} 
+        width={1600} 
+        height={1000} 
+        className="w-full rounded-sm" 
+        priority={priority}
+        loading={priority ? undefined : "lazy"}
+      />
       <figcaption className="mt-3 text-xs text-neutral-400">{caption}</figcaption>
     </figure>
   );
@@ -101,6 +111,19 @@ function Figure({
 /* ---------------- Page ---------------- */
 
 export default function RingalletsPage() {
+  /* ================= PRELOAD FIRST IMAGE ================= */
+  useEffect(() => {
+    const link = document.createElement("link");
+    link.rel = "preload";
+    link.as = "image";
+    link.href = "/work/ringallets-final.png";
+    document.head.appendChild(link);
+    return () => {
+      const existingLink = document.querySelector('link[href="/work/ringallets-final.png"]');
+      if (existingLink) document.head.removeChild(existingLink);
+    };
+  }, []);
+
   /* ================= MARK TOP-RIGHT NAV LINKS ================= */
   useEffect(() => {
     const labels = new Set(["Portfolio", "Concepts", "About", "Contact"]);
@@ -185,6 +208,7 @@ export default function RingalletsPage() {
           src="/work/ringallets-final.png"
           alt="Ringallets final product"
           caption="Final Ringallets configuration"
+          priority={true}
         />
 
         <section className="mt-16">
@@ -224,11 +248,11 @@ export default function RingalletsPage() {
 
         <div className="mx-auto mt-12 grid max-w-2xl gap-10 md:grid-cols-2">
           <div>
-            <Image src="/work/ringallets-testing1.png" alt="Testing 1" width={800} height={600} />
+            <Image src="/work/ringallets-testing1.png" alt="Testing 1" width={800} height={600} loading="lazy" />
             <p className="mt-3 text-xs text-neutral-400">Stability testing</p>
           </div>
           <div>
-            <Image src="/work/ringallets-testing2.png" alt="Testing 2" width={800} height={600} />
+            <Image src="/work/ringallets-testing2.png" alt="Testing 2" width={800} height={600} loading="lazy" />
             <p className="mt-3 text-xs text-neutral-400">Iteration feedback</p>
           </div>
         </div>

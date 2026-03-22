@@ -85,15 +85,25 @@ function Figure({
   src,
   alt,
   caption,
+  priority = false,
 }: {
   src: string;
   alt: string;
   caption: string;
+  priority?: boolean;
 }) {
   return (
     <FadeIn>
       <figure className="mx-auto mt-12 max-w-2xl">
-        <Image src={src} alt={alt} width={1600} height={1000} className="w-full rounded-sm" />
+        <Image 
+          src={src} 
+          alt={alt} 
+          width={1600} 
+          height={1000} 
+          className="w-full rounded-sm" 
+          priority={priority}
+          loading={priority ? undefined : "lazy"}
+        />
         <figcaption className="mt-3 text-xs text-neutral-400">{caption}</figcaption>
       </figure>
     </FadeIn>
@@ -103,6 +113,19 @@ function Figure({
 /* ---------------- Page ---------------- */
 
 export default function MarbleLaunchPage() {
+  /* ================= PRELOAD FIRST IMAGE ================= */
+  useEffect(() => {
+    const link = document.createElement("link");
+    link.rel = "preload";
+    link.as = "image";
+    link.href = "/work/mlheader.png";
+    document.head.appendChild(link);
+    return () => {
+      const existingLink = document.querySelector('link[href="/work/mlheader.png"]');
+      if (existingLink) document.head.removeChild(existingLink);
+    };
+  }, []);
+
   /* ================= MARK TOP-RIGHT NAV LINKS ================= */
   useEffect(() => {
     const labels = new Set(["Portfolio", "Concepts", "About", "Contact"]);
@@ -184,7 +207,7 @@ export default function MarbleLaunchPage() {
         </p>
 
         <div className="mt-6">
-          <Image src="/work/mlheader.png" alt="Marble Launcher" width={1600} height={1000} className="w-full rounded-sm" />
+          <Image src="/work/mlheader.png" alt="Marble Launcher" width={1600} height={1000} className="w-full rounded-sm" priority />
         </div>
 
         <section className="mt-16">
@@ -213,7 +236,7 @@ export default function MarbleLaunchPage() {
             <li>Goal: maximize idea quantity before narrowing down.</li>
           </ul>
           <div className="mt-6 -ml-5">
-            <Image src="/work/mlsketches.png" alt="Ideation sketches" width={1600} height={1000} className="w-full rounded-sm" />
+            <Image src="/work/mlsketches.png" alt="Ideation sketches" width={1600} height={1000} className="w-full rounded-sm" loading="lazy" />
           </div>
         </section>
 
@@ -227,36 +250,36 @@ export default function MarbleLaunchPage() {
                 <li>Tested slot shapes (circle, oval, triangle, square).</li>
               </ul>
               <div className="mt-4">
-                <Image src="/work/mlslot.png" alt="Ball displacement mechanism" width={1600} height={1000} className="w-1/3 rounded-sm" />
+                <Image src="/work/mlslot.png" alt="Ball displacement mechanism" width={1600} height={1000} className="w-1/3 rounded-sm" loading="lazy" />
               </div>
               <ul className="mt-4 list-disc pl-5 space-y-1 text-neutral-300">
                 <li>Circular slot performed best.</li>
               </ul>
               <div className="mt-4">
-                <Image src="/work/mlslot3.png" alt="Circular slot" width={1600} height={1000} className="w-2/5 rounded-sm" />
+                <Image src="/work/mlslot3.png" alt="Circular slot" width={1600} height={1000} className="w-2/5 rounded-sm" loading="lazy" />
               </div>
               <ul className="mt-4 list-disc pl-5 space-y-1 text-neutral-300">
                 <li>Used metrics of success (did it travel 180° smoothly?).</li>
               </ul>
               <div className="mt-4">
-                <Image src="/work/mlslot2.png" alt="Circular slot" width={1600} height={1000} className="w-1/3 rounded-sm" />
+                <Image src="/work/mlslot2.png" alt="Circular slot" width={1600} height={1000} className="w-1/3 rounded-sm" loading="lazy" />
               </div>
             </div>
 
             <div>
               <h3 className="text-sm font-medium text-neutral-200 mt-4">Funnel</h3>
               <div className="mt-4">
-                <Image src="/work/mlfunnel1.png" alt="Funnel" width={1600} height={1000} className="w-1/3 rounded-sm" />
+                <Image src="/work/mlfunnel1.png" alt="Funnel" width={1600} height={1000} className="w-1/3 rounded-sm" loading="lazy" />
               </div>
               <ul className="mt-4 list-disc pl-5 space-y-1 text-neutral-300">
                 <li>Tested angles (90°, 75°, 60°, 45°, 30°).</li>
               </ul>
               <div className="mt-4 flex gap-4">
                 <div className="flex-1">
-                  <Image src="/work/mlfunnel3.png" alt="Funnel angles" width={1600} height={1000} className="w-full h-full object-contain rounded-sm" style={{ height: '400px' }} />
+                  <Image src="/work/mlfunnel3.png" alt="Funnel angles" width={1600} height={1000} className="w-full h-full object-contain rounded-sm" style={{ height: '400px' }} loading="lazy" />
                 </div>
                 <div className="flex-1">
-                  <Image src="/work/mlfunnelchart.png" alt="Funnel chart" width={1600} height={1000} className="w-full h-full object-contain rounded-sm" style={{ height: '400px' }} />
+                  <Image src="/work/mlfunnelchart.png" alt="Funnel chart" width={1600} height={1000} className="w-full h-full object-contain rounded-sm" style={{ height: '400px' }} loading="lazy" />
                 </div>
               </div>
               <ul className="mt-4 list-disc pl-5 space-y-1 text-neutral-300">
@@ -264,10 +287,10 @@ export default function MarbleLaunchPage() {
               </ul>
               <div className="mt-4 flex gap-4">
                 <div className="flex-1">
-                  <Image src="/work/mlfunnel2.png" alt="60 degree funnel" width={1600} height={1000} className="w-full h-full object-contain rounded-sm" style={{ height: '400px' }} />
+                  <Image src="/work/mlfunnel2.png" alt="60 degree funnel" width={1600} height={1000} className="w-full h-full object-contain rounded-sm" style={{ height: '400px' }} loading="lazy" />
                 </div>
                 <div className="flex-1">
-                  <Image src="/work/mlfunnel4.png" alt="60 degree funnel" width={1600} height={1000} className="w-full h-full object-contain rounded-sm" style={{ height: '400px' }} />
+                  <Image src="/work/mlfunnel4.png" alt="60 degree funnel" width={1600} height={1000} className="w-full h-full object-contain rounded-sm" style={{ height: '400px' }} loading="lazy" />
                   <p className="mt-2 text-sm text-neutral-400">Bad funnel angle: balls block each other</p>
                 </div>
               </div>
@@ -276,7 +299,7 @@ export default function MarbleLaunchPage() {
               </ul>
               <h4 className="text-sm font-medium text-neutral-200 mt-6">Low fidelity prototype</h4>
               <div className="mt-4">
-                <Image src="/work/mlp1.png" alt="Low fidelity prototype" width={1600} height={1000} className="w-[85%] rounded-sm" />
+                <Image src="/work/mlp1.png" alt="Low fidelity prototype" width={1600} height={1000} className="w-[85%] rounded-sm" loading="lazy" />
               </div>
             </div>
 
@@ -288,7 +311,7 @@ export default function MarbleLaunchPage() {
                 <li>Incorporated hard stops.</li>
               </ul>
               <div className="mt-4">
-                <Image src="/work/mlspring.png" alt="Spring integration" width={1600} height={1000} className="w-full rounded-sm" />
+                <Image src="/work/mlspring.png" alt="Spring integration" width={1600} height={1000} className="w-full rounded-sm" loading="lazy" />
               </div>
             </div>
 
@@ -306,10 +329,10 @@ export default function MarbleLaunchPage() {
           <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-400">Higher fidelity prototype</h2>
           <div className="mt-4 flex gap-4">
             <div className="flex-1">
-              <Image src="/work/mlp2.png" alt="Higher fidelity prototype" width={1600} height={1000} className="w-full h-full object-contain rounded-sm" style={{ height: '400px' }} />
+              <Image src="/work/mlp2.png" alt="Higher fidelity prototype" width={1600} height={1000} className="w-full h-full object-contain rounded-sm" style={{ height: '400px' }} loading="lazy" />
             </div>
             <div className="flex-1">
-              <Image src="/work/mlp2sketch.png" alt="Higher fidelity prototype sketch" width={1600} height={1000} className="w-full h-full object-contain rounded-sm" style={{ height: '400px' }} />
+              <Image src="/work/mlp2sketch.png" alt="Higher fidelity prototype sketch" width={1600} height={1000} className="w-full h-full object-contain rounded-sm" style={{ height: '400px' }} loading="lazy" />
             </div>
           </div>
         </section>
@@ -317,20 +340,20 @@ export default function MarbleLaunchPage() {
         <section className="mt-12">
           <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-400">Iteration + Adjustments</h2>
           <div className="mt-4">
-            <Image src="/work/mlitad.png" alt="Iteration and adjustments" width={1600} height={1000} className="w-full rounded-sm" />
+            <Image src="/work/mlitad.png" alt="Iteration and adjustments" width={1600} height={1000} className="w-full rounded-sm" loading="lazy" />
           </div>
         </section>
 
         <section className="mt-12">
           <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-400">Final Assembly + Documentation</h2>
           <div className="mt-4">
-            <Image src="/work/mlbuild.png" alt="Final assembly" width={1600} height={1000} className="w-full rounded-sm" />
+            <Image src="/work/mlbuild.png" alt="Final assembly" width={1600} height={1000} className="w-full rounded-sm" loading="lazy" />
           </div>
           <ul className="mt-4 list-disc pl-5 space-y-2 text-neutral-300">
             <li>Final working version.</li>
           </ul>
           <div className="mt-4">
-            <Image src="/work/mlfinal.png" alt="Final working version" width={1600} height={1000} className="w-full rounded-sm" />
+            <Image src="/work/mlfinal.png" alt="Final working version" width={1600} height={1000} className="w-full rounded-sm" loading="lazy" />
           </div>
           <div className="mt-6 flex justify-center">
             <video
@@ -343,7 +366,7 @@ export default function MarbleLaunchPage() {
             />
           </div>
           <div className="mt-4">
-            <Image src="/work/mlcad.png" alt="CAD model" width={1600} height={1000} className="w-full rounded-sm" />
+            <Image src="/work/mlcad.png" alt="CAD model" width={1600} height={1000} className="w-full rounded-sm" loading="lazy" />
           </div>
           <ul className="mt-4 list-disc pl-5 space-y-2 text-neutral-300">
             <li>CAD model.</li>

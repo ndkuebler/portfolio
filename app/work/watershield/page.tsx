@@ -6,6 +6,19 @@ export default function WaterShieldPage() {
   const sectionsRef = useRef<(HTMLElement | null)[]>([]);
   const [progress, setProgress] = useState(0);
 
+  /* ================= PRELOAD FIRST IMAGE ================= */
+  useEffect(() => {
+    const link = document.createElement("link");
+    link.rel = "preload";
+    link.as = "image";
+    link.href = "/work/wsprototypev1.png";
+    document.head.appendChild(link);
+    return () => {
+      const existingLink = document.querySelector('link[href="/work/wsprototypev1.png"]');
+      if (existingLink) document.head.removeChild(existingLink);
+    };
+  }, []);
+
   // Fade-in on scroll
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -179,6 +192,8 @@ export default function WaterShieldPage() {
             src="/work/wsprototypev1.png"
             alt="First iteration prototype"
             className="mt-6 w-full rounded-lg"
+            loading="eager"
+            fetchPriority="high"
           />
           <p className="mt-2 text-sm text-neutral-500">
             First iteration prototype
@@ -197,6 +212,7 @@ export default function WaterShieldPage() {
             src="/work/wsprototypev1pic.png"
             alt="Prototype looked too bulky"
             className="mt-6 w-full rounded-lg"
+            loading="lazy"
           />
           <p className="mt-2 text-sm text-neutral-500">
             Prototype looked too bulky and reminded me of a door stopper
@@ -206,6 +222,7 @@ export default function WaterShieldPage() {
             src="/work/watershield-design.png"
             alt="WaterShield design development"
             className="mt-6 w-full rounded-lg"
+            loading="lazy"
           />
           <p className="mt-2 text-sm text-neutral-500">
             Iterating form and attachment strategy for wheel clearance and stability.
@@ -227,6 +244,7 @@ export default function WaterShieldPage() {
             src="/work/watershield-testing1-new.png"
             alt="WaterShield testing"
             className="mt-6 w-full rounded-lg"
+            loading="lazy"
           />
           <p className="mt-2 text-sm text-neutral-500">
             Real-world testing to validate fit, clearance, and durability.
@@ -236,6 +254,7 @@ export default function WaterShieldPage() {
             src="/work/watershield-testing2.png"
             alt="WaterShield splash testing"
             className="mt-6 w-full rounded-lg"
+            loading="lazy"
           />
           <p className="mt-2 text-sm text-neutral-500">
             Observing splash reduction under wet riding conditions.

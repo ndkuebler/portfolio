@@ -337,7 +337,11 @@ export default function ConceptsPage() {
                         (c.mediaSrc || "").toLowerCase().includes("plant")) ||
                       ((c.title || "").toLowerCase().includes("drone") ||
                         (c.thumb || "").toLowerCase().includes("drone") ||
-                        (c.mediaSrc || "").toLowerCase().includes("drone"))
+                        (c.mediaSrc || "").toLowerCase().includes("drone")) ||
+                      ((c.title || "").toLowerCase().includes("bac") ||
+                        (c.title || "").toLowerCase().includes("pouch") ||
+                        (c.thumb || "").toLowerCase().includes("salv") ||
+                        (c.mediaSrc || "").toLowerCase().includes("salv"))
                         ? "object-contain bg-black"
                         : "object-cover"
                     } rounded-2xl`}
@@ -551,6 +555,7 @@ export default function ConceptsPage() {
           transition: transform 280ms cubic-bezier(0.2, 0, 0, 1), 
                       box-shadow 280ms cubic-bezier(0.2, 0, 0, 1);
           will-change: transform, box-shadow;
+          overflow: hidden !important;
         }
 
         .nk-tile:hover {
@@ -575,10 +580,12 @@ export default function ConceptsPage() {
           border-radius: inherit; /* ✅ always match the tile's rounding */
           transform: translateZ(0);
           display: block;
+          max-width: 100%;
+          max-height: 100%;
         }
 
         .nk-tile:hover .nk-thumb {
-          transform: translateZ(0) scale(1.05);
+          transform: translateZ(0) scale(1.02);
         }
 
         /* ===== Blank tile look ===== */
