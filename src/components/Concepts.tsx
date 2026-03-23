@@ -202,7 +202,7 @@ export function Concepts() {
 
   return (
     <section
-      className="border-t border-[#f5f5f5]/[0.08] py-20 sm:py-28"
+      className="relative z-10 border-t border-[#f5f5f5]/[0.08] py-20 sm:py-28 bg-[#0a0a0a]"
       aria-labelledby="concepts-heading"
     >
       <div className="mx-auto mb-12 flex max-w-[1400px] items-baseline justify-between gap-6 px-6 sm:px-10 lg:px-14">

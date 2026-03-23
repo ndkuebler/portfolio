@@ -13,7 +13,7 @@ export default function Home() {
       <AboutSection />
 
       {/* ===== CONTACT SECTION ===== */}
-      <section id="contact" className="border-t border-[#f5f5f5]/[0.08] px-6 sm:px-10 lg:px-14 py-24 sm:py-32">
+      <section id="contact" className="relative z-10 bg-[#0a0a0a] border-t border-[#f5f5f5]/[0.08] px-6 sm:px-10 lg:px-14 py-24 sm:py-32">
         <div className="mx-auto max-w-[1200px]">
           <h2 className="text-[clamp(3rem,10vw,7rem)] font-bold uppercase tracking-tight text-[#f5f5f5] leading-[0.9] mb-16">
             Contact

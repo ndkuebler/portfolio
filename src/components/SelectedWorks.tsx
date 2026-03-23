@@ -1,12 +1,21 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { works } from "@/data/works";
 
 export function SelectedWorks() {
-  // Each card is ~80vh tall. The parent needs enough height
-  // so that scrolling reveals each card one by one.
-  // Total height = (number of cards) * card height in scroll space
-  const cardScrollHeight = 80; // vh per card of scroll travel
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 640);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  const cardScrollHeight = isMobile ? 80 : 80;
   const totalHeight = `${works.length * cardScrollHeight}vh`;
 
   return (
@@ -29,12 +38,6 @@ export function SelectedWorks() {
         </div>
       </div>
 
-      {/*
-        All cards are siblings inside one tall container.
-        Each card is position:sticky with the same top value.
-        As you scroll, each card sticks in place and the next
-        one scrolls up to cover it — exactly like Mason Taylor.
-      */}
       <div className="relative" style={{ height: totalHeight }}>
         {works.map((project, index) => (
           <Link
@@ -49,7 +52,6 @@ export function SelectedWorks() {
             {/* Top bar: number + name | tags | year */}
             <div className="mx-auto w-full max-w-[1400px] px-6 sm:px-10 lg:px-14">
               <div className="flex items-center justify-between py-5 sm:py-6">
-                {/* Left: number + title */}
                 <div className="flex items-center gap-3">
                   <span className="text-[0.75rem] font-normal tabular-nums text-[#f5f5f5]/40">
                     {project.number}
@@ -59,7 +61,6 @@ export function SelectedWorks() {
                   </span>
                 </div>
 
-                {/* Center: tags */}
                 <div className="hidden md:flex items-center gap-4">
                   {project.tags.map((tag) => (
                     <span
@@ -71,20 +72,16 @@ export function SelectedWorks() {
                   ))}
                 </div>
 
-                {/* Right: year */}
                 <span className="text-[0.75rem] sm:text-[0.8125rem] font-normal tabular-nums text-[#f5f5f5]/40">
                   {project.year}
                 </span>
               </div>
             </div>
 
-            {/* Image area — right-aligned like Mason Taylor */}
+            {/* Image area */}
             <div className="mx-auto w-full max-w-[1400px] px-6 sm:px-10 lg:px-14">
               <div className="flex">
-                {/* Left spacer on desktop */}
                 <div className="hidden md:block md:w-2/5" />
-
-                {/* Image */}
                 <div className="w-full md:w-3/5">
                   <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg">
                     <Image
@@ -103,8 +100,8 @@ export function SelectedWorks() {
         ))}
       </div>
 
-      {/* Bottom spacer */}
-      <div className="h-[30vh] sm:h-32" aria-hidden />
+      {/* Bottom spacer for sticky card clearance */}
+      <div className="h-32" aria-hidden />
     </section>
   );
 }

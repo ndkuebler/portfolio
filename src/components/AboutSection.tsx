@@ -12,7 +12,7 @@ export function AboutSection() {
   const [activePhoto, setActivePhoto] = useState(0);
 
   return (
-    <section id="about" className="border-t border-[#f5f5f5]/[0.08] px-6 sm:px-10 lg:px-14 py-24 sm:py-32">
+    <section id="about" className="relative z-10 bg-[#0a0a0a] border-t border-[#f5f5f5]/[0.08] px-6 sm:px-10 lg:px-14 py-24 sm:py-32">
       <div className="mx-auto max-w-[1200px]">
         <h2 className="text-[clamp(3rem,10vw,7rem)] font-bold uppercase tracking-tight text-[#f5f5f5] leading-[0.9] mb-16">
           About
@@ -50,7 +50,7 @@ export function AboutSection() {
           {/* Right — full bio */}
           <div className="md:w-1/2 flex flex-col justify-center">
             <p className="text-[clamp(1.25rem,2.5vw,1.75rem)] font-bold leading-[1.4] text-[#f5f5f5] mb-8">
-              I&apos;m Nick. I am a product designer engineer and focus on physical products.
+              I&apos;m Nick. I am a product designer/engineer and focus on physical products.
             </p>
             <p className="text-[1.125rem] leading-[1.7] text-[#f5f5f5]/80 mb-6">
               I enjoy building things that are aesthetically pleasing, address real user

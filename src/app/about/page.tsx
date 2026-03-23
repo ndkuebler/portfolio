@@ -36,7 +36,7 @@ export default function AboutPage() {
             {/* Right — bio */}
             <div className="md:w-1/2 md:sticky md:top-32 md:self-start">
               <p className="text-[1.5rem] sm:text-[1.75rem] font-bold leading-[1.4] text-[#f5f5f5] mb-8">
-                I&apos;m Nick. I am a product designer engineer and focus on physical products.
+                I&apos;m Nick. I am a product designer/engineer and focus on physical products.
               </p>
 
               <p className="text-[1.125rem] leading-[1.7] text-[#f5f5f5]/80 mb-6">

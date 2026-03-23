@@ -12,7 +12,28 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "Nick Kuebler",
-  description: "Portfolio",
+  description: "Product designer/engineer focused on building QOL upgrades, tech forward physical products and aesthetics.",
+  openGraph: {
+    title: "Nick Kuebler",
+    description: "Product designer/engineer focused on building QOL upgrades, tech forward physical products and aesthetics.",
+    url: "https://nkuebler.com",
+    siteName: "Nick Kuebler",
+    images: [
+      {
+        url: "/nklogo.png",
+        width: 1200,
+        height: 630,
+        alt: "Nick Kuebler",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Nick Kuebler",
+    description: "Product designer/engineer focused on building QOL upgrades, tech forward physical products and aesthetics.",
+    images: ["/nklogo.png"],
+  },
 };
 
 export default function RootLayout({
