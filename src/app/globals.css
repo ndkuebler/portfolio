@@ -14,8 +14,6 @@
 html {
   scroll-behavior: smooth;
   /* Sticky: must not clip overflow on the root scroll container */
-  overflow-x: visible;
-  overflow-y: visible;
 }
 
 body {
@@ -23,8 +21,7 @@ body {
   color: var(--foreground);
   font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   letter-spacing: -0.01em;
-  overflow-x: visible;
-  overflow-y: visible;
+  overflow-x: hidden;
 }
 
 /* Subtle underline on hover (editorial) */
@@ -73,11 +70,32 @@ body {
   animation: hero-enter 1s cubic-bezier(0.22, 1, 0.36, 1) 0.35s forwards;
 }
 
+/* Hero image: blur + zoom reveal like Mason Taylor */
+@keyframes hero-image-reveal {
+  from {
+    filter: blur(20px);
+    transform: scale(1.15);
+  }
+  to {
+    filter: blur(0px);
+    transform: scale(1);
+  }
+}
+
+.hero-image-reveal {
+  animation: hero-image-reveal 1.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero-enter,
   .hero-enter-delayed {
     animation: none;
     opacity: 1;
+    transform: none;
+  }
+  .hero-image-reveal {
+    animation: none;
+    filter: none;
     transform: none;
   }
 }
@@ -95,14 +113,7 @@ body {
 
 .concepts-marquee-track {
   width: max-content;
-  animation: concepts-marquee 18s linear infinite;
   will-change: transform;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .concepts-marquee:hover .concepts-marquee-track {
-    animation-play-state: paused;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -20,7 +20,7 @@ export function Footer() {
 
         <div className="mt-12 grid grid-cols-1 gap-6 border-t border-[#f5f5f5]/[0.08] pt-8 sm:grid-cols-3 sm:items-center sm:gap-8">
           <p className="text-[0.8125rem] font-bold uppercase tracking-[0.14em] text-[#f5f5f5]">
-            Nick Kuebler <span className="align-super text-[0.65em] font-normal">®</span>
+            Nick Kuebler
           </p>
           <p className="text-[0.8125rem] sm:text-center">
             <Link
@@ -29,9 +29,6 @@ export function Footer() {
             >
               {EMAIL}
             </Link>
-          </p>
-          <p className="text-[0.8125rem] font-normal tabular-nums tracking-wide text-[#f5f5f5]/45 sm:text-right">
-            © 2025
           </p>
         </div>
       </div>

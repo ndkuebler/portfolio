@@ -22,7 +22,7 @@ export const works: WorkProject[] = [
     number: "02",
     title: "Marble Launcher",
     tags: ["Mechanical Engineering", "ME102"],
-    year: "2024",
+    year: "2022",
     image: "/work/marblelaunch.png",
   },
   {
@@ -30,7 +30,7 @@ export const works: WorkProject[] = [
     number: "03",
     title: "Ringallets",
     tags: ["Product Design", "Training Tool"],
-    year: "2024",
+    year: "2023",
     image: "/work/ringalletsbbg.png",
   },
 ];
