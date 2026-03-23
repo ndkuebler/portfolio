@@ -15,6 +15,13 @@ export function Concepts() {
 
   const BASE_SPEED = 1;
 
+  // Touch/drag state
+  const isDragging = useRef(false);
+  const dragStartX = useRef(0);
+  const dragStartPos = useRef(0);
+  const lastDragX = useRef(0);
+  const dragVelocity = useRef(0);
+
   // Lightbox state
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
@@ -49,21 +56,88 @@ export function Concepts() {
     };
 
     const animate = () => {
-      speedRef.current += (targetSpeedRef.current - speedRef.current) * 0.03;
-      posRef.current += speedRef.current;
+      if (!isDragging.current) {
+        // Decay drag velocity back toward 0
+        dragVelocity.current *= 0.95;
+        if (Math.abs(dragVelocity.current) < 0.1) dragVelocity.current = 0;
+
+        // Blend auto-scroll speed with drag velocity
+        speedRef.current += (targetSpeedRef.current - speedRef.current) * 0.03;
+        posRef.current += speedRef.current + dragVelocity.current;
+      }
 
       const halfWidth = getHalfWidth();
-      if (halfWidth > 0 && posRef.current >= halfWidth) {
-        posRef.current -= halfWidth;
+      if (halfWidth > 0) {
+        if (posRef.current >= halfWidth) posRef.current -= halfWidth;
+        if (posRef.current < 0) posRef.current += halfWidth;
       }
 
       track.style.transform = `translate3d(${-posRef.current}px, 0, 0)`;
       rafRef.current = requestAnimationFrame(animate);
     };
 
+    // Touch events
+    const onTouchStart = (e: TouchEvent) => {
+      isDragging.current = true;
+      dragStartX.current = e.touches[0].clientX;
+      dragStartPos.current = posRef.current;
+      lastDragX.current = e.touches[0].clientX;
+      dragVelocity.current = 0;
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      if (!isDragging.current) return;
+      const x = e.touches[0].clientX;
+      const delta = lastDragX.current - x;
+      posRef.current += delta;
+      dragVelocity.current = delta;
+      lastDragX.current = x;
+    };
+
+    const onTouchEnd = () => {
+      isDragging.current = false;
+    };
+
+    // Mouse drag events
+    const onMouseDown = (e: MouseEvent) => {
+      isDragging.current = true;
+      dragStartX.current = e.clientX;
+      dragStartPos.current = posRef.current;
+      lastDragX.current = e.clientX;
+      dragVelocity.current = 0;
+      track.style.cursor = "grabbing";
+    };
+
+    const onMouseMove = (e: MouseEvent) => {
+      if (!isDragging.current) return;
+      const x = e.clientX;
+      const delta = lastDragX.current - x;
+      posRef.current += delta;
+      dragVelocity.current = delta;
+      lastDragX.current = x;
+    };
+
+    const onMouseUp = () => {
+      isDragging.current = false;
+      track.style.cursor = "";
+    };
+
+    track.addEventListener("touchstart", onTouchStart, { passive: true });
+    track.addEventListener("touchmove", onTouchMove, { passive: true });
+    track.addEventListener("touchend", onTouchEnd);
+    track.addEventListener("mousedown", onMouseDown);
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseup", onMouseUp);
+
     rafRef.current = requestAnimationFrame(animate);
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      track.removeEventListener("touchstart", onTouchStart);
+      track.removeEventListener("touchmove", onTouchMove);
+      track.removeEventListener("touchend", onTouchEnd);
+      track.removeEventListener("mousedown", onMouseDown);
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mouseup", onMouseUp);
     };
   }, []);
 
@@ -141,7 +215,7 @@ export function Concepts() {
       </div>
 
       <div
-        className="concepts-marquee relative overflow-hidden pl-6 sm:pl-10 lg:pl-14"
+        className="concepts-marquee relative overflow-hidden pl-6 sm:pl-10 lg:pl-14 cursor-grab active:cursor-grabbing select-none"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >

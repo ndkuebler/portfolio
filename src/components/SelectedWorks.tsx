@@ -103,8 +103,8 @@ export function SelectedWorks() {
         ))}
       </div>
 
-      {/* Bottom spacer — extra on mobile so last card clears before Concepts */}
-      <div className="h-[80vh] sm:h-32" aria-hidden />
+      {/* Bottom spacer */}
+      <div className="h-[30vh] sm:h-32" aria-hidden />
     </section>
   );
 }
