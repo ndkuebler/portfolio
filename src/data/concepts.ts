@@ -16,6 +16,7 @@ const FILENAMES = [
   "ltable.webp",
   "musicframe.webp",
   "scentfork1-carousel.webp",
+  "modecandle1.webp",
 ] as const;
 
 export const conceptItems: ConceptItem[] = FILENAMES.map((filename) => ({

@@ -102,4 +102,12 @@ export const CONCEPTS: Concept[] = [
     mediaType: "image",
     mediaSrc: "/concepts/scentfork2.webp",
   },
+  {
+    title: "The Mode Candle",
+    subtitle:
+      "A dual-chamber ceramic candle with a thermochromic divider. Rotate 180° to switch between rosemary + peppermint (WORK) and amber + sandalwood (CHILL). Heated from below.",
+    thumb: "/concepts/modecandle1.webp",
+    mediaType: "image",
+    mediaSrc: "/concepts/modecandle2.webp",
+  },
 ];
