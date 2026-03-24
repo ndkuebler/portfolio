@@ -94,4 +94,12 @@ export const CONCEPTS: Concept[] = [
     mediaType: "image",
     mediaSrc: "/concepts/dognsheepv2.png",
   },
+  {
+    title: "Scent Fork",
+    subtitle:
+      "A fork with swappable aroma sleeves that slide onto the neck, tricking your brain into perceiving different flavors than what you're eating. Time to make broccoli taste like chocolate.",
+    thumb: "/concepts/scentfork1.png",
+    mediaType: "image",
+    mediaSrc: "/concepts/scentfork2.png",
+  },
 ];

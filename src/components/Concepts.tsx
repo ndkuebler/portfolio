@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { conceptItems } from "@/data/concepts";
 import { CONCEPTS } from "@/app/concepts/concepts-data";
 
@@ -38,6 +39,7 @@ export function Concepts() {
     "hapticbelt.png": 2,    // Haptic Direction Belt
     "ltable.png": 3,        // Lightning Connection Table
     "musicframe.png": 7,    // Living Album Cover
+    "scentfork1.png": 12,   // Scent Fork
   };
 
   const getConceptForFile = (filename: string) => {
@@ -153,11 +155,32 @@ export function Concepts() {
     };
   }, [activeIndex]);
 
-  // Escape key to close
+  // Get sorted list of concept indices that are in the carousel
+  const carouselConceptIndices = Object.values(CAROUSEL_TO_CONCEPT).sort((a, b) => a - b);
+
+  const goToPrev = () => {
+    if (activeIndex === null) return;
+    const currentPos = carouselConceptIndices.indexOf(activeIndex);
+    if (currentPos === -1) return;
+    const prevPos = currentPos === 0 ? carouselConceptIndices.length - 1 : currentPos - 1;
+    setActiveIndex(carouselConceptIndices[prevPos]);
+  };
+
+  const goToNext = () => {
+    if (activeIndex === null) return;
+    const currentPos = carouselConceptIndices.indexOf(activeIndex);
+    if (currentPos === -1) return;
+    const nextPos = currentPos === carouselConceptIndices.length - 1 ? 0 : currentPos + 1;
+    setActiveIndex(carouselConceptIndices[nextPos]);
+  };
+
+  // Keyboard navigation: Escape to close, arrows to navigate
   useEffect(() => {
     if (activeIndex === null) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setActiveIndex(null);
+      if (e.key === "ArrowLeft") goToPrev();
+      if (e.key === "ArrowRight") goToNext();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -201,6 +224,7 @@ export function Concepts() {
   };
 
   return (
+    <>
     <section
       className="relative z-10 border-t border-[#f5f5f5]/[0.08] py-20 sm:py-28 bg-[#0a0a0a]"
       aria-labelledby="concepts-heading"
@@ -229,30 +253,48 @@ export function Concepts() {
         </div>
       </div>
 
-      {/* ===== Lightbox Modal ===== */}
-      {activeConcept && (
+    </section>
+
+      {/* ===== Lightbox Modal (portalled to body to escape z-10 stacking context) ===== */}
+      {activeConcept && typeof document !== "undefined" && createPortal(
         <div
           className="fixed inset-0 z-[200] flex items-center justify-center"
         >
-          {/* Backdrop — click to go to concepts page */}
-          <a href="/concepts" className="absolute inset-0 bg-black/80 backdrop-blur-sm" />
+          {/* Backdrop — click to close */}
+          <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={() => setActiveIndex(null)} />
 
           {/* Back button */}
           <button
             onClick={() => setActiveIndex(null)}
-            className="absolute top-20 sm:top-6 left-6 z-20 flex items-center gap-2 rounded-full border border-white/30 px-5 py-2 text-sm font-medium text-white hover:bg-white hover:text-black transition-all duration-200"
+            className="absolute top-20 sm:top-5 left-6 z-[210] flex items-center gap-2 rounded-full bg-black/60 border border-white/30 px-5 py-2 text-sm font-medium text-white hover:bg-white hover:text-black transition-all duration-200 backdrop-blur-sm"
           >
             ← Back
           </button>
 
+          {/* Prev / Next arrows */}
+          <button
+            onClick={(e) => { e.stopPropagation(); goToPrev(); }}
+            className="absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/30 bg-black/60 text-white hover:bg-white hover:text-black transition-all duration-200 backdrop-blur-sm"
+            aria-label="Previous concept"
+          >
+            ‹
+          </button>
+          <button
+            onClick={(e) => { e.stopPropagation(); goToNext(); }}
+            className="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/30 bg-black/60 text-white hover:bg-white hover:text-black transition-all duration-200 backdrop-blur-sm"
+            aria-label="Next concept"
+          >
+            ›
+          </button>
+
           {/* Content */}
-          <div className="relative z-10 w-full max-w-4xl mx-6" onClick={(e) => e.stopPropagation()}>
+          <div className="relative z-10 w-full max-w-4xl mx-6 max-h-[92vh] overflow-y-auto pb-6" onClick={(e) => e.stopPropagation()}>
             {/* Media */}
             <div className="relative w-full overflow-hidden rounded-2xl bg-black">
               {activeConcept.mediaType === "video" && activeConcept.mediaSrc ? (
                 <video
                   src={activeConcept.mediaSrc}
-                  className="w-full h-auto max-h-[70vh] object-contain bg-black"
+                  className="w-full h-auto max-h-[55vh] object-contain bg-black"
                   autoPlay
                   loop
                   muted
@@ -263,7 +305,7 @@ export function Concepts() {
                 <img
                   src={activeConcept.mediaSrc}
                   alt={activeConcept.title}
-                  className="w-full h-auto max-h-[70vh] object-contain bg-black"
+                  className="w-full h-auto max-h-[55vh] object-contain bg-black"
                   onClick={() => setActiveIndex(null)}
                 />
               )}
@@ -287,8 +329,9 @@ export function Concepts() {
               </a>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
-    </section>
+    </>
   );
 }

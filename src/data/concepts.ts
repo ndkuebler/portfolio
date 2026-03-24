@@ -15,6 +15,7 @@ const FILENAMES = [
   "hapticbelt.png",
   "ltable.png",
   "musicframe.png",
+  "scentfork1.png",
 ] as const;
 
 export const conceptItems: ConceptItem[] = FILENAMES.map((filename) => ({
