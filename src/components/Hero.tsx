@@ -25,7 +25,7 @@ export function Hero() {
         {/* Background image — fills entire viewport */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/work/nkhero1.png"
+          src="/work/nkhero1.webp"
           alt=""
           className="absolute inset-0 w-full h-full object-cover object-[center_40%]"
           style={{ animation: "hero-image-reveal 1.8s cubic-bezier(0.22, 1, 0.36, 1) forwards" }}

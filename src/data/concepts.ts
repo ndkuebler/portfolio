@@ -5,17 +5,17 @@ export type ConceptItem = {
 
 /** Curated list — filenames as stored in /public/concepts */
 const FILENAMES = [
-  "djglasses1.png",
-  "bench.png",
-  "chairproj1.png",
-  "dogdronev2.png",
-  "freckles.png",
-  "fridge1.png",
-  "gumopened.png",
-  "hapticbelt.png",
-  "ltable.png",
-  "musicframe.png",
-  "scentfork1.png",
+  "djglasses1.webp",
+  "bench.webp",
+  "chairproj1.webp",
+  "dogdronev2.webp",
+  "freckles.webp",
+  "fridge1.webp",
+  "gumopened.webp",
+  "hapticbelt.webp",
+  "ltable.webp",
+  "musicframe.webp",
+  "scentfork1-carousel.webp",
 ] as const;
 
 export const conceptItems: ConceptItem[] = FILENAMES.map((filename) => ({

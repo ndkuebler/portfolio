@@ -1,10 +1,12 @@
+import { BackButton } from "@/components/BackButton";
+
 export default function MarbleLauncherPage() {
   return (
     <main className="min-h-screen bg-[#0a0a0a]">
       {/* ===== HERO IMAGE ===== */}
       <section className="relative h-[40vh] sm:h-[70vh] w-full overflow-hidden sm:-mt-[4.5rem]">
         <img
-          src="/work/mlheader.png"
+          src="/work/mlheader.webp"
           alt="Marble Launcher"
           className="absolute inset-0 w-full h-full object-cover object-center"
           fetchPriority="high"
@@ -15,12 +17,7 @@ export default function MarbleLauncherPage() {
       {/* ===== PROJECT INFO ===== */}
       <section className="bg-[#0a0a0a] px-6 sm:px-10 lg:px-14 pt-16 pb-20">
         <div className="mx-auto max-w-[1200px]">
-          <a
-            href="/#selected-works"
-            className="inline-block text-xs uppercase tracking-[0.2em] text-[#f5f5f5]/40 hover:text-[#f5f5f5] transition mb-12"
-          >
-            ← Back to work
-          </a>
+          <BackButton />
 
           <div className="flex flex-col md:flex-row gap-12 md:gap-20">
             <div className="md:w-3/5">
@@ -85,7 +82,7 @@ export default function MarbleLauncherPage() {
             <li>Focused on exploring mechanism possibilities</li>
             <li>Goal: maximize idea quantity before narrowing down</li>
           </ul>
-          <img src="/work/mlsketches.png" alt="Ideation sketches" className="w-full max-h-[80vh] object-contain rounded-xl" />
+          <img src="/work/mlsketches.webp" alt="Ideation sketches" className="w-full max-h-[80vh] object-contain rounded-xl" />
         </div>
       </section>
 
@@ -102,8 +99,8 @@ export default function MarbleLauncherPage() {
             Tested slot shapes (circle, oval, triangle, square). Circular slot performed best.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-16">
-            <img src="/work/mlslot.png" alt="Slot shapes" className="w-full max-h-[80vh] object-contain rounded-xl" />
-            <img src="/work/mlslot3.png" alt="Circular slot" className="w-full max-h-[80vh] object-contain rounded-xl" />
+            <img src="/work/mlslot.webp" alt="Slot shapes" className="w-full max-h-[80vh] object-contain rounded-xl" />
+            <img src="/work/mlslot3.webp" alt="Circular slot" className="w-full max-h-[80vh] object-contain rounded-xl" />
             <img src="/work/mlslot2.png" alt="Slot testing" className="w-full max-h-[80vh] object-contain rounded-xl" />
           </div>
 
@@ -117,23 +114,23 @@ export default function MarbleLauncherPage() {
             <img src="/work/mlfunnelchart.png" alt="Funnel chart" className="w-full max-h-[80vh] object-contain rounded-xl" />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <img src="/work/mlfunnel2.png" alt="60 degree funnel" className="w-full max-h-[80vh] object-contain rounded-xl" />
+            <img src="/work/mlfunnel2.webp" alt="60 degree funnel" className="w-full max-h-[80vh] object-contain rounded-xl" />
             <div>
-              <img src="/work/mlfunnel4.png" alt="Bad funnel angle" className="w-full max-h-[80vh] object-contain rounded-xl" />
+              <img src="/work/mlfunnel4.webp" alt="Bad funnel angle" className="w-full max-h-[80vh] object-contain rounded-xl" />
               <p className="mt-3 text-sm text-[#f5f5f5]/50">Bad funnel angle: balls block each other</p>
             </div>
           </div>
 
           {/* Low fidelity prototype */}
           <h3 className="text-sm font-semibold text-[#f5f5f5]/80 mt-16 mb-4">Low fidelity prototype</h3>
-          <img src="/work/mlp1.png" alt="Low fidelity prototype" className="w-full md:w-4/5 max-h-[80vh] object-contain rounded-xl" />
+          <img src="/work/mlp1.webp" alt="Low fidelity prototype" className="w-full md:w-4/5 max-h-[80vh] object-contain rounded-xl" />
 
           {/* Spring */}
           <h3 className="text-sm font-semibold text-[#f5f5f5]/80 mt-16 mb-4">Spring Integration</h3>
           <p className="text-[1rem] text-[#f5f5f5]/80 mb-6">
             Tested attachment locations. Found optimal slot for linear stretch + max extension. Incorporated hard stops.
           </p>
-          <img src="/work/mlspring.png" alt="Spring integration" className="w-full max-h-[80vh] object-contain rounded-xl" />
+          <img src="/work/mlspring.webp" alt="Spring integration" className="w-full max-h-[80vh] object-contain rounded-xl" />
 
           {/* Launch Hammer */}
           <h3 className="text-sm font-semibold text-[#f5f5f5]/80 mt-16 mb-4">Launch Hammer</h3>
@@ -150,8 +147,8 @@ export default function MarbleLauncherPage() {
             Higher fidelity prototype
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <img src="/work/mlp2.png" alt="Higher fidelity prototype" className="w-full max-h-[80vh] object-contain rounded-xl" />
-            <img src="/work/mlp2sketch.png" alt="Prototype sketch" className="w-full max-h-[80vh] object-contain rounded-xl" />
+            <img src="/work/mlp2.webp" alt="Higher fidelity prototype" className="w-full max-h-[80vh] object-contain rounded-xl" />
+            <img src="/work/mlp2sketch.webp" alt="Prototype sketch" className="w-full max-h-[80vh] object-contain rounded-xl" />
           </div>
         </div>
       </section>
@@ -162,7 +159,7 @@ export default function MarbleLauncherPage() {
           <h2 className="text-xs uppercase tracking-[0.25em] text-[#f5f5f5]/40 mb-12">
             Iteration + Adjustments
           </h2>
-          <img src="/work/mlitad.png" alt="Iteration and adjustments" className="w-full max-h-[80vh] object-contain rounded-xl" />
+          <img src="/work/mlitad.webp" alt="Iteration and adjustments" className="w-full max-h-[80vh] object-contain rounded-xl" />
         </div>
       </section>
 
@@ -172,8 +169,8 @@ export default function MarbleLauncherPage() {
           <h2 className="text-xs uppercase tracking-[0.25em] text-[#f5f5f5]/40 mb-12">
             Final Assembly + Documentation
           </h2>
-          <img src="/work/mlbuild.png" alt="Final assembly" className="w-full max-h-[80vh] object-contain rounded-xl mb-8" />
-          <img src="/work/mlfinal.png" alt="Final working version" className="w-full max-h-[80vh] object-contain rounded-xl mb-8" />
+          <img src="/work/mlbuild.webp" alt="Final assembly" className="w-full max-h-[80vh] object-contain rounded-xl mb-8" />
+          <img src="/work/mlfinal.webp" alt="Final working version" className="w-full max-h-[80vh] object-contain rounded-xl mb-8" />
 
           <div className="flex justify-center my-12">
             <video
@@ -186,7 +183,7 @@ export default function MarbleLauncherPage() {
             />
           </div>
 
-          <img src="/work/mlcad.png" alt="CAD model" className="w-full max-h-[80vh] object-contain rounded-xl" />
+          <img src="/work/mlcad.webp" alt="CAD model" className="w-full max-h-[80vh] object-contain rounded-xl" />
           <p className="mt-3 text-sm text-[#f5f5f5]/50">CAD model</p>
         </div>
       </section>

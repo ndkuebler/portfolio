@@ -29,17 +29,17 @@ export function Concepts() {
   // Direct mapping from carousel filenames to CONCEPTS index
   // Some carousel images differ from CONCEPTS thumbs, so we map manually
   const CAROUSEL_TO_CONCEPT: Record<string, number> = {
-    "djglasses1.png": 0,   // DJ Glasses
-    "bench.png": 9,         // Companion Bench
-    "chairproj1.png": 5,    // Posture Chair
-    "dogdronev2.png": 11,   // Drone Shepherd
-    "freckles.png": 8,      // Micro-LED Freckles
-    "fridge1.png": 4,       // Intuitive Fridge
-    "gumopened.png": 6,     // Athlete recovery gum
-    "hapticbelt.png": 2,    // Haptic Direction Belt
-    "ltable.png": 3,        // Lightning Connection Table
-    "musicframe.png": 7,    // Living Album Cover
-    "scentfork1.png": 12,   // Scent Fork
+    "djglasses1.webp": 0,   // DJ Glasses
+    "bench.webp": 9,         // Companion Bench
+    "chairproj1.webp": 5,    // Posture Chair
+    "dogdronev2.webp": 11,   // Drone Shepherd
+    "freckles.webp": 8,      // Micro-LED Freckles
+    "fridge1.webp": 4,       // Intuitive Fridge
+    "gumopened.webp": 6,     // Athlete recovery gum
+    "hapticbelt.webp": 2,    // Haptic Direction Belt
+    "ltable.webp": 3,        // Lightning Connection Table
+    "musicframe.webp": 7,    // Living Album Cover
+    "scentfork1-carousel.webp": 12,   // Scent Fork
   };
 
   const getConceptForFile = (filename: string) => {

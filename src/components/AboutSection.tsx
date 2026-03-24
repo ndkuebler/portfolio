@@ -1,11 +1,12 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 
 const PHOTOS = [
-  { src: "/nick.jpeg", alt: "Nick in the workshop" },
-  { src: "/concepts/nkhbar.jpeg", alt: "Nick on high bar" },
-  { src: "/concepts/nickcube.jpeg", alt: "Nick portrait" },
+  { src: "/nick.webp", alt: "Nick in the workshop" },
+  { src: "/concepts/nkhbar.webp", alt: "Nick on high bar" },
+  { src: "/concepts/nickcube.webp", alt: "Nick portrait" },
 ];
 
 export function AboutSection() {
@@ -21,11 +22,15 @@ export function AboutSection() {
         <div className="flex flex-col md:flex-row gap-12 md:gap-20">
           {/* Left — photo with thumbnails */}
           <div className="md:w-1/2">
-            <img
-              src={PHOTOS[activePhoto].src}
-              alt={PHOTOS[activePhoto].alt}
-              className="w-full aspect-[4/5] object-cover rounded-2xl transition-opacity duration-300"
-            />
+            <div className="relative w-full aspect-[4/5] rounded-2xl overflow-hidden">
+              <Image
+                src={PHOTOS[activePhoto].src}
+                alt={PHOTOS[activePhoto].alt}
+                fill
+                className="object-cover transition-opacity duration-300"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+            </div>
             <div className="flex gap-3 mt-4">
               {PHOTOS.map((photo, i) => (
                 <button
@@ -37,10 +42,12 @@ export function AboutSection() {
                       : "opacity-50 hover:opacity-80"
                   }`}
                 >
-                  <img
+                  <Image
                     src={photo.src}
                     alt={photo.alt}
-                    className="w-full h-full object-cover"
+                    fill
+                    className="object-cover"
+                    sizes="80px"
                   />
                 </button>
               ))}

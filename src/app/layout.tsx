@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     siteName: "Nick Kuebler",
     images: [
       {
-        url: "/nklogo.png",
+        url: "/nklogo.webp",
         width: 1200,
         height: 630,
         alt: "Nick Kuebler",
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Nick Kuebler",
     description: "Product designer/engineer focused on building QOL upgrades, tech forward physical products and aesthetics.",
-    images: ["/nklogo.png"],
+    images: ["/nklogo.webp"],
   },
 };
 

@@ -1,10 +1,12 @@
+import { BackButton } from "@/components/BackButton";
+
 export default function WaterShieldPage() {
   return (
     <main className="min-h-screen bg-[#0a0a0a]">
       {/* ===== HERO IMAGE — full bleed ===== */}
       <section className="relative h-[40vh] sm:h-[70vh] w-full overflow-hidden sm:-mt-[4.5rem]">
         <img
-          src="/work/watershieldbbg.png"
+          src="/work/watershieldbbg.webp"
           alt="WaterShield"
           className="absolute inset-0 w-full h-full object-cover object-center"
           fetchPriority="high"
@@ -15,12 +17,7 @@ export default function WaterShieldPage() {
       {/* ===== PROJECT INFO — two column ===== */}
       <section className="bg-[#0a0a0a] px-6 sm:px-10 lg:px-14 pt-16 pb-20">
         <div className="mx-auto max-w-[1200px]">
-          <a
-            href="/#selected-works"
-            className="inline-block text-xs uppercase tracking-[0.2em] text-[#f5f5f5]/40 hover:text-[#f5f5f5] transition mb-12"
-          >
-            ← Back to work
-          </a>
+          <BackButton />
 
           <div className="flex flex-col md:flex-row gap-12 md:gap-20">
             {/* Left — title + description */}
@@ -87,7 +84,7 @@ export default function WaterShieldPage() {
 
           {/* Full-width first prototype */}
           <img
-            src="/work/wsprototypev1.png"
+            src="/work/wsprototypev1.webp"
             alt="First iteration prototype"
             className="w-full max-h-[80vh] object-contain rounded-xl"
           />
@@ -100,7 +97,7 @@ export default function WaterShieldPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
             <div>
               <img
-                src="/work/wsprototypev1pic.png"
+                src="/work/wsprototypev1pic.webp"
                 alt="Prototype looked too bulky"
                 className="w-full max-h-[80vh] object-contain rounded-xl"
               />
@@ -110,7 +107,7 @@ export default function WaterShieldPage() {
             </div>
             <div>
               <img
-                src="/work/watershield-design.png"
+                src="/work/watershield-design.webp"
                 alt="WaterShield design development"
                 className="w-full max-h-[80vh] object-contain rounded-xl"
               />
@@ -134,7 +131,7 @@ export default function WaterShieldPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <img
-                src="/work/watershield-testing1-new.png"
+                src="/work/watershield-testing1-new.webp"
                 alt="WaterShield testing"
                 className="w-full max-h-[80vh] object-contain rounded-xl"
               />
@@ -144,7 +141,7 @@ export default function WaterShieldPage() {
             </div>
             <div>
               <img
-                src="/work/watershield-testing2.png"
+                src="/work/watershield-testing2.webp"
                 alt="WaterShield splash testing"
                 className="w-full max-h-[80vh] object-contain rounded-xl"
               />

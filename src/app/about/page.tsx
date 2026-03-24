@@ -17,17 +17,17 @@ export default function AboutPage() {
             {/* Left — photos */}
             <div className="md:w-1/2 flex flex-col gap-6">
               <img
-                src="/nick.jpeg"
+                src="/nick.webp"
                 alt="Nick in the workshop"
                 className="w-full rounded-2xl"
               />
               <img
-                src="/concepts/nkhbar.jpeg"
+                src="/concepts/nkhbar.webp"
                 alt="Nick on high bar"
                 className="w-full rounded-2xl"
               />
               <img
-                src="/concepts/nickcube.jpeg"
+                src="/concepts/nickcube.webp"
                 alt="Nick"
                 className="w-full rounded-2xl"
               />

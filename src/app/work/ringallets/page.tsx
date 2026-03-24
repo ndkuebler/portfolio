@@ -1,10 +1,12 @@
+import { BackButton } from "@/components/BackButton";
+
 export default function RingalletsPage() {
   return (
     <main className="min-h-screen bg-[#0a0a0a]">
       {/* ===== HERO IMAGE ===== */}
       <section className="relative h-[40vh] sm:h-[70vh] w-full overflow-hidden sm:-mt-[4.5rem]">
         <img
-          src="/work/ringalletsbbg.png"
+          src="/work/ringalletsbbg.webp"
           alt="Ringallets"
           className="absolute inset-0 w-full h-full object-contain object-center bg-black"
           fetchPriority="high"
@@ -15,12 +17,7 @@ export default function RingalletsPage() {
       {/* ===== PROJECT INFO ===== */}
       <section className="bg-[#0a0a0a] px-6 sm:px-10 lg:px-14 pt-16 pb-20">
         <div className="mx-auto max-w-[1200px]">
-          <a
-            href="/#selected-works"
-            className="inline-block text-xs uppercase tracking-[0.2em] text-[#f5f5f5]/40 hover:text-[#f5f5f5] transition mb-12"
-          >
-            ← Back to work
-          </a>
+          <BackButton />
 
           <div className="flex flex-col md:flex-row gap-12 md:gap-20">
             <div className="md:w-3/5">
@@ -84,13 +81,13 @@ export default function RingalletsPage() {
               <p className="mt-3 text-sm text-[#f5f5f5]/50">Early sketches</p>
             </div>
             <div>
-              <img src="/work/ringallets-cad.png" alt="CAD model" className="w-full max-h-[80vh] object-contain rounded-xl" />
+              <img src="/work/ringallets-cad.webp" alt="CAD model" className="w-full max-h-[80vh] object-contain rounded-xl" />
               <p className="mt-3 text-sm text-[#f5f5f5]/50">CAD model</p>
             </div>
           </div>
 
           <img
-            src="/work/ringallets-prototype.png"
+            src="/work/ringallets-prototype.webp"
             alt="Physical prototype"
             className="w-full max-h-[80vh] object-contain rounded-xl mt-8"
           />
@@ -121,11 +118,11 @@ export default function RingalletsPage() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <img src="/work/ringallets-testing1.png" alt="Stability testing" className="w-full max-h-[80vh] object-contain rounded-xl" />
+              <img src="/work/ringallets-testing1.webp" alt="Stability testing" className="w-full max-h-[80vh] object-contain rounded-xl" />
               <p className="mt-3 text-sm text-[#f5f5f5]/50">Stability testing</p>
             </div>
             <div>
-              <img src="/work/ringallets-testing2.png" alt="Iteration feedback" className="w-full max-h-[80vh] object-contain rounded-xl" />
+              <img src="/work/ringallets-testing2.webp" alt="Iteration feedback" className="w-full max-h-[80vh] object-contain rounded-xl" />
               <p className="mt-3 text-sm text-[#f5f5f5]/50">Iteration feedback</p>
             </div>
           </div>
@@ -150,15 +147,15 @@ export default function RingalletsPage() {
           <h2 className="text-xs uppercase tracking-[0.25em] text-[#f5f5f5]/40 mb-12">
             Product in action
           </h2>
-          <img src="/work/ringallets-final-alt.png" alt="Final components" className="w-full max-h-[80vh] object-contain rounded-xl mb-8" />
-          <img src="/work/ringalleths.JPG" alt="Ringallets in use" className="w-full max-h-[80vh] object-contain rounded-xl mb-8" />
+          <img src="/work/ringallets-final-alt.webp" alt="Final components" className="w-full max-h-[80vh] object-contain rounded-xl mb-8" />
+          <img src="/work/ringalleths.webp" alt="Ringallets in use" className="w-full max-h-[80vh] object-contain rounded-xl mb-8" />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <img src="/work/ringalletl.jpg" alt="Ringallets L-sit" className="w-full max-h-[80vh] object-contain rounded-xl" />
-            <img src="/work/ringalletplanche.jpg" alt="Ringallets planche" className="w-full max-h-[80vh] object-contain rounded-xl" />
+            <img src="/work/ringalletl.webp" alt="Ringallets L-sit" className="w-full max-h-[80vh] object-contain rounded-xl" />
+            <img src="/work/ringalletplanche.webp" alt="Ringallets planche" className="w-full max-h-[80vh] object-contain rounded-xl" />
           </div>
 
           <img
-            src="/work/ringallets-final.png"
+            src="/work/ringallets-final.webp"
             alt="Ringallets final product"
             className="w-full max-h-[80vh] object-contain rounded-xl mt-8"
           />
