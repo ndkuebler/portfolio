@@ -3,8 +3,26 @@
 import Image from "next/image";
 import Link from "next/link";
 import { createPortal } from "react-dom";
+import dynamic from "next/dynamic";
 import { useEffect, useRef, useState, useCallback } from "react";
 import { works } from "@/data/works";
+
+const SomniModelViewer = dynamic(
+  () => import("@/components/SomniModelViewer").then((m) => m.SomniModelViewer),
+  { ssr: false, loading: () => <div className="w-full h-full flex items-center justify-center"><span className="text-white/50 text-sm">Loading 3D model...</span></div> }
+);
+
+// Preload the GLB file and component module on page load
+if (typeof window !== "undefined") {
+  const link = document.createElement("link");
+  link.rel = "prefetch";
+  link.href = "/work/somni.glb";
+  link.as = "fetch";
+  link.crossOrigin = "anonymous";
+  document.head.appendChild(link);
+  // Also prefetch the component JS chunk
+  import("@/components/SomniModelViewer").catch(() => {});
+}
 
 export function SelectedWorks() {
   const [isMobile, setIsMobile] = useState(false);
@@ -35,6 +53,7 @@ export function SelectedWorks() {
   }, []);
 
   const [somniClosing, setSomniClosing] = useState(false);
+  const [show3D, setShow3D] = useState(false);
 
   const handleSomniClose = useCallback(() => {
     if (somniClosing) return;
@@ -45,6 +64,7 @@ export function SelectedWorks() {
       setSomniAnimated(false);
       setSomniClosing(false);
       setSomniRect(null);
+      setShow3D(false);
     }, 400);
   }, [somniClosing]);
 
@@ -165,7 +185,7 @@ export function SelectedWorks() {
                 <div className="w-full md:w-3/5">
                   <div
                     ref={isComingSoon ? somniImgRef : undefined}
-                    className="relative aspect-[4/3] w-full overflow-hidden rounded-lg"
+                    className="relative aspect-[4/3] w-full overflow-hidden rounded-lg bg-black"
                   >
                     <Image
                       src={project.image}
@@ -214,6 +234,18 @@ export function SelectedWorks() {
             ← Back
           </button>
 
+          {/* 2D / 3D toggle */}
+          <button
+            onClick={(e) => { e.stopPropagation(); setShow3D(!show3D); }}
+            className="absolute top-20 sm:top-5 right-6 z-[210] flex items-center gap-2 rounded-full bg-black/60 border border-white/30 px-5 py-2 text-sm font-medium text-white hover:bg-white hover:text-black transition-all duration-200 backdrop-blur-sm"
+            style={{
+              opacity: somniClosing ? 0 : somniAnimated ? 1 : 0,
+              transition: somniClosing ? "opacity 200ms ease" : "opacity 400ms ease 300ms",
+            }}
+          >
+            {show3D ? "View 2D" : "View 3D"}
+          </button>
+
           {/* Content */}
           <div
             className="relative z-10 flex flex-col items-center gap-8 px-6"
@@ -224,10 +256,11 @@ export function SelectedWorks() {
               transition: "opacity 350ms ease, transform 350ms ease",
             }}
           >
-            {/* Animated image */}
+            {/* 2D image */}
             <div
               className="relative w-[min(80vw,500px)] aspect-square"
               style={{
+                display: show3D ? "none" : "block",
                 transition: somniAnimated && !somniClosing
                   ? "transform 600ms cubic-bezier(0.16, 1, 0.3, 1)"
                   : "none",
@@ -242,6 +275,14 @@ export function SelectedWorks() {
                 className="object-contain"
                 sizes="500px"
               />
+            </div>
+            {/* 3D model - always mounted once lightbox opens so it preloads */}
+            <div
+              className="relative w-[min(80vw,500px)] aspect-square"
+              style={{ display: show3D ? "block" : "none" }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <SomniModelViewer />
             </div>
 
             {/* Text fades in after image arrives */}
