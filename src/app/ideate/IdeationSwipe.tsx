@@ -130,27 +130,15 @@ function SwipeCard({
 
         {/* Approve overlay */}
         <div
-          className="pointer-events-none absolute inset-0 flex items-center justify-center rounded-2xl bg-emerald-500/30"
+          className="pointer-events-none absolute inset-0 rounded-2xl bg-emerald-500/30"
           style={{ opacity: approveOpacity }}
-        >
-          <div className="rounded-xl border-4 border-emerald-400 px-6 py-3 rotate-[-20deg]">
-            <span className="text-4xl font-black tracking-wider text-emerald-400">
-              KEEP
-            </span>
-          </div>
-        </div>
+        />
 
         {/* Reject overlay */}
         <div
-          className="pointer-events-none absolute inset-0 flex items-center justify-center rounded-2xl bg-red-500/30"
+          className="pointer-events-none absolute inset-0 rounded-2xl bg-red-500/30"
           style={{ opacity: rejectOpacity }}
-        >
-          <div className="rounded-xl border-4 border-red-400 px-6 py-3 rotate-[20deg]">
-            <span className="text-4xl font-black tracking-wider text-red-400">
-              NOPE
-            </span>
-          </div>
-        </div>
+        />
       </div>
     </div>
   );
