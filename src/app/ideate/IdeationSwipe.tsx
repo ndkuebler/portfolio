@@ -146,7 +146,7 @@ function SwipeCard({
 
 /* ───────────────────────── ScrollWheel ───────────────────────── */
 
-function ScrollWheel({ concepts }: { concepts: IdeationConcept[] }) {
+function ScrollWheel({ concepts, onSelect }: { concepts: IdeationConcept[]; onSelect: (c: IdeationConcept) => void }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const rafRef = useRef<number>(0);
@@ -208,7 +208,8 @@ function ScrollWheel({ concepts }: { concepts: IdeationConcept[] }) {
           <div
             key={c.id}
             ref={(el) => { itemRefs.current[i] = el; }}
-            className="flex h-[80px] snap-center items-center gap-4 px-5 will-change-transform"
+            className="flex h-[80px] cursor-pointer snap-center items-center gap-4 px-5 will-change-transform active:scale-95"
+            onClick={() => onSelect(c)}
           >
             <div className="h-12 w-12 shrink-0 overflow-hidden rounded-xl bg-black">
               <img
@@ -249,6 +250,7 @@ export default function IdeationSwipe() {
   const [results, setResults] = useState<Results>({});
   const [mounted, setMounted] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [viewing, setViewing] = useState<IdeationConcept | null>(null);
 
   useEffect(() => {
     setResults(loadResults());
@@ -326,6 +328,51 @@ export default function IdeationSwipe() {
     );
   }
 
+  // Detail view — viewing a single concept
+  if (remaining.length === 0 && viewing) {
+    return (
+      <main className="h-[100dvh] flex flex-col bg-[#0a0a0a] md:h-auto md:min-h-screen">
+        <div className="mx-auto flex w-full max-w-md flex-1 flex-col px-5 pt-6 pb-8 md:pt-28">
+          {/* Back button */}
+          <button
+            type="button"
+            onClick={() => setViewing(null)}
+            className="mb-4 flex shrink-0 items-center gap-1.5 self-start text-[12px] uppercase tracking-[0.15em] text-white/40 transition-colors hover:text-white/70"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+            Back
+          </button>
+
+          {/* Image */}
+          <div className="relative min-h-0 flex-1 overflow-hidden rounded-2xl bg-black">
+            <Image
+              src={viewing.mediaSrc}
+              alt={viewing.title}
+              fill
+              className="object-contain"
+            />
+
+            {/* Content overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80" />
+            <div className="absolute inset-x-0 bottom-0 p-5 md:p-7">
+              <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-white/35">
+                Concept {viewing.id}
+              </p>
+              <h2 className="mt-1.5 text-[22px] font-semibold tracking-tight text-white/90 md:text-2xl">
+                {viewing.title}
+              </h2>
+              <p className="mt-2 text-sm leading-relaxed text-white/55">
+                {viewing.subtitle}
+              </p>
+            </div>
+          </div>
+        </div>
+      </main>
+    );
+  }
+
   // Results screen — all reviewed
   if (remaining.length === 0) {
     return (
@@ -338,7 +385,7 @@ export default function IdeationSwipe() {
 
           {/* Scroll wheel */}
           {approved.length > 0 && (
-            <ScrollWheel concepts={approved} />
+            <ScrollWheel concepts={approved} onSelect={setViewing} />
           )}
 
           {/* Fixed bottom section */}
