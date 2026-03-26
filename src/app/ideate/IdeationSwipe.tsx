@@ -201,8 +201,8 @@ function ScrollWheel({ concepts }: { concepts: IdeationConcept[] }) {
         className="h-full snap-y snap-mandatory overflow-y-auto overscroll-contain"
         style={{ scrollbarWidth: "none" } as React.CSSProperties}
       >
-        {/* Top spacer — pushes first item to center */}
-        <div className="h-[calc(30%-40px)]" />
+        {/* Top spacer */}
+        <div className="h-[calc(20%-40px)]" />
 
         {concepts.map((c, i) => (
           <div
@@ -342,7 +342,7 @@ export default function IdeationSwipe() {
           )}
 
           {/* Fixed bottom section */}
-          <div className="shrink-0 pt-6">
+          <div className="shrink-0 pt-3">
             {/* Results code — white pill */}
             {approved.length > 0 && (
               <button
@@ -366,7 +366,7 @@ export default function IdeationSwipe() {
             {/* Start over — red */}
             <p
               onClick={resetAll}
-              className="mt-5 cursor-pointer text-center text-[11px] font-medium uppercase tracking-[0.2em] text-red-400/60 transition-colors duration-300 hover:text-red-400"
+              className="mt-3 cursor-pointer text-center text-[11px] font-medium uppercase tracking-[0.2em] text-red-400/60 transition-colors duration-300 hover:text-red-400"
             >
               Start Over
             </p>
