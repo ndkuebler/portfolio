@@ -81,10 +81,9 @@ function SwipeCard({
       ? dragTransform
       : `scale(${stackScale}) translateY(${stackY}px)`;
 
-  // Subtle edge glow on drag
-  const dragProgress = isTop ? Math.abs(swipe.offsetX) / 150 : 0;
-  const isApproving = swipe.offsetX > 0;
-  const glowOpacity = Math.min(dragProgress * 0.4, 0.4);
+  // Overlay opacities
+  const approveOpacity = isTop && swipe.offsetX > 0 ? Math.min(swipe.offsetX / 150, 0.8) : 0;
+  const rejectOpacity = isTop && swipe.offsetX < 0 ? Math.min(-swipe.offsetX / 150, 0.8) : 0;
 
   return (
     <div
@@ -103,7 +102,7 @@ function SwipeCard({
         userSelect: "none",
       }}
     >
-      <div className="relative h-full w-full overflow-hidden rounded-2xl bg-[#111]">
+      <div className="relative h-full w-full overflow-hidden rounded-2xl bg-black">
         <Image
           src={concept.thumb || concept.mediaSrc}
           alt={concept.title}
@@ -129,21 +128,29 @@ function SwipeCard({
           </p>
         </div>
 
-        {/* Color glow on swipe — green for keep, red for pass */}
-        {isTop && dragProgress > 0.1 && (
-          <div
-            className="pointer-events-none absolute inset-0 rounded-2xl transition-opacity duration-100"
-            style={{
-              opacity: glowOpacity,
-              background: isApproving
-                ? "radial-gradient(ellipse at right center, rgba(52,211,153,0.15) 0%, transparent 70%)"
-                : "radial-gradient(ellipse at left center, rgba(248,113,113,0.15) 0%, transparent 70%)",
-              boxShadow: isApproving
-                ? "inset 0 0 80px rgba(52,211,153,0.1), inset 4px 0 40px rgba(52,211,153,0.08)"
-                : "inset 0 0 80px rgba(248,113,113,0.1), inset -4px 0 40px rgba(248,113,113,0.08)",
-            }}
-          />
-        )}
+        {/* Approve overlay */}
+        <div
+          className="pointer-events-none absolute inset-0 flex items-center justify-center rounded-2xl bg-emerald-500/30"
+          style={{ opacity: approveOpacity }}
+        >
+          <div className="rounded-xl border-4 border-emerald-400 px-6 py-3 rotate-[-20deg]">
+            <span className="text-4xl font-black tracking-wider text-emerald-400">
+              KEEP
+            </span>
+          </div>
+        </div>
+
+        {/* Reject overlay */}
+        <div
+          className="pointer-events-none absolute inset-0 flex items-center justify-center rounded-2xl bg-red-500/30"
+          style={{ opacity: rejectOpacity }}
+        >
+          <div className="rounded-xl border-4 border-red-400 px-6 py-3 rotate-[20deg]">
+            <span className="text-4xl font-black tracking-wider text-red-400">
+              NOPE
+            </span>
+          </div>
+        </div>
       </div>
     </div>
   );
