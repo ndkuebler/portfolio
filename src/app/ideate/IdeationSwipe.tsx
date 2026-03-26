@@ -241,16 +241,23 @@ export default function IdeationSwipe() {
       <main className="min-h-screen bg-[#0a0a0a]">
         <div className="mx-auto max-w-md px-5 pt-16 pb-20 md:pt-32">
           {/* Count */}
-          <p className="text-center text-[11px] font-medium uppercase tracking-[0.3em] text-white/20">
+          <p className="text-center text-[13px] font-semibold uppercase tracking-[0.3em] text-white">
             {approved.length} Kept
           </p>
 
-          {/* Vertical list of kept concepts */}
+          {/* Stacked concept cards */}
           {approved.length > 0 && (
-            <div className="mt-10 space-y-4">
-              {approved.map((c) => (
-                <div key={c.id} className="flex items-center gap-4">
-                  <div className="h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-black">
+            <div className="relative mx-auto mt-10" style={{ height: `${80 + (approved.length - 1) * 56}px` }}>
+              {approved.map((c, i) => (
+                <div
+                  key={c.id}
+                  className="absolute left-0 right-0 flex items-center gap-4 rounded-2xl border border-white/[0.06] bg-[#141414] px-4 py-3 shadow-lg"
+                  style={{
+                    top: `${i * 56}px`,
+                    zIndex: approved.length - i,
+                  }}
+                >
+                  <div className="h-14 w-14 shrink-0 overflow-hidden rounded-xl bg-black">
                     <img
                       src={c.thumb || c.mediaSrc}
                       alt={c.title}
@@ -258,10 +265,10 @@ export default function IdeationSwipe() {
                     />
                   </div>
                   <div className="min-w-0">
-                    <p className="text-[15px] font-medium text-white/80">
+                    <p className="text-[15px] font-medium text-white/85">
                       {c.title}
                     </p>
-                    <p className="mt-0.5 truncate text-[12px] text-white/30">
+                    <p className="mt-0.5 truncate text-[12px] text-white/35">
                       {c.subtitle}
                     </p>
                   </div>
@@ -273,7 +280,7 @@ export default function IdeationSwipe() {
           {/* Divider */}
           <div className="mx-auto my-10 h-px w-12 bg-white/10" />
 
-          {/* Results code */}
+          {/* Results code — white pill */}
           {approved.length > 0 && (
             <button
               type="button"
@@ -282,21 +289,21 @@ export default function IdeationSwipe() {
                 setCopied(true);
                 setTimeout(() => setCopied(false), 2000);
               }}
-              className="mx-auto flex items-center gap-2.5 rounded-full border border-white/[0.08] px-5 py-2.5 transition-all duration-300 hover:border-white/20 active:scale-95"
+              className="mx-auto flex items-center gap-2.5 rounded-full bg-white px-5 py-2.5 transition-all duration-300 hover:bg-white/90 active:scale-95"
             >
-              <span className="font-mono text-[13px] tracking-wider text-white/40">
+              <span className="font-mono text-[13px] tracking-wider text-black/70">
                 {resultsCode}
               </span>
-              <span className="text-[10px] uppercase tracking-[0.15em] text-white/20">
+              <span className="text-[10px] font-semibold uppercase tracking-[0.15em] text-black/40">
                 {copied ? "Copied" : "Copy"}
               </span>
             </button>
           )}
 
-          {/* Start over */}
+          {/* Start over — red */}
           <p
             onClick={resetAll}
-            className="mt-8 cursor-pointer text-center text-[11px] uppercase tracking-[0.2em] text-white/15 transition-colors duration-300 hover:text-white/30"
+            className="mt-8 cursor-pointer text-center text-[11px] font-medium uppercase tracking-[0.2em] text-red-400/60 transition-colors duration-300 hover:text-red-400"
           >
             Start Over
           </p>
