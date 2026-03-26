@@ -146,9 +146,26 @@ function SwipeCard({
 
 /* ───────────────────────── Main Component ───────────────────────── */
 
+async function syncToServer(results: Results, approvedList: IdeationConcept[], rejectedList: IdeationConcept[]) {
+  try {
+    await fetch("/api/ideation-results?key=nk2026", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        results,
+        approved: approvedList.map((c) => ({ id: c.id, title: c.title })),
+        rejected: rejectedList.map((c) => ({ id: c.id, title: c.title })),
+      }),
+    });
+  } catch {
+    // Silent fail — localStorage is the primary store
+  }
+}
+
 export default function IdeationSwipe() {
   const [results, setResults] = useState<Results>({});
   const [mounted, setMounted] = useState(false);
+  const [synced, setSynced] = useState(false);
 
   useEffect(() => {
     setResults(loadResults());
@@ -172,6 +189,14 @@ export default function IdeationSwipe() {
 
   const total = IDEATION_CONCEPTS.length;
   const reviewed = total - remaining.length;
+
+  // Auto-sync to server when all reviewed
+  useEffect(() => {
+    if (mounted && remaining.length === 0 && total > 0 && !synced) {
+      setSynced(true);
+      syncToServer(results, approved, rejected);
+    }
+  }, [mounted, remaining.length, total, synced, results, approved, rejected]);
 
   const handleSwipe = useCallback(
     (dir: "left" | "right") => {
