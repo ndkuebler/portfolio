@@ -50,7 +50,7 @@ function SomniModel() {
 
 export function SomniModelViewer() {
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full" onPointerDown={(e) => e.stopPropagation()} onClick={(e) => e.stopPropagation()}>
       <Canvas
         camera={{ position: [0, 0, 4], fov: 45 }}
         style={{ background: "transparent" }}

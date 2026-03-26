@@ -12,7 +12,14 @@ export function SomniImageToggle({ image, title }: { image: string; title: strin
 
   return (
     <div className="mt-12">
-      <div className="relative aspect-[16/10] w-full overflow-hidden rounded-sm border border-[#f5f5f5]/10 bg-[#111]">
+      <div
+        className="relative aspect-[16/10] w-full overflow-hidden rounded-sm border border-[#f5f5f5]/10 bg-[#111]"
+        onClickCapture={show3D ? (e) => {
+          // Block click events from the 3D canvas to prevent parent navigation
+          e.stopPropagation();
+          e.preventDefault();
+        } : undefined}
+      >
         {show3D ? (
           <Suspense
             fallback={
