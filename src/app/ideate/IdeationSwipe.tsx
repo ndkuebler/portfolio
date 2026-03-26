@@ -202,7 +202,7 @@ function ScrollWheel({ concepts }: { concepts: IdeationConcept[] }) {
         style={{ scrollbarWidth: "none" } as React.CSSProperties}
       >
         {/* Top spacer — pushes first item to center */}
-        <div className="h-[calc(50%-40px)]" />
+        <div className="h-[calc(30%-40px)]" />
 
         {concepts.map((c, i) => (
           <div
