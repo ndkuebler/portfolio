@@ -146,89 +146,90 @@ function SwipeCard({
 
 /* ───────────────────────── ScrollWheel ───────────────────────── */
 
-const ITEM_HEIGHT = 80;
-
 function ScrollWheel({ concepts }: { concepts: IdeationConcept[] }) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [scrollY, setScrollY] = useState(0);
-  const [containerH, setContainerH] = useState(0);
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const rafRef = useRef<number>(0);
 
   useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-    setContainerH(el.clientHeight);
+    const container = containerRef.current;
+    if (!container) return;
 
-    const onScroll = () => setScrollY(el.scrollTop);
-    el.addEventListener("scroll", onScroll, { passive: true });
+    const update = () => {
+      const rect = container.getBoundingClientRect();
+      const centerY = rect.top + rect.height / 2;
 
-    const onResize = () => setContainerH(el.clientHeight);
-    window.addEventListener("resize", onResize);
+      itemRefs.current.forEach((el) => {
+        if (!el) return;
+        const elRect = el.getBoundingClientRect();
+        const elCenter = elRect.top + elRect.height / 2;
+        const dist = Math.abs(elCenter - centerY);
+        const maxDist = rect.height / 2;
+        const norm = Math.min(dist / maxDist, 1);
+
+        const scale = 1 - norm * 0.2;
+        const opacity = 1 - norm * 0.7;
+
+        el.style.transform = `scale(${scale})`;
+        el.style.opacity = `${opacity}`;
+      });
+    };
+
+    const onScroll = () => {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = requestAnimationFrame(update);
+    };
+
+    container.addEventListener("scroll", onScroll, { passive: true });
+    // Initial render
+    requestAnimationFrame(update);
 
     return () => {
-      el.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onResize);
+      container.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(rafRef.current);
     };
-  }, []);
-
-  const centerY = containerH / 2;
-  const spacer = centerY - ITEM_HEIGHT / 2;
+  }, [concepts.length]);
 
   return (
     <div className="relative mt-6 min-h-0 flex-1">
       {/* Fade edges */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-20 bg-gradient-to-b from-[#0a0a0a] to-transparent" />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-20 bg-gradient-to-t from-[#0a0a0a] to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-16 bg-gradient-to-b from-[#0a0a0a] to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-16 bg-gradient-to-t from-[#0a0a0a] to-transparent" />
 
       <div
         ref={containerRef}
-        className="h-full snap-y snap-mandatory overflow-y-auto overscroll-contain scrollbar-none"
-        style={{ WebkitOverflowScrolling: "touch", scrollbarWidth: "none" } as React.CSSProperties}
+        className="h-full snap-y snap-mandatory overflow-y-auto overscroll-contain"
+        style={{ scrollbarWidth: "none" } as React.CSSProperties}
       >
-        <div style={{ height: spacer }} />
+        {/* Top spacer — pushes first item to center */}
+        <div className="h-[calc(50%-40px)]" />
 
-        {concepts.map((c, i) => {
-          const itemCenter = spacer + i * ITEM_HEIGHT + ITEM_HEIGHT / 2;
-          const distFromCenter = Math.abs(itemCenter - scrollY - centerY);
-          const maxDist = centerY + ITEM_HEIGHT;
-          const norm = Math.min(distFromCenter / maxDist, 1);
-
-          const scale = 1 - norm * 0.25;
-          const opacity = 1 - norm * 0.65;
-
-          return (
-            <div
-              key={c.id}
-              className="snap-center"
-              style={{ height: ITEM_HEIGHT }}
-            >
-              <div
-                className="mx-auto flex h-full max-w-[340px] items-center gap-4 rounded-2xl px-4 transition-none"
-                style={{
-                  transform: `scale(${scale})`,
-                  opacity,
-                }}
-              >
-                <div className="h-12 w-12 shrink-0 overflow-hidden rounded-xl bg-black">
-                  <img
-                    src={c.thumb || c.mediaSrc}
-                    alt={c.title}
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-                <div className="min-w-0">
-                  <p className="text-[15px] font-medium text-white">
-                    {c.title}
-                  </p>
-                  <p className="mt-0.5 truncate text-[12px] text-white/40">
-                    {c.subtitle}
-                  </p>
-                </div>
-              </div>
+        {concepts.map((c, i) => (
+          <div
+            key={c.id}
+            ref={(el) => { itemRefs.current[i] = el; }}
+            className="flex h-[80px] snap-center items-center gap-4 px-5 will-change-transform"
+          >
+            <div className="h-12 w-12 shrink-0 overflow-hidden rounded-xl bg-black">
+              <img
+                src={c.thumb || c.mediaSrc}
+                alt={c.title}
+                className="h-full w-full object-cover"
+              />
             </div>
-          );
-        })}
+            <div className="min-w-0">
+              <p className="text-[15px] font-medium text-white">
+                {c.title}
+              </p>
+              <p className="mt-0.5 truncate text-[12px] text-white/40">
+                {c.subtitle}
+              </p>
+            </div>
+          </div>
+        ))}
 
-        <div style={{ height: spacer }} />
+        {/* Bottom spacer — allows last item to reach center */}
+        <div className="h-[calc(50%-40px)]" />
       </div>
     </div>
   );
