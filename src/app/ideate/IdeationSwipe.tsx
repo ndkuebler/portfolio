@@ -238,71 +238,90 @@ export default function IdeationSwipe() {
   // Results screen — all reviewed
   if (remaining.length === 0) {
     return (
-      <main className="min-h-screen bg-[#0a0a0a]">
-        <div className="mx-auto max-w-md px-5 pt-16 pb-20 md:pt-32">
+      <main className="h-[100dvh] flex flex-col bg-[#0a0a0a] md:h-auto md:min-h-screen">
+        <div className="mx-auto flex w-full max-w-md flex-1 flex-col px-5 pt-14 pb-8 md:pt-32 md:pb-20">
           {/* Count */}
-          <p className="text-center text-[13px] font-semibold uppercase tracking-[0.3em] text-white">
+          <p className="shrink-0 text-center text-[13px] font-semibold uppercase tracking-[0.3em] text-white">
             {approved.length} Kept
           </p>
 
-          {/* Concept list */}
+          {/* Scroll wheel */}
           {approved.length > 0 && (
-            <div className="mt-10 space-y-3">
-              {approved.map((c) => (
-                <div
-                  key={c.id}
-                  className="flex items-center gap-4 rounded-2xl border border-white/[0.06] bg-[#141414] px-4 py-3"
-                >
-                  <div className="h-12 w-12 shrink-0 overflow-hidden rounded-lg bg-black">
-                    <img
-                      src={c.thumb || c.mediaSrc}
-                      alt={c.title}
-                      className="h-full w-full object-cover"
-                    />
+            <div className="relative mt-8 min-h-0 flex-1">
+              {/* Fade edges */}
+              <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-16 bg-gradient-to-b from-[#0a0a0a] to-transparent" />
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-16 bg-gradient-to-t from-[#0a0a0a] to-transparent" />
+
+              {/* Center highlight */}
+              <div className="pointer-events-none absolute inset-x-0 top-1/2 z-[5] -translate-y-1/2 h-[72px] rounded-2xl border border-white/[0.08]" />
+
+              {/* Scrollable area */}
+              <div
+                className="wheel-scroll h-full snap-y snap-mandatory overflow-y-auto overscroll-contain"
+                style={{ WebkitOverflowScrolling: "touch" } as React.CSSProperties}
+              >
+                {/* Top spacer to center first item */}
+                <div className="h-[calc(50%-36px)]" />
+
+                {approved.map((c) => (
+                  <div
+                    key={c.id}
+                    className="flex h-[72px] snap-center items-center gap-4 px-4"
+                  >
+                    <div className="h-11 w-11 shrink-0 overflow-hidden rounded-lg bg-black">
+                      <img
+                        src={c.thumb || c.mediaSrc}
+                        alt={c.title}
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-[15px] font-medium text-white/80">
+                        {c.title}
+                      </p>
+                      <p className="mt-0.5 truncate text-[12px] text-white/30">
+                        {c.subtitle}
+                      </p>
+                    </div>
                   </div>
-                  <div className="min-w-0">
-                    <p className="text-[15px] font-medium text-white/85">
-                      {c.title}
-                    </p>
-                    <p className="mt-0.5 truncate text-[12px] text-white/35">
-                      {c.subtitle}
-                    </p>
-                  </div>
-                </div>
-              ))}
+                ))}
+
+                {/* Bottom spacer to center last item */}
+                <div className="h-[calc(50%-36px)]" />
+              </div>
             </div>
           )}
 
-          {/* Divider */}
-          <div className="mx-auto my-10 h-px w-12 bg-white/10" />
+          {/* Fixed bottom section */}
+          <div className="shrink-0 pt-6">
+            {/* Results code — white pill */}
+            {approved.length > 0 && (
+              <button
+                type="button"
+                onClick={() => {
+                  copyToClipboard(resultsCode);
+                  setCopied(true);
+                  setTimeout(() => setCopied(false), 2000);
+                }}
+                className="mx-auto flex items-center gap-2.5 rounded-full bg-white px-5 py-2.5 transition-all duration-300 hover:bg-white/90 active:scale-95"
+              >
+                <span className="font-mono text-[13px] tracking-wider text-black/70">
+                  {resultsCode}
+                </span>
+                <span className="text-[10px] font-semibold uppercase tracking-[0.15em] text-black/40">
+                  {copied ? "Copied" : "Copy"}
+                </span>
+              </button>
+            )}
 
-          {/* Results code — white pill */}
-          {approved.length > 0 && (
-            <button
-              type="button"
-              onClick={() => {
-                copyToClipboard(resultsCode);
-                setCopied(true);
-                setTimeout(() => setCopied(false), 2000);
-              }}
-              className="mx-auto flex items-center gap-2.5 rounded-full bg-white px-5 py-2.5 transition-all duration-300 hover:bg-white/90 active:scale-95"
+            {/* Start over — red */}
+            <p
+              onClick={resetAll}
+              className="mt-5 cursor-pointer text-center text-[11px] font-medium uppercase tracking-[0.2em] text-red-400/60 transition-colors duration-300 hover:text-red-400"
             >
-              <span className="font-mono text-[13px] tracking-wider text-black/70">
-                {resultsCode}
-              </span>
-              <span className="text-[10px] font-semibold uppercase tracking-[0.15em] text-black/40">
-                {copied ? "Copied" : "Copy"}
-              </span>
-            </button>
-          )}
-
-          {/* Start over — red */}
-          <p
-            onClick={resetAll}
-            className="mt-8 cursor-pointer text-center text-[11px] font-medium uppercase tracking-[0.2em] text-red-400/60 transition-colors duration-300 hover:text-red-400"
-          >
-            Start Over
-          </p>
+              Start Over
+            </p>
+          </div>
         </div>
       </main>
     );
