@@ -245,19 +245,15 @@ export default function IdeationSwipe() {
             {approved.length} Kept
           </p>
 
-          {/* Stacked concept cards */}
+          {/* Concept list */}
           {approved.length > 0 && (
-            <div className="relative mx-auto mt-10" style={{ height: `${80 + (approved.length - 1) * 56}px` }}>
-              {approved.map((c, i) => (
+            <div className="mt-10 space-y-3">
+              {approved.map((c) => (
                 <div
                   key={c.id}
-                  className="absolute left-0 right-0 flex items-center gap-4 rounded-2xl border border-white/[0.06] bg-[#141414] px-4 py-3 shadow-lg"
-                  style={{
-                    top: `${i * 56}px`,
-                    zIndex: approved.length - i,
-                  }}
+                  className="flex items-center gap-4 rounded-2xl border border-white/[0.06] bg-[#141414] px-4 py-3"
                 >
-                  <div className="h-14 w-14 shrink-0 overflow-hidden rounded-xl bg-black">
+                  <div className="h-12 w-12 shrink-0 overflow-hidden rounded-lg bg-black">
                     <img
                       src={c.thumb || c.mediaSrc}
                       alt={c.title}
