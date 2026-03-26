@@ -202,7 +202,8 @@ export default function ConceptsPage() {
                       (c.title || "").toLowerCase().includes("tank") ||
                       (c.title || "").toLowerCase().includes("plant") ||
                       (c.title || "").toLowerCase().includes("drone") ||
-                      (c.title || "").toLowerCase().includes("scent")
+                      (c.title || "").toLowerCase().includes("scent") ||
+                      (c.title || "").toLowerCase().includes("tide")
                         ? "object-contain bg-black"
                         : "object-cover"
                     } rounded-2xl`}
