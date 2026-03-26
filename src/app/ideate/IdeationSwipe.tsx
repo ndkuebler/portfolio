@@ -238,51 +238,31 @@ export default function IdeationSwipe() {
   // Results screen — all reviewed
   if (remaining.length === 0) {
     return (
-      <main className="min-h-screen bg-[#0a0a0a] pt-12 pb-16 md:pt-32 md:pb-20">
-        <div className="mx-auto max-w-lg px-6">
-          {/* Minimal header */}
-          <div className="mb-12 text-center">
-            <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-white/25">
-              Review Complete
-            </p>
-            <div className="mx-auto mt-6 flex max-w-[200px] justify-between">
-              <div className="text-center">
-                <span className="text-2xl font-light tabular-nums text-white/70">
-                  {approved.length}
-                </span>
-                <p className="mt-1 text-[10px] uppercase tracking-[0.15em] text-white/25">
-                  Kept
-                </p>
-              </div>
-              <div className="h-10 w-px bg-white/10" />
-              <div className="text-center">
-                <span className="text-2xl font-light tabular-nums text-white/40">
-                  {rejected.length}
-                </span>
-                <p className="mt-1 text-[10px] uppercase tracking-[0.15em] text-white/25">
-                  Passed
-                </p>
-              </div>
-            </div>
-          </div>
+      <main className="min-h-screen bg-[#0a0a0a]">
+        <div className="mx-auto max-w-md px-5 pt-16 pb-20 md:pt-32">
+          {/* Count */}
+          <p className="text-center text-[11px] font-medium uppercase tracking-[0.3em] text-white/20">
+            {approved.length} Kept
+          </p>
 
+          {/* Vertical list of kept concepts */}
           {approved.length > 0 && (
-            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+            <div className="mt-10 space-y-4">
               {approved.map((c) => (
-                <div
-                  key={c.id}
-                  className="group relative overflow-hidden rounded-xl bg-[#111]"
-                >
-                  <div className="aspect-[4/3] w-full">
+                <div key={c.id} className="flex items-center gap-4">
+                  <div className="h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-black">
                     <img
                       src={c.thumb || c.mediaSrc}
                       alt={c.title}
-                      className="h-full w-full object-contain"
+                      className="h-full w-full object-cover"
                     />
                   </div>
-                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-3 pt-8">
-                    <p className="text-xs font-medium text-white/60">
+                  <div className="min-w-0">
+                    <p className="text-[15px] font-medium text-white/80">
                       {c.title}
+                    </p>
+                    <p className="mt-0.5 truncate text-[12px] text-white/30">
+                      {c.subtitle}
                     </p>
                   </div>
                 </div>
@@ -290,38 +270,36 @@ export default function IdeationSwipe() {
             </div>
           )}
 
-          {/* Results code for sharing */}
-          {approved.length > 0 && (
-            <div className="mt-10 text-center">
-              <p className="text-[10px] uppercase tracking-[0.2em] text-white/20">
-                Your picks
-              </p>
-              <p className="mt-2 font-mono text-sm tracking-wider text-white/50">
-                {resultsCode}
-              </p>
-              <button
-                type="button"
-                onClick={() => {
-                  copyToClipboard(resultsCode);
-                  setCopied(true);
-                  setTimeout(() => setCopied(false), 2000);
-                }}
-                className="mt-3 rounded-full px-6 py-2 text-[11px] font-medium uppercase tracking-[0.2em] text-white/40 transition-colors duration-300 hover:text-white/60 border border-white/10 hover:border-white/20"
-              >
-                {copied ? "Copied" : "Copy Code"}
-              </button>
-            </div>
-          )}
+          {/* Divider */}
+          <div className="mx-auto my-10 h-px w-12 bg-white/10" />
 
-          <div className="mt-8 flex justify-center">
+          {/* Results code */}
+          {approved.length > 0 && (
             <button
               type="button"
-              onClick={resetAll}
-              className="rounded-full px-8 py-2.5 text-[11px] font-medium uppercase tracking-[0.2em] text-white/20 transition-colors duration-300 hover:text-white/40"
+              onClick={() => {
+                copyToClipboard(resultsCode);
+                setCopied(true);
+                setTimeout(() => setCopied(false), 2000);
+              }}
+              className="mx-auto flex items-center gap-2.5 rounded-full border border-white/[0.08] px-5 py-2.5 transition-all duration-300 hover:border-white/20 active:scale-95"
             >
-              Start Over
+              <span className="font-mono text-[13px] tracking-wider text-white/40">
+                {resultsCode}
+              </span>
+              <span className="text-[10px] uppercase tracking-[0.15em] text-white/20">
+                {copied ? "Copied" : "Copy"}
+              </span>
             </button>
-          </div>
+          )}
+
+          {/* Start over */}
+          <p
+            onClick={resetAll}
+            className="mt-8 cursor-pointer text-center text-[11px] uppercase tracking-[0.2em] text-white/15 transition-colors duration-300 hover:text-white/30"
+          >
+            Start Over
+          </p>
         </div>
       </main>
     );
