@@ -41,18 +41,18 @@ function SwipeCard({
   const handleSwipe = useCallback(
     (dir: "left" | "right") => {
       setExiting(dir);
-      setTimeout(() => onSwipe(dir), 400);
+      setTimeout(() => onSwipe(dir), 450);
     },
     [onSwipe]
   );
 
   const swipe = useSwipeGesture(cardRef, {
-    threshold: 120,
+    threshold: 100,
     onSwipe: handleSwipe,
     enabled: isTop && !exiting,
   });
 
-  // Programmatic swipe (from buttons/keyboard)
+  // Programmatic swipe (from keyboard)
   useEffect(() => {
     if (!isTop) return;
     const handler = (e: CustomEvent<"left" | "right">) => {
@@ -63,19 +63,16 @@ function SwipeCard({
       window.removeEventListener("ideate-swipe" as string, handler as EventListener);
   }, [isTop, handleSwipe]);
 
-  // Stack positioning for non-top cards
-  const stackScale = 1 - stackIndex * 0.05;
-  const stackY = stackIndex * 10;
+  const stackScale = 1 - stackIndex * 0.04;
+  const stackY = stackIndex * 8;
 
-  // Drag transform
   const dragTransform =
     isTop && !exiting
-      ? `translateX(${swipe.offsetX}px) translateY(${swipe.offsetY}px) rotate(${swipe.rotation}deg)`
+      ? `translateX(${swipe.offsetX}px) translateY(${swipe.offsetY * 0.4}px) rotate(${swipe.rotation * 0.6}deg)`
       : "";
 
-  // Exit transform
   const exitTransform = exiting
-    ? `translateX(${exiting === "right" ? "120vw" : "-120vw"}) rotate(${exiting === "right" ? 25 : -25}deg)`
+    ? `translateX(${exiting === "right" ? "110vw" : "-110vw"}) rotate(${exiting === "right" ? 15 : -15}deg)`
     : "";
 
   const transform = exiting
@@ -84,9 +81,10 @@ function SwipeCard({
       ? dragTransform
       : `scale(${stackScale}) translateY(${stackY}px)`;
 
-  // Overlay opacities
-  const approveOpacity = isTop && swipe.offsetX > 0 ? Math.min(swipe.offsetX / 150, 0.8) : 0;
-  const rejectOpacity = isTop && swipe.offsetX < 0 ? Math.min(-swipe.offsetX / 150, 0.8) : 0;
+  // Subtle edge glow on drag
+  const dragProgress = isTop ? Math.abs(swipe.offsetX) / 150 : 0;
+  const isApproving = swipe.offsetX > 0;
+  const glowOpacity = Math.min(dragProgress * 0.4, 0.4);
 
   return (
     <div
@@ -98,15 +96,14 @@ function SwipeCard({
           swipe.isDragging && !exiting
             ? "none"
             : exiting
-              ? "transform 400ms ease-in"
-              : "transform 300ms cubic-bezier(0.2, 0.9, 0.2, 1)",
+              ? "transform 450ms cubic-bezier(0.4, 0, 1, 1)"
+              : "transform 350ms cubic-bezier(0.2, 0.9, 0.2, 1)",
         zIndex: 30 - stackIndex,
         touchAction: "none",
         userSelect: "none",
       }}
     >
-      {/* Image */}
-      <div className="relative h-full w-full overflow-hidden rounded-[20px] bg-black">
+      <div className="relative h-full w-full overflow-hidden rounded-2xl bg-[#111]">
         <Image
           src={concept.thumb || concept.mediaSrc}
           alt={concept.title}
@@ -116,42 +113,34 @@ function SwipeCard({
           priority={stackIndex === 0}
         />
 
-        {/* Title overlay at bottom */}
-        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent p-4 pt-12 md:p-6 md:pt-24">
-          <span className="mb-1 inline-block rounded-full bg-white/10 px-2.5 py-0.5 text-xs font-medium tabular-nums text-white/60 backdrop-blur-sm">
-            #{concept.id}
-          </span>
-          <h2 className="text-lg font-bold tracking-tight text-white md:text-2xl">
+        {/* Cinematic gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80" />
+
+        {/* Content at bottom — editorial style */}
+        <div className="absolute inset-x-0 bottom-0 p-5 md:p-7">
+          <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
+            Concept {concept.id}
+          </p>
+          <h2 className="mt-1.5 text-xl font-semibold tracking-tight text-white/90 md:text-2xl">
             {concept.title}
           </h2>
-          <p className="mt-1 text-xs leading-snug text-white/50 md:text-sm md:leading-relaxed">
+          <p className="mt-2 text-[13px] leading-relaxed text-white/40 md:text-sm">
             {concept.subtitle}
           </p>
         </div>
 
-        {/* Approve overlay */}
-        <div
-          className="pointer-events-none absolute inset-0 flex items-center justify-center rounded-[20px] bg-emerald-500/30"
-          style={{ opacity: approveOpacity }}
-        >
-          <div className="rounded-xl border-4 border-emerald-400 px-6 py-3 rotate-[-20deg]">
-            <span className="text-4xl font-black tracking-wider text-emerald-400">
-              KEEP
-            </span>
-          </div>
-        </div>
-
-        {/* Reject overlay */}
-        <div
-          className="pointer-events-none absolute inset-0 flex items-center justify-center rounded-[20px] bg-red-500/30"
-          style={{ opacity: rejectOpacity }}
-        >
-          <div className="rounded-xl border-4 border-red-400 px-6 py-3 rotate-[20deg]">
-            <span className="text-4xl font-black tracking-wider text-red-400">
-              NOPE
-            </span>
-          </div>
-        </div>
+        {/* Subtle edge glow on swipe — no text, just ambient light */}
+        {isTop && dragProgress > 0.1 && (
+          <div
+            className="pointer-events-none absolute inset-0 rounded-2xl transition-opacity duration-100"
+            style={{
+              opacity: glowOpacity,
+              boxShadow: isApproving
+                ? "inset 0 0 60px rgba(255,255,255,0.08), inset 3px 0 30px rgba(255,255,255,0.05)"
+                : "inset 0 0 60px rgba(255,255,255,0.04), inset -3px 0 30px rgba(255,255,255,0.03)",
+            }}
+          />
+        )}
       </div>
     </div>
   );
@@ -163,27 +152,23 @@ export default function IdeationSwipe() {
   const [results, setResults] = useState<Results>({});
   const [mounted, setMounted] = useState(false);
 
-  // Load from localStorage on mount
   useEffect(() => {
     setResults(loadResults());
     setMounted(true);
   }, []);
 
-  // Concepts that haven't been reviewed yet
   const remaining = useMemo(
     () => IDEATION_CONCEPTS.filter((c) => !(c.id in results)),
     [results]
   );
 
   const approved = useMemo(
-    () =>
-      IDEATION_CONCEPTS.filter((c) => results[c.id] === "approved"),
+    () => IDEATION_CONCEPTS.filter((c) => results[c.id] === "approved"),
     [results]
   );
 
   const rejected = useMemo(
-    () =>
-      IDEATION_CONCEPTS.filter((c) => results[c.id] === "rejected"),
+    () => IDEATION_CONCEPTS.filter((c) => results[c.id] === "rejected"),
     [results]
   );
 
@@ -214,13 +199,9 @@ export default function IdeationSwipe() {
     const handler = (e: KeyboardEvent) => {
       if (remaining.length === 0) return;
       if (e.key === "ArrowLeft" || e.key === "j") {
-        window.dispatchEvent(
-          new CustomEvent("ideate-swipe", { detail: "left" })
-        );
+        window.dispatchEvent(new CustomEvent("ideate-swipe", { detail: "left" }));
       } else if (e.key === "ArrowRight" || e.key === "k") {
-        window.dispatchEvent(
-          new CustomEvent("ideate-swipe", { detail: "right" })
-        );
+        window.dispatchEvent(new CustomEvent("ideate-swipe", { detail: "right" }));
       }
     };
     window.addEventListener("keydown", handler);
@@ -229,20 +210,14 @@ export default function IdeationSwipe() {
 
   if (!mounted) return null;
 
-  // Empty state — no concepts generated yet
+  // Empty state
   if (total === 0) {
     return (
-      <main className="min-h-screen bg-[#0a0a0a] pt-6 pb-10 md:pt-32 md:pb-20">
-        <div className="mx-auto max-w-md px-6 text-center">
-          <h1 className="mb-2 text-2xl font-bold tracking-tight text-white">
-            Ideation
-          </h1>
-          <div className="mt-12 flex flex-col items-center rounded-2xl border border-dashed border-white/10 py-20">
-            <p className="text-lg font-medium text-white/30">No concepts yet</p>
-            <p className="mt-2 max-w-xs text-sm text-white/20">
-              Run the overnight generation to populate this page.
-            </p>
-          </div>
+      <main className="flex min-h-screen items-center justify-center bg-[#0a0a0a]">
+        <div className="text-center">
+          <p className="text-sm font-medium uppercase tracking-[0.2em] text-white/20">
+            No concepts yet
+          </p>
         </div>
       </main>
     );
@@ -251,68 +226,65 @@ export default function IdeationSwipe() {
   // Results screen — all reviewed
   if (remaining.length === 0) {
     return (
-      <main className="min-h-screen bg-[#0a0a0a] pt-6 pb-10 md:pt-32 md:pb-20">
-        <div className="mx-auto max-w-2xl px-6">
-          <h1 className="mb-8 text-center text-2xl font-bold tracking-tight text-white">
-            Review Complete
-          </h1>
-
-          <div className="mb-8 flex justify-center gap-8">
-            <div className="text-center">
-              <span className="text-3xl font-bold text-emerald-400">
-                {approved.length}
-              </span>
-              <p className="mt-1 text-xs uppercase tracking-wider text-white/40">
-                Approved
-              </p>
-            </div>
-            <div className="text-center">
-              <span className="text-3xl font-bold text-red-400">
-                {rejected.length}
-              </span>
-              <p className="mt-1 text-xs uppercase tracking-wider text-white/40">
-                Rejected
-              </p>
+      <main className="min-h-screen bg-[#0a0a0a] pt-12 pb-16 md:pt-32 md:pb-20">
+        <div className="mx-auto max-w-lg px-6">
+          {/* Minimal header */}
+          <div className="mb-12 text-center">
+            <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-white/25">
+              Review Complete
+            </p>
+            <div className="mx-auto mt-6 flex max-w-[200px] justify-between">
+              <div className="text-center">
+                <span className="text-2xl font-light tabular-nums text-white/70">
+                  {approved.length}
+                </span>
+                <p className="mt-1 text-[10px] uppercase tracking-[0.15em] text-white/25">
+                  Kept
+                </p>
+              </div>
+              <div className="h-10 w-px bg-white/10" />
+              <div className="text-center">
+                <span className="text-2xl font-light tabular-nums text-white/40">
+                  {rejected.length}
+                </span>
+                <p className="mt-1 text-[10px] uppercase tracking-[0.15em] text-white/25">
+                  Passed
+                </p>
+              </div>
             </div>
           </div>
 
           {approved.length > 0 && (
-            <>
-              <h2 className="mb-4 text-sm font-medium uppercase tracking-wider text-white/40">
-                Approved Concepts
-              </h2>
-              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-                {approved.map((c) => (
-                  <div
-                    key={c.id}
-                    className="group relative overflow-hidden rounded-xl bg-white/[0.03]"
-                  >
-                    <div className="aspect-[4/3] w-full bg-black">
-                      <img
-                        src={c.thumb || c.mediaSrc}
-                        alt={c.title}
-                        className="h-full w-full object-contain"
-                      />
-                    </div>
-                    <div className="p-3">
-                      <span className="text-xs text-white/40">#{c.id}</span>
-                      <p className="text-sm font-medium text-white/80">
-                        {c.title}
-                      </p>
-                    </div>
+            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+              {approved.map((c) => (
+                <div
+                  key={c.id}
+                  className="group relative overflow-hidden rounded-xl bg-[#111]"
+                >
+                  <div className="aspect-[4/3] w-full">
+                    <img
+                      src={c.thumb || c.mediaSrc}
+                      alt={c.title}
+                      className="h-full w-full object-contain"
+                    />
                   </div>
-                ))}
-              </div>
-            </>
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-3 pt-8">
+                    <p className="text-xs font-medium text-white/60">
+                      {c.title}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
           )}
 
-          <div className="mt-10 flex justify-center">
+          <div className="mt-12 flex justify-center">
             <button
               type="button"
               onClick={resetAll}
-              className="rounded-full border border-white/20 px-6 py-2.5 text-sm font-medium text-white/60 transition-all duration-200 hover:border-white/40 hover:text-white"
+              className="rounded-full px-8 py-2.5 text-[11px] font-medium uppercase tracking-[0.2em] text-white/30 transition-colors duration-300 hover:text-white/60"
             >
-              Review Again
+              Start Over
             </button>
           </div>
         </div>
@@ -324,28 +296,28 @@ export default function IdeationSwipe() {
   const visibleCards = remaining.slice(0, 3);
 
   return (
-    <main className="h-[100dvh] overflow-hidden bg-[#0a0a0a] px-6 pt-4 pb-6 md:h-auto md:min-h-screen md:overflow-visible md:pt-28 md:pb-20">
-      <div className="mx-auto max-w-md">
-        {/* Header */}
-        <div className="mb-4 flex items-center justify-between md:mb-6">
-          <h1 className="text-xl font-bold tracking-tight text-white">
+    <main className="h-[100dvh] overflow-hidden bg-[#0a0a0a] md:h-auto md:min-h-screen md:overflow-visible md:pb-20">
+      <div className="mx-auto flex h-full max-w-md flex-col px-5 pt-4 pb-6 md:block md:h-auto md:pt-28">
+        {/* Header — ultra minimal */}
+        <div className="mb-3 flex items-center justify-between md:mb-6">
+          <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-white/25">
             Ideation
-          </h1>
-          <span className="text-sm tabular-nums text-white/40">
+          </p>
+          <p className="text-[11px] font-medium tabular-nums tracking-wider text-white/20">
             {reviewed + 1} / {total}
-          </span>
+          </p>
         </div>
 
-        {/* Progress bar */}
-        <div className="mb-4 h-1 w-full overflow-hidden rounded-full bg-white/10 md:mb-8">
+        {/* Progress — thin line */}
+        <div className="mb-4 h-[2px] w-full overflow-hidden rounded-full bg-white/[0.06] md:mb-8">
           <div
-            className="h-full rounded-full bg-white/30 transition-all duration-500 ease-out"
+            className="h-full rounded-full bg-white/20 transition-all duration-700 ease-out"
             style={{ width: `${(reviewed / total) * 100}%` }}
           />
         </div>
 
         {/* Card stack */}
-        <div className="card-stack">
+        <div className="card-stack flex-1 md:flex-none">
           {visibleCards
             .slice()
             .reverse()
@@ -363,64 +335,9 @@ export default function IdeationSwipe() {
             })}
         </div>
 
-        {/* Action buttons */}
-        <div className="mt-4 flex shrink-0 items-center justify-center gap-6 md:mt-8">
-          <button
-            type="button"
-            onClick={() =>
-              window.dispatchEvent(
-                new CustomEvent("ideate-swipe", { detail: "left" })
-              )
-            }
-            className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-red-400/40 text-red-400 transition-all duration-200 hover:border-red-400 hover:bg-red-400/10 hover:scale-110 active:scale-95 md:h-14 md:w-14"
-            aria-label="Reject"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-7 w-7"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2.5}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-
-          <button
-            type="button"
-            onClick={() =>
-              window.dispatchEvent(
-                new CustomEvent("ideate-swipe", { detail: "right" })
-              )
-            }
-            className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-emerald-400/40 text-emerald-400 transition-all duration-200 hover:border-emerald-400 hover:bg-emerald-400/10 hover:scale-110 active:scale-95 md:h-14 md:w-14"
-            aria-label="Approve"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-7 w-7"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2.5}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M5 13l4 4L19 7"
-              />
-            </svg>
-          </button>
-        </div>
-
-        {/* Keyboard hint — desktop only */}
-        <p className="mt-4 hidden text-center text-xs text-white/20 md:block">
-          ← / j to reject &middot; → / k to approve
+        {/* Keyboard hint — desktop only, very subtle */}
+        <p className="mt-6 hidden text-center text-[10px] tracking-[0.15em] text-white/15 md:block">
+          ← PASS &nbsp;&middot;&nbsp; KEEP →
         </p>
       </div>
 
@@ -429,13 +346,13 @@ export default function IdeationSwipe() {
           position: relative;
           width: 100%;
           aspect-ratio: 3 / 4;
-          max-width: 400px;
+          max-width: 420px;
           margin: 0 auto;
         }
         @media (max-width: 767px) {
           .card-stack {
             aspect-ratio: unset;
-            height: calc(100dvh - 230px);
+            min-height: 0;
           }
         }
         .card-stack :global(.swipe-card) {
