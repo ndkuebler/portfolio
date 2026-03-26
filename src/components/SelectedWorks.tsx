@@ -281,6 +281,9 @@ export function SelectedWorks() {
               className="relative w-[min(80vw,500px)] aspect-square"
               style={{ display: show3D ? "block" : "none" }}
               onClick={(e) => e.stopPropagation()}
+              onPointerDown={(e) => e.stopPropagation()}
+              onMouseDown={(e) => e.stopPropagation()}
+              onTouchStart={(e) => e.stopPropagation()}
             >
               <SomniModelViewer />
             </div>
