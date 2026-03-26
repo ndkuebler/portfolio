@@ -144,6 +144,96 @@ function SwipeCard({
   );
 }
 
+/* ───────────────────────── ScrollWheel ───────────────────────── */
+
+const ITEM_HEIGHT = 80;
+
+function ScrollWheel({ concepts }: { concepts: IdeationConcept[] }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [scrollY, setScrollY] = useState(0);
+  const [containerH, setContainerH] = useState(0);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    setContainerH(el.clientHeight);
+
+    const onScroll = () => setScrollY(el.scrollTop);
+    el.addEventListener("scroll", onScroll, { passive: true });
+
+    const onResize = () => setContainerH(el.clientHeight);
+    window.addEventListener("resize", onResize);
+
+    return () => {
+      el.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onResize);
+    };
+  }, []);
+
+  const centerY = containerH / 2;
+  const spacer = centerY - ITEM_HEIGHT / 2;
+
+  return (
+    <div className="relative mt-6 min-h-0 flex-1">
+      {/* Fade edges */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-20 bg-gradient-to-b from-[#0a0a0a] to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-20 bg-gradient-to-t from-[#0a0a0a] to-transparent" />
+
+      <div
+        ref={containerRef}
+        className="h-full snap-y snap-mandatory overflow-y-auto overscroll-contain scrollbar-none"
+        style={{ WebkitOverflowScrolling: "touch", scrollbarWidth: "none" } as React.CSSProperties}
+      >
+        <div style={{ height: spacer }} />
+
+        {concepts.map((c, i) => {
+          const itemCenter = spacer + i * ITEM_HEIGHT + ITEM_HEIGHT / 2;
+          const distFromCenter = Math.abs(itemCenter - scrollY - centerY);
+          const maxDist = centerY + ITEM_HEIGHT;
+          const norm = Math.min(distFromCenter / maxDist, 1);
+
+          const scale = 1 - norm * 0.25;
+          const opacity = 1 - norm * 0.65;
+
+          return (
+            <div
+              key={c.id}
+              className="snap-center"
+              style={{ height: ITEM_HEIGHT }}
+            >
+              <div
+                className="mx-auto flex h-full max-w-[340px] items-center gap-4 rounded-2xl px-4 transition-none"
+                style={{
+                  transform: `scale(${scale})`,
+                  opacity,
+                }}
+              >
+                <div className="h-12 w-12 shrink-0 overflow-hidden rounded-xl bg-black">
+                  <img
+                    src={c.thumb || c.mediaSrc}
+                    alt={c.title}
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-[15px] font-medium text-white">
+                    {c.title}
+                  </p>
+                  <p className="mt-0.5 truncate text-[12px] text-white/40">
+                    {c.subtitle}
+                  </p>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+
+        <div style={{ height: spacer }} />
+      </div>
+    </div>
+  );
+}
+
 /* ───────────────────────── Main Component ───────────────────────── */
 
 function buildResultsCode(approvedIds: number[]): string {
@@ -247,46 +337,7 @@ export default function IdeationSwipe() {
 
           {/* Scroll wheel */}
           {approved.length > 0 && (
-            <div className="relative mt-8 min-h-0 flex-1">
-              {/* Bottom fade */}
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-12 bg-gradient-to-t from-[#0a0a0a] to-transparent" />
-
-
-              {/* Scrollable area */}
-              <div
-                className="wheel-scroll h-full snap-y snap-mandatory overflow-y-auto overscroll-contain"
-                style={{ WebkitOverflowScrolling: "touch" } as React.CSSProperties}
-              >
-                {/* Top spacer */}
-                <div className="h-4" />
-
-                {approved.map((c) => (
-                  <div
-                    key={c.id}
-                    className="flex h-[72px] snap-center items-center gap-4 px-4"
-                  >
-                    <div className="h-11 w-11 shrink-0 overflow-hidden rounded-lg bg-black">
-                      <img
-                        src={c.thumb || c.mediaSrc}
-                        alt={c.title}
-                        className="h-full w-full object-cover"
-                      />
-                    </div>
-                    <div className="min-w-0">
-                      <p className="text-[15px] font-medium text-white/80">
-                        {c.title}
-                      </p>
-                      <p className="mt-0.5 truncate text-[12px] text-white/30">
-                        {c.subtitle}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-
-                {/* Bottom spacer */}
-                <div className="h-4" />
-              </div>
-            </div>
+            <ScrollWheel concepts={approved} />
           )}
 
           {/* Fixed bottom section */}
