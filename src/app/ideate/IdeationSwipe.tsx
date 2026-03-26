@@ -248,20 +248,17 @@ export default function IdeationSwipe() {
           {/* Scroll wheel */}
           {approved.length > 0 && (
             <div className="relative mt-8 min-h-0 flex-1">
-              {/* Fade edges */}
-              <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-16 bg-gradient-to-b from-[#0a0a0a] to-transparent" />
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-16 bg-gradient-to-t from-[#0a0a0a] to-transparent" />
+              {/* Bottom fade */}
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-12 bg-gradient-to-t from-[#0a0a0a] to-transparent" />
 
-              {/* Center highlight */}
-              <div className="pointer-events-none absolute inset-x-0 top-1/2 z-[5] -translate-y-1/2 h-[72px] rounded-2xl border border-white/[0.08]" />
 
               {/* Scrollable area */}
               <div
                 className="wheel-scroll h-full snap-y snap-mandatory overflow-y-auto overscroll-contain"
                 style={{ WebkitOverflowScrolling: "touch" } as React.CSSProperties}
               >
-                {/* Top spacer to center first item */}
-                <div className="h-[calc(50%-36px)]" />
+                {/* Top spacer */}
+                <div className="h-4" />
 
                 {approved.map((c) => (
                   <div
@@ -286,8 +283,8 @@ export default function IdeationSwipe() {
                   </div>
                 ))}
 
-                {/* Bottom spacer to center last item */}
-                <div className="h-[calc(50%-36px)]" />
+                {/* Bottom spacer */}
+                <div className="h-4" />
               </div>
             </div>
           )}
