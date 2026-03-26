@@ -108,7 +108,7 @@ function SwipeCard({
           src={concept.thumb || concept.mediaSrc}
           alt={concept.title}
           fill
-          className="object-contain"
+          className="object-contain object-[center_35%]"
           draggable={false}
           priority={stackIndex === 0}
         />
@@ -118,13 +118,13 @@ function SwipeCard({
 
         {/* Content at bottom — editorial style */}
         <div className="absolute inset-x-0 bottom-0 p-5 md:p-7">
-          <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
+          <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-white/35">
             Concept {concept.id}
           </p>
-          <h2 className="mt-1.5 text-xl font-semibold tracking-tight text-white/90 md:text-2xl">
+          <h2 className="mt-1.5 text-[22px] font-semibold tracking-tight text-white/90 md:text-2xl">
             {concept.title}
           </h2>
-          <p className="mt-2 text-[13px] leading-relaxed text-white/40 md:text-sm">
+          <p className="mt-2 text-sm leading-relaxed text-white/55 md:text-[15px]">
             {concept.subtitle}
           </p>
         </div>
