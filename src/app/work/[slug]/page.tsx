@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getWorkBySlug, works } from "@/data/works";
+import { SomniImageToggle } from "@/components/SomniImageToggle";
 
 export async function generateStaticParams() {
   return works.map((w) => ({ slug: w.slug }));
@@ -52,17 +53,21 @@ export default async function WorkPage({
           </p>
         </header>
 
-        <div className="relative mt-12 aspect-[16/10] w-full overflow-hidden rounded-sm border border-[#f5f5f5]/10 bg-[#111]">
-          <Image
-            src={project.image}
-            alt={project.title}
-            fill
-            className="object-cover"
-            sizes="(max-width: 900px) 100vw, 900px"
-            priority
-            unoptimized={project.image.endsWith(".svg")}
-          />
-        </div>
+        {slug === "somni" ? (
+          <SomniImageToggle image={project.image} title={project.title} />
+        ) : (
+          <div className="relative mt-12 aspect-[16/10] w-full overflow-hidden rounded-sm border border-[#f5f5f5]/10 bg-[#111]">
+            <Image
+              src={project.image}
+              alt={project.title}
+              fill
+              className="object-cover"
+              sizes="(max-width: 900px) 100vw, 900px"
+              priority
+              unoptimized={project.image.endsWith(".svg")}
+            />
+          </div>
+        )}
 
         <p className="mt-12 max-w-[52ch] text-[0.9375rem] font-light leading-relaxed text-[#f5f5f5]/60">
           Case study content for this project can go here — process, outcomes, and
