@@ -117,14 +117,14 @@ function SwipeCard({
         />
 
         {/* Title overlay at bottom */}
-        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent p-6 pt-24">
+        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent p-4 pt-12 md:p-6 md:pt-24">
           <span className="mb-1 inline-block rounded-full bg-white/10 px-2.5 py-0.5 text-xs font-medium tabular-nums text-white/60 backdrop-blur-sm">
             #{concept.id}
           </span>
-          <h2 className="text-xl font-bold tracking-tight text-white sm:text-2xl">
+          <h2 className="text-lg font-bold tracking-tight text-white md:text-2xl">
             {concept.title}
           </h2>
-          <p className="mt-1 text-sm leading-relaxed text-white/50">
+          <p className="mt-1 hidden text-sm leading-relaxed text-white/50 md:block">
             {concept.subtitle}
           </p>
         </div>
@@ -232,7 +232,7 @@ export default function IdeationSwipe() {
   // Empty state — no concepts generated yet
   if (total === 0) {
     return (
-      <main className="min-h-screen bg-[#0a0a0a] pt-32 pb-20">
+      <main className="min-h-screen bg-[#0a0a0a] pt-6 pb-10 md:pt-32 md:pb-20">
         <div className="mx-auto max-w-md px-6 text-center">
           <h1 className="mb-2 text-2xl font-bold tracking-tight text-white">
             Ideation
@@ -251,7 +251,7 @@ export default function IdeationSwipe() {
   // Results screen — all reviewed
   if (remaining.length === 0) {
     return (
-      <main className="min-h-screen bg-[#0a0a0a] pt-32 pb-20">
+      <main className="min-h-screen bg-[#0a0a0a] pt-6 pb-10 md:pt-32 md:pb-20">
         <div className="mx-auto max-w-2xl px-6">
           <h1 className="mb-8 text-center text-2xl font-bold tracking-tight text-white">
             Review Complete
@@ -324,10 +324,10 @@ export default function IdeationSwipe() {
   const visibleCards = remaining.slice(0, 3);
 
   return (
-    <main className="min-h-screen bg-[#0a0a0a] pt-28 pb-20">
-      <div className="mx-auto max-w-md px-6">
+    <main className="h-[100dvh] overflow-hidden bg-[#0a0a0a] px-6 pt-4 pb-6 md:h-auto md:min-h-screen md:overflow-visible md:pt-28 md:pb-20">
+      <div className="mx-auto max-w-md">
         {/* Header */}
-        <div className="mb-6 flex items-center justify-between">
+        <div className="mb-4 flex items-center justify-between md:mb-6">
           <h1 className="text-xl font-bold tracking-tight text-white">
             Ideation
           </h1>
@@ -337,7 +337,7 @@ export default function IdeationSwipe() {
         </div>
 
         {/* Progress bar */}
-        <div className="mb-8 h-1 w-full overflow-hidden rounded-full bg-white/10">
+        <div className="mb-4 h-1 w-full overflow-hidden rounded-full bg-white/10 md:mb-8">
           <div
             className="h-full rounded-full bg-white/30 transition-all duration-500 ease-out"
             style={{ width: `${(reviewed / total) * 100}%` }}
@@ -364,7 +364,7 @@ export default function IdeationSwipe() {
         </div>
 
         {/* Action buttons */}
-        <div className="mt-8 flex items-center justify-center gap-6">
+        <div className="mt-4 flex shrink-0 items-center justify-center gap-6 md:mt-8">
           <button
             type="button"
             onClick={() =>
@@ -372,7 +372,7 @@ export default function IdeationSwipe() {
                 new CustomEvent("ideate-swipe", { detail: "left" })
               )
             }
-            className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-red-400/40 text-red-400 transition-all duration-200 hover:border-red-400 hover:bg-red-400/10 hover:scale-110 active:scale-95"
+            className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-red-400/40 text-red-400 transition-all duration-200 hover:border-red-400 hover:bg-red-400/10 hover:scale-110 active:scale-95 md:h-14 md:w-14"
             aria-label="Reject"
           >
             <svg
@@ -398,7 +398,7 @@ export default function IdeationSwipe() {
                 new CustomEvent("ideate-swipe", { detail: "right" })
               )
             }
-            className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-emerald-400/40 text-emerald-400 transition-all duration-200 hover:border-emerald-400 hover:bg-emerald-400/10 hover:scale-110 active:scale-95"
+            className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-emerald-400/40 text-emerald-400 transition-all duration-200 hover:border-emerald-400 hover:bg-emerald-400/10 hover:scale-110 active:scale-95 md:h-14 md:w-14"
             aria-label="Approve"
           >
             <svg
@@ -418,8 +418,8 @@ export default function IdeationSwipe() {
           </button>
         </div>
 
-        {/* Keyboard hint */}
-        <p className="mt-4 text-center text-xs text-white/20">
+        {/* Keyboard hint — desktop only */}
+        <p className="mt-4 hidden text-center text-xs text-white/20 md:block">
           ← / j to reject &middot; → / k to approve
         </p>
       </div>
@@ -431,6 +431,12 @@ export default function IdeationSwipe() {
           aspect-ratio: 3 / 4;
           max-width: 400px;
           margin: 0 auto;
+        }
+        @media (max-width: 767px) {
+          .card-stack {
+            aspect-ratio: unset;
+            height: calc(100dvh - 230px);
+          }
         }
         .card-stack :global(.swipe-card) {
           position: absolute;
