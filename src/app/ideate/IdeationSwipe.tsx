@@ -129,15 +129,18 @@ function SwipeCard({
           </p>
         </div>
 
-        {/* Subtle edge glow on swipe — no text, just ambient light */}
+        {/* Color glow on swipe — green for keep, red for pass */}
         {isTop && dragProgress > 0.1 && (
           <div
             className="pointer-events-none absolute inset-0 rounded-2xl transition-opacity duration-100"
             style={{
               opacity: glowOpacity,
+              background: isApproving
+                ? "radial-gradient(ellipse at right center, rgba(52,211,153,0.15) 0%, transparent 70%)"
+                : "radial-gradient(ellipse at left center, rgba(248,113,113,0.15) 0%, transparent 70%)",
               boxShadow: isApproving
-                ? "inset 0 0 60px rgba(255,255,255,0.08), inset 3px 0 30px rgba(255,255,255,0.05)"
-                : "inset 0 0 60px rgba(255,255,255,0.04), inset -3px 0 30px rgba(255,255,255,0.03)",
+                ? "inset 0 0 80px rgba(52,211,153,0.1), inset 4px 0 40px rgba(52,211,153,0.08)"
+                : "inset 0 0 80px rgba(248,113,113,0.1), inset -4px 0 40px rgba(248,113,113,0.08)",
             }}
           />
         )}
