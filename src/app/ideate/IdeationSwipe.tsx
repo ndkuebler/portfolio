@@ -124,7 +124,7 @@ function SwipeCard({
           <h2 className="text-lg font-bold tracking-tight text-white md:text-2xl">
             {concept.title}
           </h2>
-          <p className="mt-1 hidden text-sm leading-relaxed text-white/50 md:block">
+          <p className="mt-1 text-xs leading-snug text-white/50 md:text-sm md:leading-relaxed">
             {concept.subtitle}
           </p>
         </div>
