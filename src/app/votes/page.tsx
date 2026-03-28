@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 type VoteResult = {
@@ -13,7 +13,7 @@ type VoteResult = {
   likePercent: number;
 };
 
-export default function VotesPage() {
+function VotesContent() {
   const params = useSearchParams();
   const key = params.get("key");
   const [results, setResults] = useState<VoteResult[] | null>(null);
@@ -119,5 +119,13 @@ export default function VotesPage() {
         </div>
       </div>
     </main>
+  );
+}
+
+export default function VotesPage() {
+  return (
+    <Suspense fallback={<main className="flex min-h-screen items-center justify-center bg-[#0a0a0a]"><p className="text-sm text-white/30">Loading...</p></main>}>
+      <VotesContent />
+    </Suspense>
   );
 }
