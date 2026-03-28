@@ -273,7 +273,7 @@ export default function ConceptSwipe({ onClose }: { onClose: () => void }) {
   }, []);
 
   const remaining = useMemo(() => {
-    return shuffledConcepts.filter((c) => !(c.slug in voted));
+    return shuffledConcepts.filter((c) => !(c.slug! in voted));
   }, [shuffledConcepts, voted]);
 
   const totalToRate = shuffledConcepts.length;
@@ -285,7 +285,7 @@ export default function ConceptSwipe({ onClose }: { onClose: () => void }) {
       if (remaining.length === 0) return;
       const concept = remaining[0];
       const vote = dir === "right" ? "like" : "pass";
-      const next: VotedMap = { ...voted, [concept.slug]: vote as "like" | "pass" };
+      const next: VotedMap = { ...voted, [concept.slug!]: vote as "like" | "pass" };
       setVoted(next);
       saveVoted(next);
 
@@ -293,7 +293,7 @@ export default function ConceptSwipe({ onClose }: { onClose: () => void }) {
       fetch("/api/votes", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ slug: concept.slug, vote }),
+        body: JSON.stringify({ slug: concept.slug!, vote }),
       }).catch(() => {});
     },
     [remaining, voted]
@@ -386,7 +386,7 @@ export default function ConceptSwipe({ onClose }: { onClose: () => void }) {
                 const stackIndex = visibleCards.length - 1 - reverseIdx;
                 return (
                   <SwipeCard
-                    key={c.slug}
+                    key={c.slug!}
                     concept={c}
                     isTop={stackIndex === 0}
                     stackIndex={stackIndex}
