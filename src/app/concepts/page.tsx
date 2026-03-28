@@ -3,6 +3,9 @@
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
 import { CONCEPTS, type Concept } from "./concepts-data";
+import dynamic from "next/dynamic";
+
+const ConceptSwipe = dynamic(() => import("./ConceptSwipe"), { ssr: false });
 
 export default function ConceptsPage() {
   const concepts: Concept[] = CONCEPTS;
@@ -28,6 +31,7 @@ export default function ConceptsPage() {
   } | null>(null);
 
   const [expanded, setExpanded] = useState(false);
+  const [swipeOpen, setSwipeOpen] = useState(false);
   const closingRef = useRef(false);
 
   const imgRef = useRef<HTMLImageElement | null>(null);
@@ -171,13 +175,22 @@ export default function ConceptsPage() {
   const active = activeIndex != null ? concepts[activeIndex] : null;
 
   return (
-    <main className="min-h-screen bg-[#0a0a0a] pt-28 pb-20">
+    <main className="min-h-screen bg-[#0a0a0a] pt-20 pb-20 sm:pt-28">
       {/* Underlay: grid content */}
       <div className={`nk-underlay ${expanded ? "is-hidden" : ""}`}>
         <div className="mx-auto max-w-6xl px-6 sm:px-10 lg:px-14">
-          <h1 className="text-4xl font-semibold tracking-tight text-[#f5f5f5] mb-12">
-            Concepts
-          </h1>
+          <div className="flex items-center justify-between mb-12">
+            <h1 className="text-4xl font-semibold tracking-tight text-[#f5f5f5]">
+              Concepts
+            </h1>
+            <button
+              type="button"
+              onClick={() => setSwipeOpen(true)}
+              className="group relative rounded-full bg-white px-5 py-2.5 text-[13px] font-semibold text-black shadow-[0_0_20px_rgba(255,255,255,0.15)] transition-all duration-200 hover:shadow-[0_0_30px_rgba(255,255,255,0.25)] hover:scale-105 active:scale-95"
+            >
+              Rate My Concepts
+            </button>
+          </div>
 
           <div ref={gridRef} className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {concepts.map((c, i) => (
@@ -322,6 +335,9 @@ export default function ConceptsPage() {
           </div>
         </div>
       )}
+
+      {/* Swipe rating overlay */}
+      {swipeOpen && <ConceptSwipe onClose={() => setSwipeOpen(false)} />}
 
       <style jsx>{`
         .nk-underlay {
