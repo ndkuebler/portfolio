@@ -21,5 +21,5 @@ const FILENAMES = [
 
 export const conceptItems: ConceptItem[] = FILENAMES.map((filename) => ({
   filename,
-  src: `/concepts/${encodeURIComponent(filename)}`,
+  src: filename.includes('/') ? `/${filename}` : `/concepts/${encodeURIComponent(filename)}`,
 }));

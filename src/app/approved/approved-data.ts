@@ -86,4 +86,34 @@ export const APPROVED_CONCEPTS: IdeationConcept[] = [
     mediaSrc: "/ideate/ferro-clock.webp",
     createdAt: "2026-03-25",
   },
+  {
+    id: 2,
+    title: "Tide Stone",
+    subtitle:
+      "A smooth basalt desk stone with an embedded e-ink strip that displays the real time tide height of any coastline you choose, connecting your workspace to the ocean's rhythm.",
+    thumb: "/ideate/tide-stone-thumb.webp",
+    mediaType: "image",
+    mediaSrc: "/ideate/tide-stone.webp",
+    createdAt: "2026-03-27",
+  },
+  {
+    id: 4,
+    title: "Nebula Jar",
+    subtitle:
+      "A sealed glass jar filled with a proprietary magnetic fluid that swirls into galaxy like formations when you wave your hand near it, creating a personal nebula on your shelf.",
+    thumb: "/ideate/nebula-jar-thumb.webp",
+    mediaType: "image",
+    mediaSrc: "/ideate/nebula-jar.webp",
+    createdAt: "2026-03-27",
+  },
+  {
+    id: 12,
+    title: "Soot Canvas",
+    subtitle:
+      "A matte black wall panel coated in a soot based surface that you draw on with your fingertip. Exposed areas glow faintly at night using phosphorescent pigment beneath the soot layer.",
+    thumb: "/ideate/soot-canvas-thumb.webp",
+    mediaType: "image",
+    mediaSrc: "/ideate/soot-canvas.webp",
+    createdAt: "2026-03-27",
+  },
 ];

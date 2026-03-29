@@ -6,7 +6,7 @@ import { APPROVED_CONCEPTS, type IdeationConcept } from "./approved-data";
 
 const STORAGE_KEY = "approved-review-results";
 
-type Category = "deploy_now" | "touch_up_text" | "touch_up_image" | "touch_up";
+type Category = "deploy_now" | "deployed" | "touch_up_text" | "touch_up_image" | "touch_up";
 type CatResults = Record<number, Category>;
 
 function loadResults(): CatResults {
@@ -24,15 +24,41 @@ function saveResults(r: CatResults) {
 
 /* ───────────────────────── Detail View ───────────────────────── */
 
+async function deployConceptToPortfolio(concept: IdeationConcept): Promise<{ success: boolean; error?: string }> {
+  try {
+    const res = await fetch("/api/deploy-concept", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        title: concept.title,
+        subtitle: concept.subtitle,
+        thumb: concept.thumb,
+        mediaType: concept.mediaType,
+        mediaSrc: concept.mediaSrc,
+      }),
+    });
+    if (!res.ok) {
+      const data = await res.json();
+      return { success: false, error: data.error || "Deploy failed" };
+    }
+    return { success: true };
+  } catch (e) {
+    return { success: false, error: String(e) };
+  }
+}
+
 function DetailView({
   concept,
   onBack,
   onCategorize,
+  onDeploy,
 }: {
   concept: IdeationConcept;
   onBack: () => void;
   onCategorize: (cat: Category) => void;
+  onDeploy: () => void;
 }) {
+  const [deploying, setDeploying] = useState(false);
   return (
     <div>
       {/* Back */}
@@ -81,10 +107,20 @@ function DetailView({
       <div className="mt-6 flex flex-col gap-2.5">
         <button
           type="button"
-          onClick={() => onCategorize("deploy_now")}
-          className="w-full rounded-full bg-white py-3 text-[12px] font-semibold uppercase tracking-[0.15em] text-black transition-all duration-200 hover:bg-white/90 active:scale-[0.97]"
+          disabled={deploying}
+          onClick={async () => {
+            setDeploying(true);
+            const result = await deployConceptToPortfolio(concept);
+            setDeploying(false);
+            if (result.success) {
+              onDeploy();
+            } else {
+              alert(`Deploy failed: ${result.error}`);
+            }
+          }}
+          className="w-full rounded-full bg-white py-3 text-[12px] font-semibold uppercase tracking-[0.15em] text-black transition-all duration-200 hover:bg-white/90 active:scale-[0.97] disabled:opacity-50"
         >
-          Deploy Now
+          {deploying ? "Deploying..." : "Deploy Now"}
         </button>
         <div className="flex gap-2.5">
           <button
@@ -141,7 +177,9 @@ function ConceptCard({
           <div className="absolute right-3 top-3">
             <span
               className={`rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider ${
-                badge === "Deploy Now"
+                badge === "Deployed"
+                  ? "bg-green-500/90 text-white"
+                  : badge === "Deploy Now"
                   ? "bg-white/90 text-black"
                   : "bg-white/10 text-white/50 backdrop-blur-sm"
               }`}
@@ -178,6 +216,11 @@ export default function ApprovedReview() {
     [results]
   );
 
+  const deployed = useMemo(
+    () => APPROVED_CONCEPTS.filter((c) => results[c.id] === "deployed"),
+    [results]
+  );
+
   const deployNow = useMemo(
     () => APPROVED_CONCEPTS.filter((c) => results[c.id] === "deploy_now"),
     [results]
@@ -208,6 +251,14 @@ export default function ApprovedReview() {
     },
     [viewing, results]
   );
+
+  const handleDeploy = useCallback(() => {
+    if (!viewing) return;
+    const next: CatResults = { ...results, [viewing.id]: "deployed" };
+    setResults(next);
+    saveResults(next);
+    setViewing(null);
+  }, [viewing, results]);
 
   const resetAll = () => {
     setResults({});
@@ -242,6 +293,7 @@ export default function ApprovedReview() {
             concept={viewing}
             onBack={() => setViewing(null)}
             onCategorize={handleCategorize}
+            onDeploy={handleDeploy}
           />
         </div>
       </main>
@@ -261,6 +313,25 @@ export default function ApprovedReview() {
 
           {/* Sections */}
           <div className="mt-12 space-y-14">
+            {/* Deployed */}
+            {deployed.length > 0 && (
+              <div>
+                <div className="mb-6 flex items-center gap-3">
+                  <h2 className="text-[13px] font-semibold uppercase tracking-[0.2em] text-green-400">
+                    Deployed
+                  </h2>
+                  <span className="rounded-full bg-green-500/10 px-2.5 py-0.5 text-[11px] tabular-nums text-green-400/60">
+                    {deployed.length}
+                  </span>
+                </div>
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {deployed.map((c) => (
+                    <ConceptCard key={c.id} concept={c} onClick={() => setViewing(c)} badge="Deployed" />
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Deploy Now */}
             {deployNow.length > 0 && (
               <div>
@@ -384,11 +455,12 @@ export default function ApprovedReview() {
         </div>
 
         {/* Already categorized */}
-        {(deployNow.length > 0 || touchUpText.length > 0 || touchUpImage.length > 0 || touchUp.length > 0) && (
+        {(deployed.length > 0 || deployNow.length > 0 || touchUpText.length > 0 || touchUpImage.length > 0 || touchUp.length > 0) && (
           <div className="mt-16">
             <div className="mx-auto mb-8 h-px w-12 bg-white/10" />
 
             {[
+              { label: "Deployed", items: deployed },
               { label: "Deploy Now", items: deployNow },
               { label: "Touch Up Text", items: touchUpText },
               { label: "Touch Up Image", items: touchUpImage },

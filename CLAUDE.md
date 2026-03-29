@@ -16,23 +16,29 @@
 5. Ideation data gets cleared (empty the array) for the next batch
 6. Never touch approved-data.ts when clearing ideation data
 
-## Nick's Concept Taste Profile (Batch 1: 8/50 approved)
+## Nick's Concept Taste Profile (11/75 approved across 2 batches)
 
 ### What he likes
 - Objects that blend physical and digital in a subtle, poetic way
 - Time/nature-connected products (shadow, wind, tides, horizon)
-- Dark/moody materials (black zirconium, walnut, matte finishes)
-- Products with a sense of quiet magic (floating, glowing, magnets)
+- Dark/moody materials (black zirconium, walnut, matte, basalt, soot)
+- Products with a sense of quiet magic (floating, glowing, magnets, ferrofluid)
 - Desk/shelf/wall objects over wearables or kitchen items
+- Tactile interaction (hand wave, fingertip drawing, touch)
+- Real world data made physical (tides, wind, aurora, ocean)
 
 ### What he passes on
 - Pure wearables (rings, headbands, bracelets, sandals)
 - Purely decorative items without an interactive element
 - Overly gadget-y or utilitarian products (rescue tools, trackers, chargers)
 - Furniture pieces (chairs, tables)
+- Biometric/wellness products (breath guides, stress monitors, focus sensors)
+- Handheld tools or monocle-type devices
+- Most lamps (unless very unique concept)
 
-### Approved from Batch 1
-- Memory Marble, Shadow Clock, Thermal Portrait, Drift Globe, Horizon Shelf, Cloud Humidifier, Glyph Ring, Ferro Clock
+### Approved concepts
+- Batch 1: Memory Marble, Shadow Clock, Thermal Portrait, Drift Globe, Horizon Shelf, Cloud Humidifier, Glyph Ring, Ferro Clock
+- Batch 2: Tide Stone, Nebula Jar, Soot Canvas
 
 ## Deployment
 
