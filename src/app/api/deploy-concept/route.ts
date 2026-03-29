@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
+import { execSync } from "child_process";
 
 export async function POST(req: Request) {
   if (process.env.NODE_ENV !== "development") {
@@ -80,5 +81,16 @@ export async function POST(req: Request) {
 
   fs.writeFileSync(conceptsComponentPath, conceptsComponent);
 
-  return NextResponse.json({ success: true, slug, index: existingCount });
+  // 4. Git add, commit, and push
+  try {
+    execSync(
+      `git add "${conceptsDataPath}" "${carouselDataPath}" "${conceptsComponentPath}" && git commit -m "Deploy ${title} to portfolio concepts" && git push origin main`,
+      { cwd: root, stdio: "pipe" }
+    );
+  } catch (e: unknown) {
+    const msg = e instanceof Error ? e.message : String(e);
+    return NextResponse.json({ success: true, slug, index: existingCount, pushError: msg });
+  }
+
+  return NextResponse.json({ success: true, slug, index: existingCount, pushed: true });
 }

@@ -41,7 +41,8 @@ async function deployConceptToPortfolio(concept: IdeationConcept): Promise<{ suc
       const data = await res.json();
       return { success: false, error: data.error || "Deploy failed" };
     }
-    return { success: true };
+    const data = await res.json();
+    return { success: true, pushed: data.pushed };
   } catch (e) {
     return { success: false, error: String(e) };
   }
@@ -120,7 +121,7 @@ function DetailView({
           }}
           className="w-full rounded-full bg-white py-3 text-[12px] font-semibold uppercase tracking-[0.15em] text-black transition-all duration-200 hover:bg-white/90 active:scale-[0.97] disabled:opacity-50"
         >
-          {deploying ? "Deploying..." : "Deploy Now"}
+          {deploying ? "Deploying & pushing..." : "Deploy Now"}
         </button>
         <div className="flex gap-2.5">
           <button
