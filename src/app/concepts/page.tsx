@@ -51,7 +51,7 @@ export default function ConceptsPage() {
     }
   };
 
-  const computeToRect = () => {
+  const computeToRect = (index?: number) => {
     const gridEl = gridRef.current;
     if (!gridEl) return null;
 
@@ -61,13 +61,27 @@ export default function ConceptsPage() {
     const PAD_X = isMobile ? 18 : 48;
     const PAD_Y = isMobile ? 96 : 64;
 
+    // Use actual media aspect ratio if available, otherwise default to 4:3
+    let aspectRatio = 4 / 3;
+    const idx = index ?? activeIndex;
+    if (idx != null) {
+      const img = imgRef.current;
+      const vid = vidRef.current;
+      const concept = concepts[idx];
+      if (concept?.mediaType === "video" && vid?.videoWidth && vid?.videoHeight) {
+        aspectRatio = vid.videoWidth / vid.videoHeight;
+      } else if (img?.naturalWidth && img?.naturalHeight) {
+        aspectRatio = img.naturalWidth / img.naturalHeight;
+      }
+    }
+
     let w = Math.min(r.width, window.innerWidth - PAD_X * 2);
-    let h = (w * 3) / 4;
+    let h = w / aspectRatio;
 
     const maxH = Math.max(240, window.innerHeight - PAD_Y * 2);
     if (h > maxH) {
       h = maxH;
-      w = (h * 4) / 3;
+      w = h * aspectRatio;
     }
 
     const left = (window.innerWidth - w) / 2;
@@ -301,7 +315,7 @@ export default function ConceptsPage() {
                 muted
                 playsInline
                 preload="auto"
-                onLoadedMetadata={() => recomputeCaptionVars()}
+                onLoadedMetadata={() => { setToRect(computeToRect()); recomputeCaptionVars(); }}
                 onClick={(e) => {
                   e.stopPropagation();
                   close();
@@ -313,7 +327,7 @@ export default function ConceptsPage() {
                 src={active.mediaSrc}
                 alt={active.title}
                 className="nk-lightbox-img"
-                onLoad={() => recomputeCaptionVars()}
+                onLoad={() => { setToRect(computeToRect()); recomputeCaptionVars(); }}
                 onClick={(e) => {
                   e.stopPropagation();
                   close();
