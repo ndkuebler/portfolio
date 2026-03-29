@@ -60,7 +60,7 @@ export default function ConceptsPage() {
     const isMobile = window.matchMedia("(max-width: 639px)").matches;
 
     const PAD_X = isMobile ? 18 : 48;
-    const PAD_Y = isMobile ? 96 : 64;
+    const PAD_Y = isMobile ? 96 : 100;
 
     // Default 4:3, but use actual aspect ratio if known (from preloaded dimensions)
     let aspectRatio = 4 / 3;
