@@ -24,7 +24,7 @@ function saveResults(r: CatResults) {
 
 /* ───────────────────────── Detail View ───────────────────────── */
 
-async function deployConceptToPortfolio(concept: IdeationConcept): Promise<{ success: boolean; error?: string }> {
+async function deployConceptToPortfolio(concept: IdeationConcept): Promise<{ success: boolean; pushed?: boolean; error?: string }> {
   try {
     const res = await fetch("/api/deploy-concept", {
       method: "POST",
