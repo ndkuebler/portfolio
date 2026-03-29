@@ -125,4 +125,13 @@ export const CONCEPTS: Concept[] = [
     mediaType: "image",
     mediaSrc: "/concepts/modecandle2.webp",
   },
+  {
+    slug: "shadow-clock",
+    title: "Shadow Clock",
+    subtitle:
+      "A minimalist wall clock with no hands or numbers. A single pin and a hidden rotating LED ring cast a shadow that tells the time.",
+    thumb: "/ideate/shadow-clock-thumb.webp",
+    mediaType: "image",
+    mediaSrc: "/ideate/shadow-clock.webp",
+  },
 ];

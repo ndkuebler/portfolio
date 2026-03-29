@@ -40,6 +40,7 @@ export function Concepts() {
     "ltable.webp": 3,        // Lightning Connection Table
     "musicframe.webp": 7,    // Living Album Cover
     "scentfork1-carousel.webp": 12,   // Scent Fork
+    "ideate/shadow-clock-thumb.webp": 14,   // Shadow Clock
   };
 
   const getConceptForFile = (filename: string) => {
