@@ -36,6 +36,7 @@ export default function ConceptsPage() {
 
   const imgRef = useRef<HTMLImageElement | null>(null);
   const vidRef = useRef<HTMLVideoElement | null>(null);
+  const preloadedDims = useRef<Record<number, { w: number; h: number }>>({});
 
   const [capVars, setCapVars] = useState<{
     left: number;
@@ -61,22 +62,16 @@ export default function ConceptsPage() {
     const PAD_X = isMobile ? 18 : 48;
     const PAD_Y = isMobile ? 96 : 64;
 
-    // Use actual media aspect ratio if available, otherwise default to 4:3
+    // Default 4:3, but use actual aspect ratio if known (from preloaded dimensions)
     let aspectRatio = 4 / 3;
     const idx = index ?? activeIndex;
-    if (idx != null) {
-      const img = imgRef.current;
-      const vid = vidRef.current;
-      const concept = concepts[idx];
-      if (concept?.mediaType === "video" && vid?.videoWidth && vid?.videoHeight) {
-        aspectRatio = vid.videoWidth / vid.videoHeight;
-      } else if (img?.naturalWidth && img?.naturalHeight) {
-        aspectRatio = img.naturalWidth / img.naturalHeight;
-      }
+    if (idx != null && preloadedDims.current[idx]) {
+      const dims = preloadedDims.current[idx];
+      aspectRatio = dims.w / dims.h;
     }
 
     let w = Math.min(r.width, window.innerWidth - PAD_X * 2);
-    let h = w / aspectRatio;
+    let h = (w) / aspectRatio;
 
     const maxH = Math.max(240, window.innerHeight - PAD_Y * 2);
     if (h > maxH) {
@@ -135,16 +130,31 @@ export default function ConceptsPage() {
     if (!el) return;
 
     const rect = el.getBoundingClientRect();
-    setActiveIndex(i);
-    setFromRect({ top: rect.top, left: rect.left, width: rect.width, height: rect.height });
-    setToRect(computeToRect());
+    const concept = concepts[i];
     closingRef.current = false;
 
-    lockScroll(true);
+    const doOpen = () => {
+      setActiveIndex(i);
+      setFromRect({ top: rect.top, left: rect.left, width: rect.width, height: rect.height });
+      setToRect(computeToRect(i));
+      lockScroll(true);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => setExpanded(true));
+      });
+    };
 
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => setExpanded(true));
-    });
+    // Preload image dimensions so the frame is sized correctly on first open
+    if (concept.mediaType !== "video" && !preloadedDims.current[i]) {
+      const img = new Image();
+      img.onload = () => {
+        preloadedDims.current[i] = { w: img.naturalWidth, h: img.naturalHeight };
+        doOpen();
+      };
+      img.onerror = () => doOpen(); // fallback to 4:3 if load fails
+      img.src = concept.mediaSrc;
+    } else {
+      doOpen();
+    }
   };
 
   const close = () => {
