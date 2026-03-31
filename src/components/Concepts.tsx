@@ -45,6 +45,7 @@ export function Concepts() {
     "ideate/drift-globe-thumb.webp": 16,   // Drift Globe
     "ideate/horizon-shelf-thumb.webp": 17,   // Horizon Shelf
     "ideate/cloud-humidifier-thumb.webp": 18,   // Cloud Humidifier
+    "ideate/tide-stone-thumb.webp": 19,   // Tide Stone
   };
 
   const getConceptForFile = (filename: string) => {
