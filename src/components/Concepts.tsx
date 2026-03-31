@@ -43,6 +43,7 @@ export function Concepts() {
     "ideate/shadow-clock-thumb.webp": 14,   // Shadow Clock
     "ideate/memory-marble-thumb.webp": 15,   // Memory Marble
     "ideate/drift-globe-thumb.webp": 16,   // Drift Globe
+    "ideate/horizon-shelf-thumb.webp": 17,   // Horizon Shelf
   };
 
   const getConceptForFile = (filename: string) => {

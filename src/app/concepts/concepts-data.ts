@@ -152,4 +152,13 @@ export const CONCEPTS: Concept[] = [
     mediaType: "image",
     mediaSrc: "/ideate/drift-globe.webp",
   },
+  {
+    slug: "horizon-shelf",
+    title: "Horizon Shelf",
+    subtitle:
+      "A floating wall shelf with an edge-lit LED strip that casts a gradient glow downward. Warm amber at sunset. Cool blue at dawn. All synced to your local horizon times.",
+    thumb: "/ideate/horizon-shelf-thumb.webp",
+    mediaType: "image",
+    mediaSrc: "/ideate/horizon-shelf.webp",
+  },
 ];
