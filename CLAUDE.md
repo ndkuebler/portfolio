@@ -16,7 +16,7 @@
 5. Ideation data gets cleared (empty the array) for the next batch
 6. Never touch approved-data.ts when clearing ideation data
 
-## Nick's Concept Taste Profile (24/114 approved across 5 batches)
+## Nick's Concept Taste Profile (16/114 approved across 5 batches)
 
 ### What he likes
 - Objects that blend physical and digital in a subtle, poetic way
@@ -46,8 +46,8 @@
 ### Approved concepts
 - Batch 1: Memory Marble, Shadow Clock, Thermal Portrait, Drift Globe, Horizon Shelf, Cloud Humidifier, Glyph Ring, Ferro Clock
 - Batch 2: Tide Stone, Nebula Jar, Soot Canvas
-- Batch 3: (no new approvals recorded)
-- Batch 4: Covenant Coin, Sonograph Plate, Omen Tray, Solace Mask, Latch Journal, Wake Shard, Thread Loom, Pyre Vault
+- Batch 3: (no approvals)
+- Batch 4: (no approvals)
 - Batch 5: Tone Fossil, Phantom Dial, Cipher Cube, Angler, Memory Drawer
 
 ## Deployment
