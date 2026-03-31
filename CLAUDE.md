@@ -16,16 +16,20 @@
 5. Ideation data gets cleared (empty the array) for the next batch
 6. Never touch approved-data.ts when clearing ideation data
 
-## Nick's Concept Taste Profile (11/75 approved across 2 batches)
+## Nick's Concept Taste Profile (24/114 approved across 5 batches)
 
 ### What he likes
 - Objects that blend physical and digital in a subtle, poetic way
 - Time/nature-connected products (shadow, wind, tides, horizon)
-- Dark/moody materials (black zirconium, walnut, matte, basalt, soot)
-- Products with a sense of quiet magic (floating, glowing, magnets, ferrofluid)
+- Dark/moody materials (black zirconium, walnut, matte, basalt, soot, blackened brass/steel)
+- Products with a sense of quiet magic (floating, glowing, magnets, ferrofluid, bioluminescence)
 - Desk/shelf/wall objects over wearables or kitchen items
-- Tactile interaction (hand wave, fingertip drawing, touch)
+- Tactile interaction (hand wave, fingertip drawing, touch, spinning dials)
 - Real world data made physical (tides, wind, aurora, ocean)
+- Sound/voice preservation concepts (waveform fossils, archived voicemails, audio drawers)
+- Puzzle/secret/mystery objects (cipher cubes, hidden messages, locked journals)
+- Ritual objects with daily/weekly cadence (burn vaults, latch journals, thread looms)
+- Living/organic elements (bioluminescent organisms, crystal growth)
 
 ### What he passes on
 - Pure wearables (rings, headbands, bracelets, sandals)
@@ -35,10 +39,16 @@
 - Biometric/wellness products (breath guides, stress monitors, focus sensors)
 - Handheld tools or monocle-type devices
 - Most lamps (unless very unique concept)
+- Braille/tactile messaging boards
+- Receipt printers and archive output devices
+- Items too similar to existing approved concepts (e.g. another pendulum, another orb)
 
 ### Approved concepts
 - Batch 1: Memory Marble, Shadow Clock, Thermal Portrait, Drift Globe, Horizon Shelf, Cloud Humidifier, Glyph Ring, Ferro Clock
 - Batch 2: Tide Stone, Nebula Jar, Soot Canvas
+- Batch 3: (no new approvals recorded)
+- Batch 4: Covenant Coin, Sonograph Plate, Omen Tray, Solace Mask, Latch Journal, Wake Shard, Thread Loom, Pyre Vault
+- Batch 5: Tone Fossil, Phantom Dial, Cipher Cube, Angler, Memory Drawer
 
 ## Deployment
 

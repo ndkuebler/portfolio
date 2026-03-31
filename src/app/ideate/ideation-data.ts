@@ -5,7 +5,9 @@ export type IdeationConcept = Concept & {
   createdAt: string; // ISO date, e.g. "2026-03-24"
 };
 
-export const IDEATION_CONCEPTS: IdeationConcept[] = [
+export const IDEATION_CONCEPTS: IdeationConcept[] = [];
+
+/* Cleared after batch 5 approval (5/25 approved: Tone Fossil, Phantom Dial, Cipher Cube, Angler, Memory Drawer)
   {
     id: 1,
     title: "Tone Fossil",
@@ -256,4 +258,4 @@ export const IDEATION_CONCEPTS: IdeationConcept[] = [
     mediaSrc: "/ideate/fault-line.webp",
     createdAt: "2026-03-30",
   },
-];
+]; */
