@@ -117,7 +117,7 @@ export const APPROVED_CONCEPTS: IdeationConcept[] = [
     createdAt: "2026-03-27",
   },
   {
-    id: 1,
+    id: 501,
     title: "Tone Fossil",
     subtitle:
       "A polished slab of dark resin with a visible sound wave frozen inside, cast from the actual waveform of a sound you choose. Your child's first word, a favorite lyric, a voice you want to keep. A permanent fossil of an invisible moment preserved in solid form.",
@@ -127,7 +127,7 @@ export const APPROVED_CONCEPTS: IdeationConcept[] = [
     createdAt: "2026-03-30",
   },
   {
-    id: 2,
+    id: 502,
     title: "Phantom Dial",
     subtitle:
       "A vintage rotary phone dial mounted in a block of oiled walnut. Spin it to any digit and a tiny speaker plays a randomly selected voicemail from a public archive of abandoned answering machines. Each number connects you to a stranger's ordinary moment from decades ago.",
@@ -137,7 +137,7 @@ export const APPROVED_CONCEPTS: IdeationConcept[] = [
     createdAt: "2026-03-30",
   },
   {
-    id: 3,
+    id: 503,
     title: "Cipher Cube",
     subtitle:
       "A blackened steel cube with rotating faces like a puzzle. Each configuration reveals a different fragment of text through a small window cut into one side. Only one specific solved position displays the complete hidden message. A physical encryption device built to guard a single secret.",
@@ -147,7 +147,7 @@ export const APPROVED_CONCEPTS: IdeationConcept[] = [
     createdAt: "2026-03-30",
   },
   {
-    id: 10,
+    id: 504,
     title: "Angler",
     subtitle:
       "A deep sea anglerfish sculpture in blackened brass, sized for a shelf. A sealed glass vial at the tip of its lure contains living bioluminescent dinoflagellates. Shake the sculpture gently and the organisms glow blue for several minutes before slowly fading back to darkness.",
@@ -157,7 +157,7 @@ export const APPROVED_CONCEPTS: IdeationConcept[] = [
     createdAt: "2026-03-30",
   },
   {
-    id: 19,
+    id: 505,
     title: "Memory Drawer",
     subtitle:
       "A single drawer of blackened steel mounted to your wall with no cabinet around it. Inside is a felt lined compartment with a tiny embedded speaker. Record a ten second sound to the drawer. Every time you pull it open, the sound plays. A physical audio bookmark for a moment you want to revisit.",
