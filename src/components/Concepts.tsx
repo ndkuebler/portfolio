@@ -44,6 +44,7 @@ export function Concepts() {
     "ideate/memory-marble-thumb.webp": 15,   // Memory Marble
     "ideate/drift-globe-thumb.webp": 16,   // Drift Globe
     "ideate/horizon-shelf-thumb.webp": 17,   // Horizon Shelf
+    "ideate/cloud-humidifier-thumb.webp": 18,   // Cloud Humidifier
   };
 
   const getConceptForFile = (filename: string) => {

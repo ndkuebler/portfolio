@@ -161,4 +161,13 @@ export const CONCEPTS: Concept[] = [
     mediaType: "image",
     mediaSrc: "/ideate/horizon-shelf.webp",
   },
+  {
+    slug: "cloud-humidifier",
+    title: "Cloud Humidifier",
+    subtitle:
+      "A magnetically suspended cloud shaped humidifier that floats above a base, freshening your room.",
+    thumb: "/ideate/cloud-humidifier-thumb.webp",
+    mediaType: "image",
+    mediaSrc: "/ideate/cloud-humidifier.webp",
+  },
 ];
