@@ -6,7 +6,7 @@ import { APPROVED_CONCEPTS, type IdeationConcept } from "./approved-data";
 
 const STORAGE_KEY = "approved-review-results";
 
-type Category = "deploy_now" | "deployed" | "touch_up_text" | "touch_up_image" | "touch_up";
+type Category = "deploy_now" | "deployed" | "touch_up_text" | "touch_up_image" | "touch_up" | "deleted";
 type CatResults = Record<number, Category>;
 
 function loadResults(): CatResults {
@@ -53,11 +53,13 @@ function DetailView({
   onBack,
   onCategorize,
   onDeploy,
+  onDelete,
 }: {
   concept: IdeationConcept;
   onBack: () => void;
   onCategorize: (cat: Category) => void;
   onDeploy: () => void;
+  onDelete: () => void;
 }) {
   const [deploying, setDeploying] = useState(false);
   return (
@@ -146,6 +148,13 @@ function DetailView({
         >
           Touch Up Both
         </button>
+        <button
+          type="button"
+          onClick={onDelete}
+          className="mt-4 w-full rounded-full border border-red-500/30 py-3 text-[12px] font-semibold uppercase tracking-[0.15em] text-red-400/60 transition-all duration-200 hover:border-red-500/50 hover:text-red-400 active:scale-[0.97]"
+        >
+          Delete Concept
+        </button>
       </div>
     </div>
   );
@@ -213,7 +222,12 @@ export default function ApprovedReview() {
   }, []);
 
   const uncategorized = useMemo(
-    () => APPROVED_CONCEPTS.filter((c) => !(c.id in results)),
+    () => APPROVED_CONCEPTS.filter((c) => !(c.id in results) && results[c.id] !== "deleted"),
+    [results]
+  );
+
+  const deleted = useMemo(
+    () => APPROVED_CONCEPTS.filter((c) => results[c.id] === "deleted"),
     [results]
   );
 
@@ -261,6 +275,14 @@ export default function ApprovedReview() {
     setViewing(null);
   }, [viewing, results]);
 
+  const handleDelete = useCallback(() => {
+    if (!viewing) return;
+    const next: CatResults = { ...results, [viewing.id]: "deleted" };
+    setResults(next);
+    saveResults(next);
+    setViewing(null);
+  }, [viewing, results]);
+
   const resetAll = () => {
     setResults({});
     localStorage.removeItem(STORAGE_KEY);
@@ -269,8 +291,10 @@ export default function ApprovedReview() {
 
   if (!mounted) return null;
 
+  const activeConcepts = APPROVED_CONCEPTS.length - deleted.length;
+
   // Empty state
-  if (APPROVED_CONCEPTS.length === 0) {
+  if (activeConcepts === 0) {
     return (
       <main className="flex min-h-screen items-center justify-center bg-[#0a0a0a]">
         <div className="text-center px-6">
@@ -295,6 +319,7 @@ export default function ApprovedReview() {
             onBack={() => setViewing(null)}
             onCategorize={handleCategorize}
             onDeploy={handleDeploy}
+            onDelete={handleDelete}
           />
         </div>
       </main>
@@ -443,7 +468,7 @@ export default function ApprovedReview() {
           <div
             className="h-full rounded-full bg-white/20 transition-all duration-700 ease-out"
             style={{
-              width: `${((APPROVED_CONCEPTS.length - uncategorized.length) / APPROVED_CONCEPTS.length) * 100}%`,
+              width: `${((activeConcepts - uncategorized.length) / activeConcepts) * 100}%`,
             }}
           />
         </div>
