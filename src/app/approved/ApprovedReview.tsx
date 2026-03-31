@@ -263,8 +263,22 @@ export default function ApprovedReview() {
   const [viewing, setViewing] = useState<IdeationConcept | null>(null);
 
   useEffect(() => {
-    setResults(loadResults());
-    setMounted(true);
+    // Load from server file first (source of truth), fall back to localStorage
+    fetch("/api/review-state")
+      .then((r) => r.json())
+      .then((serverState) => {
+        if (serverState && Object.keys(serverState).length > 0) {
+          setResults(serverState);
+          saveResults(serverState);
+        } else {
+          setResults(loadResults());
+        }
+        setMounted(true);
+      })
+      .catch(() => {
+        setResults(loadResults());
+        setMounted(true);
+      });
   }, []);
 
   const uncategorized = useMemo(
