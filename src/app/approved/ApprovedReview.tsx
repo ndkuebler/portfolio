@@ -62,6 +62,8 @@ function DetailView({
   onDelete: () => void;
 }) {
   const [deploying, setDeploying] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [deleting, setDeleting] = useState(false);
   return (
     <div>
       {/* Back */}
@@ -148,13 +150,51 @@ function DetailView({
         >
           Touch Up Both
         </button>
-        <button
-          type="button"
-          onClick={onDelete}
-          className="mt-4 w-full rounded-full border border-red-500/30 py-3 text-[12px] font-semibold uppercase tracking-[0.15em] text-red-400/60 transition-all duration-200 hover:border-red-500/50 hover:text-red-400 active:scale-[0.97]"
-        >
-          Delete Concept
-        </button>
+        {!confirmDelete ? (
+          <button
+            type="button"
+            onClick={() => setConfirmDelete(true)}
+            className="mt-4 w-full rounded-full border border-red-500/30 py-3 text-[12px] font-semibold uppercase tracking-[0.15em] text-red-400/60 transition-all duration-200 hover:border-red-500/50 hover:text-red-400 active:scale-[0.97]"
+          >
+            Delete Concept
+          </button>
+        ) : (
+          <div className="mt-4 flex gap-2.5">
+            <button
+              type="button"
+              onClick={() => setConfirmDelete(false)}
+              className="flex-1 rounded-full border border-white/20 py-3 text-[12px] font-semibold uppercase tracking-[0.15em] text-white/60 transition-all duration-200 hover:border-white/40 hover:text-white/80 active:scale-[0.97]"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              disabled={deleting}
+              onClick={async () => {
+                setDeleting(true);
+                try {
+                  const res = await fetch("/api/delete-concept", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ id: concept.id, title: concept.title }),
+                  });
+                  if (res.ok) {
+                    onDelete();
+                  } else {
+                    const data = await res.json();
+                    alert(`Delete failed: ${data.error}`);
+                  }
+                } catch (e) {
+                  alert(`Delete failed: ${e}`);
+                }
+                setDeleting(false);
+              }}
+              className="flex-1 rounded-full bg-red-500/80 py-3 text-[12px] font-semibold uppercase tracking-[0.15em] text-white transition-all duration-200 hover:bg-red-500 active:scale-[0.97] disabled:opacity-50"
+            >
+              {deleting ? "Deleting..." : "Confirm Delete"}
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -277,11 +317,10 @@ export default function ApprovedReview() {
 
   const handleDelete = useCallback(() => {
     if (!viewing) return;
-    const next: CatResults = { ...results, [viewing.id]: "deleted" };
-    setResults(next);
-    saveResults(next);
     setViewing(null);
-  }, [viewing, results]);
+    // Reload to pick up the updated data file
+    window.location.reload();
+  }, [viewing]);
 
   const resetAll = () => {
     setResults({});
