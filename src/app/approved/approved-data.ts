@@ -137,16 +137,6 @@ export const APPROVED_CONCEPTS: IdeationConcept[] = [
     createdAt: "2026-03-30",
   },
   {
-    id: 5,
-    title: "Omen Tray",
-    subtitle:
-      "A desk tray carved from walnut with a surface of thermochromic ink that shifts from black to deep red as the day warms. Drop your keys and wallet on it each morning and watch your daily objects rest on a surface that reveals the invisible temperature around them.",
-    thumb: "/ideate/omen-tray-thumb.webp",
-    mediaType: "image",
-    mediaSrc: "/ideate/omen-tray.webp",
-    createdAt: "2026-03-30",
-  },
-  {
     id: 6,
     title: "Solace Mask",
     subtitle:
