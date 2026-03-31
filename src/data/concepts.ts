@@ -19,6 +19,7 @@ const FILENAMES = [
   "modecandle1.webp",
   "ideate/shadow-clock-thumb.webp",
   "ideate/memory-marble-thumb.webp",
+  "ideate/drift-globe-thumb.webp",
 ] as const;
 
 export const conceptItems: ConceptItem[] = FILENAMES.map((filename) => ({

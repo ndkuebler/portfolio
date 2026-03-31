@@ -42,6 +42,7 @@ export function Concepts() {
     "scentfork1-carousel.webp": 12,   // Scent Fork
     "ideate/shadow-clock-thumb.webp": 14,   // Shadow Clock
     "ideate/memory-marble-thumb.webp": 15,   // Memory Marble
+    "ideate/drift-globe-thumb.webp": 16,   // Drift Globe
   };
 
   const getConceptForFile = (filename: string) => {

@@ -143,4 +143,13 @@ export const CONCEPTS: Concept[] = [
     mediaType: "image",
     mediaSrc: "/ideate/memory-marble.webp",
   },
+  {
+    slug: "drift-globe",
+    title: "Drift Globe",
+    subtitle:
+      "A desk globe that spins driven by live global wind data. Thin LED trails glow across the surface showing real-time jet streams.",
+    thumb: "/ideate/drift-globe-thumb.webp",
+    mediaType: "image",
+    mediaSrc: "/ideate/drift-globe.webp",
+  },
 ];
