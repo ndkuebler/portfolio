@@ -41,6 +41,7 @@ export function Concepts() {
     "musicframe.webp": 7,    // Living Album Cover
     "scentfork1-carousel.webp": 12,   // Scent Fork
     "ideate/shadow-clock-thumb.webp": 14,   // Shadow Clock
+    "ideate/memory-marble-thumb.webp": 15,   // Memory Marble
   };
 
   const getConceptForFile = (filename: string) => {

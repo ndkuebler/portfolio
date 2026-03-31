@@ -134,4 +134,13 @@ export const CONCEPTS: Concept[] = [
     mediaType: "image",
     mediaSrc: "/ideate/shadow-clock.webp",
   },
+  {
+    slug: "memory-marble",
+    title: "Memory Marble",
+    subtitle:
+      "A hand-blown glass marble with a tiny embedded NFC chip. Tap it to your phone to replay a saved voice memo, song, or photo.",
+    thumb: "/ideate/memory-marble-thumb.webp",
+    mediaType: "image",
+    mediaSrc: "/ideate/memory-marble.webp",
+  },
 ];
