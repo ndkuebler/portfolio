@@ -20,6 +20,12 @@ function loadResults(): CatResults {
 
 function saveResults(r: CatResults) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(r));
+  // Sync to disk so Claude can read it
+  fetch("/api/review-state", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(r),
+  }).catch(() => {});
 }
 
 /* ───────────────────────── Detail View ───────────────────────── */

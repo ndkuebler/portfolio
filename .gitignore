@@ -38,6 +38,7 @@ yarn-error.log*
 
 # ideation results
 ideation-results.json
+review-state.json
 
 # typescript
 *.tsbuildinfo
