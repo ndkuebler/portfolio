@@ -232,17 +232,7 @@ export default function ConceptsPage() {
                   <img
                     src={c.thumb}
                     alt=""
-                    className={`nk-thumb block w-full h-full aspect-[4/3] transition-transform duration-500 ease-out ${
-                      (c.title || "").toLowerCase().includes("fridge") ||
-                      (c.title || "").toLowerCase().includes("lightning") ||
-                      (c.title || "").toLowerCase().includes("table") ||
-                      (c.title || "").toLowerCase().includes("tank") ||
-                      (c.title || "").toLowerCase().includes("plant") ||
-                      (c.title || "").toLowerCase().includes("drone") ||
-                      (c.title || "").toLowerCase().includes("scent")
-                        ? "object-contain bg-black"
-                        : "object-cover"
-                    } rounded-2xl`}
+                    className={`nk-thumb block w-full h-full aspect-[4/3] transition-transform duration-500 ease-out object-cover bg-black rounded-2xl`}
                     draggable={false}
                   />
                 ) : (
