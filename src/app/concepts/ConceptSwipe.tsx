@@ -126,7 +126,7 @@ function SwipeCard({
             />
           ) : (
             <Image
-              src={concept.mediaSrc || concept.thumb}
+              src={concept.mediaSrc || concept.thumb || ""}
               alt={concept.title}
               fill
               className="object-contain"
