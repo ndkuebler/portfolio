@@ -112,16 +112,28 @@ function SwipeCard({
       }}
     >
       <div className="flex h-full w-full flex-col overflow-hidden rounded-2xl bg-black">
-        {/* Image area */}
+        {/* Image/Video area */}
         <div className="relative min-h-0 flex-1">
-          <Image
-            src={concept.thumb || concept.mediaSrc}
-            alt={concept.title}
-            fill
-            className="object-contain"
-            draggable={false}
-            priority={stackIndex === 0}
-          />
+          {concept.mediaType === "video" ? (
+            <video
+              src={concept.mediaSrc}
+              autoPlay
+              loop
+              muted
+              playsInline
+              draggable={false}
+              className="absolute inset-0 w-full h-full object-contain"
+            />
+          ) : (
+            <Image
+              src={concept.mediaSrc || concept.thumb}
+              alt={concept.title}
+              fill
+              className="object-contain"
+              draggable={false}
+              priority={stackIndex === 0}
+            />
+          )}
           {/* Gradient overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
         </div>

@@ -18,7 +18,7 @@ function SomniModel() {
       const maxDim = Math.max(size.x, size.y, size.z);
       const fov = (camera as THREE.PerspectiveCamera).fov * (Math.PI / 180);
       // Closer camera = bigger model
-      const dist = maxDim / (2 * Math.tan(fov / 2)) * 1.1;
+      const dist = maxDim / (2 * Math.tan(fov / 2)) * 1.4;
       camera.position.set(center.x + dist * 0.5, center.y + dist * 0.15, center.z + dist * 0.85);
       camera.lookAt(center);
       (camera as THREE.PerspectiveCamera).near = 0.01;
@@ -56,13 +56,13 @@ export function SomniModelViewer() {
         style={{ background: "transparent" }}
         gl={{ alpha: true, antialias: true, toneMapping: THREE.ACESFilmicToneMapping }}
       >
-        <ambientLight intensity={1.0} />
-        <directionalLight position={[3, 4, 5]} intensity={1.5} />
-        <directionalLight position={[-4, 2, -2]} intensity={0.8} />
-        <directionalLight position={[0, -2, 4]} intensity={0.4} />
+        <ambientLight intensity={3.0} />
+        <directionalLight position={[3, 4, 5]} intensity={3.5} />
+        <directionalLight position={[-4, 2, -2]} intensity={2.0} />
+        <directionalLight position={[0, -2, 4]} intensity={1.5} />
         <Suspense fallback={null}>
           <SomniModel />
-          <Environment preset="city" environmentIntensity={0.6} />
+          <Environment preset="city" environmentIntensity={1.5} />
         </Suspense>
         <OrbitControls
           enablePan={false}
