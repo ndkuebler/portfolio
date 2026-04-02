@@ -170,13 +170,4 @@ export const CONCEPTS: Concept[] = [
     mediaType: "image",
     mediaSrc: "/ideate/cloud-humidifier.webp",
   },
-  {
-    slug: "tide-stone",
-    title: "Tide Stone",
-    subtitle:
-      "A smooth basalt desk stone with an embedded e-ink strip that displays the real time tide height of any coastline you choose.",
-    thumb: "/ideate/tide-stone-thumb.webp",
-    mediaType: "image",
-    mediaSrc: "/ideate/tide-stone.webp",
-  },
 ];

@@ -87,16 +87,6 @@ export const APPROVED_CONCEPTS: IdeationConcept[] = [
     createdAt: "2026-03-25",
   },
   {
-    id: 201,
-    title: "Tide Stone",
-    subtitle:
-      "A smooth basalt desk stone with an embedded e-ink strip that displays the real time tide height of any coastline you choose.",
-    thumb: "/ideate/tide-stone-thumb.webp",
-    mediaType: "image",
-    mediaSrc: "/ideate/tide-stone.webp",
-    createdAt: "2026-03-27",
-  },
-  {
     id: 202,
     title: "Nebula Jar",
     subtitle:
