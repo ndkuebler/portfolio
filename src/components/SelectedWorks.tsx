@@ -49,7 +49,7 @@ export function SelectedWorks() {
               height: "calc(100vh - 80px)",
             }}
           >
-            {/* Top bar: number + name | tags | year */}
+            {/* Top bar: number + title | tags | year */}
             <div className="mx-auto w-full max-w-[1400px] px-6 sm:px-10 lg:px-14">
               <div className="flex items-center justify-between py-5 sm:py-6">
                 <div className="flex items-center gap-3">
@@ -58,14 +58,6 @@ export function SelectedWorks() {
                   </span>
                   <span className="text-[1.125rem] sm:text-[1.5rem] font-semibold tracking-wide text-[#f5f5f5] uppercase">
                     {project.title}
-                  </span>
-                  {project.description && (
-                    <p className="text-[0.875rem] sm:text-[1rem] font-normal text-[#f5f5f5]/50 mt-1">
-                      {project.description}
-                    </p>
-                  )}
-                  <span className="inline-flex items-center gap-2 mt-3 text-[0.8125rem] sm:text-[0.875rem] font-medium text-[#f5f5f5]/60 group-hover:text-[#f5f5f5] transition-colors">
-                    View project <span className="transition-transform group-hover:translate-x-1">→</span>
                   </span>
                 </div>
 
@@ -84,6 +76,13 @@ export function SelectedWorks() {
                   {project.year}
                 </span>
               </div>
+
+              {/* Description below the title bar */}
+              {project.description && (
+                <p className="text-[0.875rem] sm:text-[1rem] font-normal text-[#f5f5f5]/50 -mt-2 pb-4">
+                  {project.description}
+                </p>
+              )}
             </div>
 
             {/* Image area */}
@@ -102,6 +101,13 @@ export function SelectedWorks() {
                     />
                   </div>
                 </div>
+              </div>
+
+              {/* Pill button centered below image */}
+              <div className="flex justify-center mt-6">
+                <span className="rounded-full border border-[#f5f5f5]/30 px-6 py-2.5 text-sm font-medium text-[#f5f5f5]/70 group-hover:bg-[#f5f5f5] group-hover:text-[#0a0a0a] transition-all duration-200">
+                  View project →
+                </span>
               </div>
             </div>
           </Link>
