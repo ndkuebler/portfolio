@@ -56,13 +56,16 @@ export function SelectedWorks() {
                   <span className="text-[0.75rem] font-normal tabular-nums text-[#f5f5f5]/40">
                     {project.number}
                   </span>
-                  <span className="text-[0.875rem] sm:text-[1rem] font-semibold tracking-wide text-[#f5f5f5] uppercase">
+                  <span className="text-[1.125rem] sm:text-[1.5rem] font-semibold tracking-wide text-[#f5f5f5] uppercase">
                     {project.title}
-                    {project.description && (
-                      <span className="block text-[0.75rem] sm:text-[0.8125rem] font-normal normal-case tracking-normal text-[#f5f5f5]/45 mt-1">
-                        {project.description}
-                      </span>
-                    )}
+                  </span>
+                  {project.description && (
+                    <p className="text-[0.875rem] sm:text-[1rem] font-normal text-[#f5f5f5]/50 mt-1">
+                      {project.description}
+                    </p>
+                  )}
+                  <span className="inline-flex items-center gap-2 mt-3 text-[0.8125rem] sm:text-[0.875rem] font-medium text-[#f5f5f5]/60 group-hover:text-[#f5f5f5] transition-colors">
+                    View project <span className="transition-transform group-hover:translate-x-1">→</span>
                   </span>
                 </div>
 
