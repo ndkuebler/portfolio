@@ -8,16 +8,6 @@ export function Footer() {
   return (
     <footer className="mt-auto border-t border-[#f5f5f5]/[0.08] bg-[#0a0a0a]">
       <div className="mx-auto max-w-[1400px] px-6 py-16 sm:px-10 sm:py-20 lg:px-14">
-        <p className="max-w-[40rem] text-[0.9375rem] font-light leading-relaxed text-[#f5f5f5]/70 sm:text-base">
-          Available for work and always looking for exciting projects —{" "}
-          <a
-            href={mailto}
-            className="nav-underline text-[#f5f5f5] transition-opacity hover:opacity-80"
-          >
-            {EMAIL}
-          </a>
-        </p>
-
         <div className="mt-12 grid grid-cols-1 gap-6 border-t border-[#f5f5f5]/[0.08] pt-8 sm:grid-cols-3 sm:items-center sm:gap-8">
           <p className="text-[0.8125rem] font-bold uppercase tracking-[0.14em] text-[#f5f5f5]">
             Nick Kuebler

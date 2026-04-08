@@ -11,17 +11,8 @@ export type WorkProject = {
 
 export const works: WorkProject[] = [
   {
-    slug: "somni",
-    number: "01",
-    title: "Coming Soon...",
-    subtitle: "Somni Dream Catch 1.0",
-    tags: ["Product Design"],
-    year: "2026",
-    image: "/work/somni.webp",
-  },
-  {
     slug: "watershield",
-    number: "02",
+    number: "01",
     title: "WaterShield",
     tags: ["Product Design", "Prototyping"],
     year: "2024",
@@ -29,7 +20,7 @@ export const works: WorkProject[] = [
   },
   {
     slug: "marble-launcher",
-    number: "03",
+    number: "02",
     title: "Marble Launcher",
     tags: ["Mechanical Engineering", "ME102"],
     year: "2022",
@@ -37,7 +28,7 @@ export const works: WorkProject[] = [
   },
   {
     slug: "ringallets",
-    number: "04",
+    number: "03",
     title: "Ringallets",
     tags: ["Product Design", "Training Tool"],
     year: "2023",
