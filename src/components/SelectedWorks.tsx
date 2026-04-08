@@ -58,6 +58,11 @@ export function SelectedWorks() {
                   </span>
                   <span className="text-[0.875rem] sm:text-[1rem] font-semibold tracking-wide text-[#f5f5f5] uppercase">
                     {project.title}
+                    {project.description && (
+                      <span className="block text-[0.75rem] sm:text-[0.8125rem] font-normal normal-case tracking-normal text-[#f5f5f5]/45 mt-1">
+                        {project.description}
+                      </span>
+                    )}
                   </span>
                 </div>
 
