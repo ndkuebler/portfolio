@@ -27,7 +27,7 @@ export function SelectedWorks() {
       {/* Section header */}
       <div className="bg-[#0a0a0a] pt-8 pb-6 sm:pt-10">
         <div className="mx-auto w-full max-w-[1400px] px-6 sm:px-10 lg:px-14">
-          <div className="flex items-baseline justify-between gap-6 border-b border-[#f5f5f5]/[0.08] pb-6">
+          <div className="flex items-baseline justify-between gap-6 pb-6">
             <h2
               id="selected-works-heading"
               className="text-[0.8125rem] font-semibold tracking-[0.18em] text-[#f5f5f5] uppercase"
@@ -84,16 +84,17 @@ export function SelectedWorks() {
                 </p>
               )}
 
-              {/* Pill button left-aligned under description */}
-              <span className="inline-flex rounded-full border border-[#f5f5f5]/30 px-6 py-2.5 text-sm font-medium text-[#f5f5f5]/70 group-hover:bg-[#f5f5f5] group-hover:text-[#0a0a0a] transition-all duration-200 mb-4">
-                View project →
-              </span>
             </div>
 
-            {/* Image area */}
+            {/* Image area with centered pill button */}
             <div className="mx-auto w-full max-w-[1400px] px-6 sm:px-10 lg:px-14">
               <div className="flex">
-                <div className="hidden md:block md:w-2/5" />
+                {/* Left side — pill button centered vertically */}
+                <div className="hidden md:flex md:w-2/5 items-center justify-start pl-6">
+                  <span className="inline-flex rounded-full border border-[#f5f5f5]/30 px-6 py-2.5 text-sm font-medium text-[#f5f5f5]/70 group-hover:bg-[#f5f5f5] group-hover:text-[#0a0a0a] transition-all duration-200">
+                    View project →
+                  </span>
+                </div>
                 <div className="w-full md:w-3/5">
                   <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg bg-black">
                     <Image
@@ -104,6 +105,12 @@ export function SelectedWorks() {
                       sizes="(max-width: 768px) 100vw, 800px"
                       priority={index === 0}
                     />
+                  </div>
+                  {/* Mobile pill button — centered below image */}
+                  <div className="flex md:hidden justify-center mt-4">
+                    <span className="inline-flex rounded-full border border-[#f5f5f5]/30 px-6 py-2.5 text-sm font-medium text-[#f5f5f5]/70">
+                      View project →
+                    </span>
                   </div>
                 </div>
               </div>

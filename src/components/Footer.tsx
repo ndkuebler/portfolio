@@ -1,26 +1,8 @@
-import Link from "next/link";
-
-const EMAIL = "nkuebler@stanford.edu";
-
 export function Footer() {
-  const mailto = `mailto:${EMAIL}`;
-
   return (
-    <footer className="mt-auto border-t border-[#f5f5f5]/[0.08] bg-[#0a0a0a]">
-      <div className="mx-auto max-w-[1400px] px-6 py-16 sm:px-10 sm:py-20 lg:px-14">
-        <div className="mt-12 grid grid-cols-1 gap-6 border-t border-[#f5f5f5]/[0.08] pt-8 sm:grid-cols-3 sm:items-center sm:gap-8">
-          <p className="text-[0.8125rem] font-bold uppercase tracking-[0.14em] text-[#f5f5f5]">
-            Nick Kuebler
-          </p>
-          <p className="text-[0.8125rem] sm:text-center">
-            <Link
-              href={mailto}
-              className="nav-underline font-normal tracking-wide text-[#f5f5f5]/55 transition-opacity hover:text-[#f5f5f5]/80"
-            >
-              {EMAIL}
-            </Link>
-          </p>
-        </div>
+    <footer className="mt-auto bg-[#0a0a0a]">
+      <div className="mx-auto max-w-[1400px] px-6 py-8 sm:px-10 lg:px-14">
+        <div className="border-t border-[#f5f5f5]/[0.08]" />
       </div>
     </footer>
   );
