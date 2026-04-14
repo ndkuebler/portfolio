@@ -86,6 +86,84 @@ body {
   animation: hero-image-reveal 1.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
+@keyframes hero-scroll-bob {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(8px);
+    opacity: 1;
+  }
+}
+
+.hero-scroll-cue {
+  animation: hero-scroll-bob 1.8s ease-in-out infinite;
+}
+
+/* Snake: period elongates into a curving line that snakes down and finishes with an arrowhead */
+@keyframes hero-snake-draw {
+  0% {
+    stroke-dashoffset: 0;
+    stroke-opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: -0.82;
+    stroke-opacity: 1;
+  }
+}
+
+@keyframes hero-snake-head-move {
+  0% {
+    offset-distance: 18%;
+    opacity: 1;
+  }
+  100% {
+    offset-distance: 100%;
+    opacity: 1;
+  }
+}
+
+.hero-snake-path {
+  stroke-dasharray: 0.18 2;
+  stroke-dashoffset: 0;
+  stroke-opacity: 0;
+  animation: hero-snake-draw 2.4s linear 0.65s forwards;
+}
+
+.hero-snake-head {
+  offset-distance: 18%;
+  offset-rotate: auto;
+  offset-anchor: center;
+  opacity: 0;
+  animation: hero-snake-head-move 2.4s linear 0.65s forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-snake-path {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+  .hero-snake-head {
+    animation: none;
+    offset-distance: 100%;
+  }
+}
+
+/* Snake Lab: shared animation classes used by each variant card */
+.lab-snake-path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation-name: hero-snake-draw;
+}
+
+.lab-snake-head {
+  offset-distance: 0%;
+  offset-rotate: auto;
+  offset-anchor: center;
+  animation-name: hero-snake-head-move;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero-enter,
   .hero-enter-delayed {
@@ -97,6 +175,9 @@ body {
     animation: none;
     filter: none;
     transform: none;
+  }
+  .hero-scroll-cue {
+    animation: none;
   }
 }
 

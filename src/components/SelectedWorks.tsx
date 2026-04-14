@@ -15,8 +15,13 @@ export function SelectedWorks() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  const cardScrollHeight = 100;
-  const totalHeight = `${works.length * cardScrollHeight}vh`;
+  // On mobile, use a uniformly shorter card height for every card — this
+  // tightens the overall section while keeping sticky transitions clean
+  // (any asymmetry between cards creates visual gaps as sticky ranges
+  // stop overlapping).
+  const cardVh = isMobile ? 78 : 100;
+  const totalHeight = `${works.length * cardVh}vh`;
+  const cardCss = isMobile ? `${cardVh}vh` : "calc(100vh - 80px)";
 
   return (
     <section
@@ -46,7 +51,7 @@ export function SelectedWorks() {
             className="group sticky block w-full bg-[#0a0a0a] border-t border-[#f5f5f5]/[0.08]"
             style={{
               top: "80px",
-              height: "calc(100vh - 80px)",
+              height: cardCss,
             }}
           >
             {/* Top bar: number + title | tags | year */}

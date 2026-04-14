@@ -27,7 +27,7 @@ function NavIcon({ item }: { item: (typeof navItems)[number] }) {
   return (
     <a
       href={item.href}
-      className="relative flex items-center justify-center w-10 h-10 rounded-full text-[#1a1a1a] hover:bg-[#e0e0e0] transition-colors duration-200"
+      className="relative flex items-center justify-center w-10 h-10 rounded-full text-[#1a1a1a] hover:bg-[#d4af37] transition-colors duration-200"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
