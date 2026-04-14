@@ -2,7 +2,13 @@
 
 import Image from "next/image";
 import { useState, useCallback, useEffect } from "react";
-import { Copy, Check } from "lucide-react";
+import { Copy, Check, FileText } from "lucide-react";
+import dynamic from "next/dynamic";
+
+const ResumeModal = dynamic(
+  () => import("./ResumeModal").then((m) => m.ResumeModal),
+  { ssr: false }
+);
 
 const PHOTOS = [
   { src: "/nick.webp", alt: "Nick in the workshop" },
@@ -15,6 +21,7 @@ const EMAIL = "nkuebler@stanford.edu";
 export function AboutSection() {
   const [activePhoto, setActivePhoto] = useState(0);
   const [copied, setCopied] = useState(false);
+  const [resumeOpen, setResumeOpen] = useState(false);
 
   const copyEmail = useCallback(() => {
     navigator.clipboard.writeText(EMAIL);
@@ -29,6 +36,7 @@ export function AboutSection() {
     }, 4000);
     return () => clearInterval(interval);
   }, []);
+
 
   return (
     <section id="about" className="relative z-10 bg-[#0a0a0a] border-t border-[#f5f5f5]/[0.08] px-6 sm:px-10 lg:px-14 py-24 sm:py-32">
@@ -90,6 +98,13 @@ export function AboutSection() {
                 Instagram
               </a>
               <button
+                onClick={() => setResumeOpen(true)}
+                className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-[#0a0a0a] hover:bg-[#f5f5f5]/90 transition-colors"
+              >
+                <FileText size={16} />
+                Resume
+              </button>
+              <button
                 onClick={copyEmail}
                 className="inline-flex items-center gap-2 rounded-full border border-[#f5f5f5]/20 bg-transparent px-5 py-2.5 text-sm font-medium text-[#f5f5f5]/80 hover:bg-[#f5f5f5]/10 transition-colors"
               >
@@ -100,6 +115,12 @@ export function AboutSection() {
           </div>
         </div>
       </div>
+
+      <ResumeModal
+        open={resumeOpen}
+        onClose={() => setResumeOpen(false)}
+        file="/nick-resume.pdf"
+      />
     </section>
   );
 }
