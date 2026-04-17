@@ -102,21 +102,26 @@ function SwipeCard({
         userSelect: "none",
       }}
     >
-      <div className="relative h-full w-full overflow-hidden rounded-2xl bg-black">
-        <Image
-          src={concept.thumb || concept.mediaSrc}
-          alt={concept.title}
-          fill
-          className="object-contain object-[center_35%]"
-          draggable={false}
-          priority={stackIndex === 0}
-        />
+      <div className="relative flex h-full w-full flex-col overflow-hidden rounded-2xl bg-black">
+        {/* Image area — fixed proportion, always visible */}
+        <div className="relative w-full shrink-0" style={{ height: "58%" }}>
+          <Image
+            src={concept.thumb || concept.mediaSrc}
+            alt={concept.title}
+            fill
+            className="object-cover"
+            draggable={false}
+            priority={stackIndex === 0}
+          />
+        </div>
 
-        {/* Cinematic gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80" />
-
-        {/* Content at bottom — editorial style */}
-        <div className="absolute inset-x-0 bottom-0 p-5 md:p-7">
+        {/* Text panel — fills remaining space, scrolls internally for long subtitles */}
+        <div
+          className="flex min-h-0 flex-1 flex-col overflow-y-auto bg-black px-5 pt-4 pb-5 md:px-7 md:pb-6"
+          style={{ overscrollBehavior: "contain", scrollbarWidth: "none" }}
+          onPointerDown={(e) => e.stopPropagation()}
+          onTouchStart={(e) => e.stopPropagation()}
+        >
           <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-white/35">
             Concept {concept.id}
           </p>
@@ -345,18 +350,17 @@ export default function IdeationSwipe() {
             Back
           </button>
 
-          {/* Image */}
-          <div className="relative min-h-0 flex-1 overflow-hidden rounded-2xl bg-black">
-            <Image
-              src={viewing.mediaSrc}
-              alt={viewing.title}
-              fill
-              className="object-contain"
-            />
-
-            {/* Content overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80" />
-            <div className="absolute inset-x-0 bottom-0 p-5 md:p-7">
+          {/* Card — split image + text, same layout as swipe card */}
+          <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-2xl bg-black">
+            <div className="relative w-full shrink-0" style={{ height: "58%" }}>
+              <Image
+                src={viewing.mediaSrc}
+                alt={viewing.title}
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="flex min-h-0 flex-1 flex-col overflow-y-auto bg-black px-5 pt-4 pb-5 md:px-7 md:pb-6">
               <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-white/35">
                 Concept {viewing.id}
               </p>
