@@ -173,6 +173,9 @@ export function ResumeModal({ open, onClose, pdfUrl = "/nick-resume.pdf" }: Prop
               <strong>Design:</strong> CAD (Fusion), digital design, physical prototyping (metal, 3d printing, laser cutting, sand casting, water jetting), video production
             </p>
             <p className="mt-2 text-sm text-[#0a0a0a]/80">
+              <strong>Software:</strong> Claude Code, Cursor, Vercel, Supabase
+            </p>
+            <p className="mt-2 text-sm text-[#0a0a0a]/80">
               <strong>Social Media:</strong> Instagram (20K+ followers, gymnastics/calisthenics content) ·{" "}
               <a href="https://www.instagram.com/nkuebs/reels" target="_blank" rel="noopener noreferrer" className="underline">
                 instagram.com/nkuebs/reels
@@ -187,7 +190,8 @@ export function ResumeModal({ open, onClose, pdfUrl = "/nick-resume.pdf" }: Prop
           <Section title="Demonstration of Exceptional Ability">
             <p className="text-sm font-semibold">Gymnastics National Champion</p>
             <Bullets items={[
-              "2022, 2023, & 2024 NCAA Team Champion",
+              "2022, 2023, 2024, & 2026 NCAA Team Champion",
+              "2026 NCAA Floor, Ring, & High Bar All-American",
               "2023 NCAA Floor Champion & Ring All-American",
               "Team USA 5x Junior National Team Member",
             ]} />

@@ -150,6 +150,85 @@ body {
   }
 }
 
+/* Air DJ card: soundwave rings radiating from the hand */
+.airdj-soundwaves {
+  --wave-x: 72%;
+  --wave-y: 46%;
+}
+
+.airdj-core {
+  position: absolute;
+  top: var(--wave-y);
+  left: var(--wave-x);
+  width: 6%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border-radius: 9999px;
+  background: radial-gradient(
+    circle,
+    rgba(212, 175, 55, 0.9) 0%,
+    rgba(212, 175, 55, 0.45) 40%,
+    rgba(212, 175, 55, 0) 75%
+  );
+  filter: blur(3px);
+  mix-blend-mode: screen;
+  animation: airdj-core 2.2s ease-in-out infinite;
+}
+
+.airdj-ring {
+  position: absolute;
+  top: var(--wave-y);
+  left: var(--wave-x);
+  width: 16%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%) scale(0.3);
+  border: 1.5px solid rgba(212, 175, 55, 0.75);
+  border-radius: 9999px;
+  opacity: 0;
+  mix-blend-mode: screen;
+  filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.5));
+  animation: airdj-ring 4s cubic-bezier(0.22, 0.6, 0.3, 1) infinite;
+}
+
+.airdj-ring-1 { animation-delay: 0s; }
+.airdj-ring-2 { animation-delay: 1s; }
+.airdj-ring-3 { animation-delay: 2s; }
+.airdj-ring-4 { animation-delay: 3s; }
+
+@keyframes airdj-ring {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.3);
+    border-width: 2px;
+  }
+  12% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(2.6);
+    border-width: 0.5px;
+  }
+}
+
+@keyframes airdj-core {
+  0%, 100% {
+    opacity: 0.55;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.25);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .airdj-core,
+  .airdj-ring {
+    animation: none;
+  }
+}
+
 /* Snake Lab: shared animation classes used by each variant card */
 .lab-snake-path {
   stroke-dasharray: 1;

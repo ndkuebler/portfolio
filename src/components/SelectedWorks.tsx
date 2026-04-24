@@ -101,15 +101,39 @@ export function SelectedWorks() {
                   </span>
                 </div>
                 <div className="w-full md:w-3/5">
-                  <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg bg-black">
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      className="object-contain object-center transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-                      sizes="(max-width: 768px) 100vw, 800px"
-                      priority={index === 0}
-                    />
+                  <div
+                    className={`relative w-full overflow-hidden rounded-lg bg-black ${
+                      project.slug === "air-dj"
+                        ? "aspect-video"
+                        : "aspect-[4/3]"
+                    }`}
+                  >
+                    {project.video ? (
+                      <video
+                        src={project.video}
+                        poster={project.image}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        preload="metadata"
+                        className={`absolute inset-0 h-full w-full object-center transition-transform duration-700 ease-out group-hover:scale-[1.03] ${
+                          project.slug === "air-dj"
+                            ? "object-cover scale-[1.08] group-hover:scale-[1.11]"
+                            : "object-contain"
+                        }`}
+                      />
+                    ) : (
+                      <Image
+                        src={project.image}
+                        alt={project.title}
+                        fill
+                        className="object-contain object-center transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                        sizes="(max-width: 768px) 100vw, 800px"
+                        priority={index === 0}
+                        unoptimized={project.image.endsWith(".svg")}
+                      />
+                    )}
                   </div>
                   {/* Mobile pill button — centered below image */}
                   <div className="flex md:hidden justify-center mt-4">
