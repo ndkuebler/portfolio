@@ -1,5 +1,6 @@
 import { AirDjHero } from "@/components/AirDjHero";
 import { BackButton } from "@/components/BackButton";
+import { GestureReference } from "@/components/GestureReference";
 
 export const metadata = {
   title: "Air DJ · Nick Kuebler",
@@ -103,6 +104,7 @@ export default function AirDjPage() {
                 to solo.
               </figcaption>
             </figure>
+            <GestureReference />
           </div>
 
           <div>
