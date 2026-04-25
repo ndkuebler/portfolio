@@ -112,6 +112,9 @@ export function ResumeModal({ open, onClose, pdfUrl = "/nick-resume.pdf" }: Prop
             </p>
             <Bullets items={[
               <>
+                <strong>Air DJ:</strong> Designed and built a gesture-controlled DJ board that replaces every knob and fader with a hand motion tracked through a webcam. Trained a custom gesture classifier on self-collected data, mapped poses to virtual MIDI for VirtualDJ, and authored an intuitive vocabulary (pinch to play, crossed fingers to crossfade, among 13 other gestures).
+              </>,
+              <>
                 <strong>Ringallets:</strong> Designed and prototyped a gymnastics training tool that bridges the gap between parallettes and rings, preserving correct mechanics without instability. Iterated through CAD modeling, failure point analysis, and tested with professional gymnasts.
               </>,
               <>

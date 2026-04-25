@@ -119,8 +119,8 @@ export default function AirDjPage() {
                 <p className="mt-2 text-[1rem] leading-[1.8] text-[#f5f5f5]/75">
                   The agent is a strong executor but a mediocre inventor. It
                   happily builds whatever you describe, so the value is in
-                  deciding what to build. Claude did the typing. The framing
-                  was mine.
+                  deciding what to build. Claude did the coding. The framing,
+                  the building, and the execution were mine.
                 </p>
               </li>
               <li>
