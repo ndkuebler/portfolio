@@ -91,7 +91,7 @@ export function ResumeModal({ open, onClose, pdfUrl = "/nick-resume.pdf" }: Prop
               right="Sept. 2021 – Present"
             />
             <Bullets items={[
-              "2022, 2023, & 2024 NCAA Team Champion",
+              "2022, 2023, 2024, & 2026 NCAA Team Champion",
               "2023 NCAA Individual Floor Champion",
               "Hosted annual camp for aspiring students & local non-profit groups (Children's Champions) for a day of handstands, backflips, and balance practice to inspire a love for gymnastics",
               <>
