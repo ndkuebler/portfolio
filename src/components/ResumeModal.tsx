@@ -194,7 +194,7 @@ export function ResumeModal({ open, onClose, pdfUrl = "/nick-resume.pdf" }: Prop
             <p className="text-sm font-semibold">Gymnastics National Champion</p>
             <Bullets items={[
               "2022, 2023, 2024, & 2026 NCAA Team Champion",
-              "2026 NCAA Floor, Ring, & High Bar All-American",
+              "2026 NCAA Floor & High Bar All-American, Rings Bronze Medal",
               "2023 NCAA Floor Champion & Ring All-American",
               "Team USA 5x Junior National Team Member",
             ]} />
