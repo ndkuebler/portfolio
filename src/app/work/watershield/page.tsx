@@ -162,8 +162,10 @@ export default function WaterShieldPage() {
 
           <div className="overflow-hidden rounded-xl border border-[#f5f5f5]/[0.08]">
             <video
-              src="/work/watershield-demo.mp4"
+              src="/work/watershield-demo.mp4#t=25"
               controls
+              autoPlay
+              muted
               playsInline
               preload="metadata"
               className="w-full h-auto bg-black"
@@ -176,7 +178,7 @@ export default function WaterShieldPage() {
       </section>
 
       {/* ===== WHAT I DID + TAKEAWAYS — side by side ===== */}
-      <section className="bg-[#0a0a0a] px-6 sm:px-10 lg:px-14 py-20 border-t border-[#f5f5f5]/[0.08]">
+      <section className="bg-[#0a0a0a] px-6 sm:px-10 lg:px-14 pt-20 pb-8 border-t border-[#f5f5f5]/[0.08]">
         <div className="mx-auto max-w-[1200px]">
           <div className="flex flex-col md:flex-row gap-16 md:gap-20">
             <div className="md:w-1/2">
