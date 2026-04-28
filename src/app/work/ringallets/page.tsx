@@ -162,6 +162,10 @@ export default function RingalletsPage() {
           <p className="mt-3 text-sm text-[#f5f5f5]/50">Final Ringallets configuration</p>
         </div>
       </section>
+
+      <section className="bg-[#0a0a0a] flex justify-center pb-8">
+        <BackButton />
+      </section>
     </main>
   );
 }

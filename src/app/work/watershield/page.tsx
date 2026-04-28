@@ -204,6 +204,9 @@ export default function WaterShieldPage() {
           </div>
         </div>
       </section>
+      <section className="bg-[#0a0a0a] flex justify-center pb-8">
+        <BackButton />
+      </section>
     </main>
   );
 }

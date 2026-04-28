@@ -50,7 +50,7 @@ export function SelectedWorks() {
             href={`/work/${project.slug}`}
             className="group sticky block w-full bg-[#0a0a0a] border-t border-[#f5f5f5]/[0.08]"
             style={{
-              top: "80px",
+              top: "4.5rem",
               height: cardCss,
             }}
           >
