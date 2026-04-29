@@ -177,6 +177,82 @@ export default function WaterShieldPage() {
         </div>
       </section>
 
+      {/* ===== V2: METAL D-SHAFT ASSEMBLY ===== */}
+      <section className="bg-[#0a0a0a] px-6 sm:px-10 lg:px-14 py-20 border-t border-[#f5f5f5]/[0.08]">
+        <div className="mx-auto max-w-[1200px]">
+          <h2 className="text-xs uppercase tracking-[0.25em] text-[#f5f5f5]/40 mb-6">
+            V2 — Metal D-shaft assembly
+          </h2>
+          <p className="max-w-[720px] text-[1.125rem] leading-[1.7] text-[#f5f5f5]/80">
+            The V1 demo works for normal riding, but the single 3D-printed center
+            piece could snap when the board hit a sharp impact like a curb edge.
+            V2 splits that center into two parts joined by metal D-shafts: a base
+            that bolts to the truck and an arc that slides onto the shafts. The
+            shaft takes the impact load instead of the print, so the part survives
+            the bumps a longboard is meant to handle.
+          </p>
+          <img
+            src="/work/watershield-v2-1.jpg"
+            alt="WaterShield V2 with metal D-shaft assembly"
+            className="w-full max-h-[80vh] object-contain rounded-xl mt-12"
+          />
+
+          <h3 className="text-xs uppercase tracking-[0.25em] text-[#f5f5f5]/40 mt-16 mb-6">
+            Attachment improvements
+          </h3>
+          <p className="max-w-[720px] text-[1.125rem] leading-[1.7] text-[#f5f5f5]/80">
+            The split also turns setup into a one-time job. The base stays bolted
+            to the truck, and the D-shaft and arc slide off when you don't need
+            them. As soon as it starts raining you push the arc back onto the
+            shafts and you're riding in about 20 seconds. The V1 setup took
+            around 5 minutes every time.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+            <img
+              src="/work/watershield-v2-2.jpg"
+              alt="WaterShield V2 — angled view of the two-part assembly"
+              className="w-full max-h-[80vh] object-contain rounded-xl"
+            />
+            <img
+              src="/work/watershield-v2-3.jpg"
+              alt="WaterShield V2 — side view showing the D-shaft connection"
+              className="w-full max-h-[80vh] object-contain rounded-xl"
+            />
+          </div>
+
+          <div className="max-w-[800px] mx-auto mt-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="overflow-hidden rounded-xl border border-[#f5f5f5]/[0.08] bg-black">
+                <video
+                  src="/work/watershield-v2-demo1.mp4"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  className="w-full max-h-[60vh] object-contain"
+                />
+              </div>
+              <div className="overflow-hidden rounded-xl border border-[#f5f5f5]/[0.08] bg-black">
+                <video
+                  src="/work/watershield-v2-demo2.mp4"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  className="w-full max-h-[60vh] object-contain"
+                />
+              </div>
+            </div>
+            <p className="mt-4 text-sm text-[#f5f5f5]/50 text-center">
+              Comparison of the WaterShield on the board (front wheels versus back wheels).
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* ===== WHAT I DID + TAKEAWAYS — side by side ===== */}
       <section className="bg-[#0a0a0a] px-6 sm:px-10 lg:px-14 pt-20 pb-8 border-t border-[#f5f5f5]/[0.08]">
         <div className="mx-auto max-w-[1200px]">
