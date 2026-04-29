@@ -17,7 +17,7 @@ export default function WaterShieldPage() {
       {/* ===== PROJECT INFO — two column ===== */}
       <section className="bg-[#0a0a0a] px-6 sm:px-10 lg:px-14 pt-16 pb-20">
         <div className="mx-auto max-w-[1200px]">
-          <BackButton />
+          <BackButton slug="watershield" />
 
           <div className="flex flex-col md:flex-row gap-12 md:gap-20">
             {/* Left — title + description */}
@@ -281,7 +281,7 @@ export default function WaterShieldPage() {
         </div>
       </section>
       <section className="bg-[#0a0a0a] flex justify-center pb-8">
-        <BackButton />
+        <BackButton slug="watershield" />
       </section>
     </main>
   );

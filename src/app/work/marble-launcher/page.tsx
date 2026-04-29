@@ -17,7 +17,7 @@ export default function MarbleLauncherPage() {
       {/* ===== PROJECT INFO ===== */}
       <section className="bg-[#0a0a0a] px-6 sm:px-10 lg:px-14 pt-16 pb-20">
         <div className="mx-auto max-w-[1200px]">
-          <BackButton />
+          <BackButton slug="marble-launcher" />
 
           <div className="flex flex-col md:flex-row gap-12 md:gap-20">
             <div className="md:w-3/5">
@@ -204,7 +204,7 @@ export default function MarbleLauncherPage() {
       </section>
 
       <section className="bg-[#0a0a0a] flex justify-center pb-8">
-        <BackButton />
+        <BackButton slug="marble-launcher" />
       </section>
     </main>
   );

@@ -15,6 +15,18 @@ export function SelectedWorks() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
+  // Scroll to a #work-<slug> hash on mount. Cross-page Next.js navigation to
+  // a hash sometimes runs before the target is mounted, so handle it here.
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (!hash.startsWith("#work-")) return;
+    const id = hash.slice(1);
+    requestAnimationFrame(() => {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: "instant", block: "start" });
+    });
+  }, []);
+
   // On mobile, use a uniformly shorter card height for every card — this
   // tightens the overall section while keeping sticky transitions clean
   // (any asymmetry between cards creates visual gaps as sticky ranges
@@ -47,11 +59,13 @@ export function SelectedWorks() {
         {works.map((project, index) => (
           <Link
             key={project.slug}
+            id={`work-${project.slug}`}
             href={`/work/${project.slug}`}
             className="group sticky block w-full bg-[#0a0a0a] border-t border-[#f5f5f5]/[0.08]"
             style={{
               top: "4.5rem",
               height: cardCss,
+              scrollMarginTop: "4.5rem",
             }}
           >
             {/* Top bar: number + title | tags | year */}

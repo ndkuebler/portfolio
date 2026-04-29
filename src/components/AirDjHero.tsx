@@ -166,7 +166,7 @@ export function AirDjHero() {
 
       {/* Sound-on hint chip */}
       <div
-        className="pointer-events-none absolute inset-x-0 bottom-[28%] flex justify-center transition-opacity duration-500"
+        className="pointer-events-none absolute inset-x-0 bottom-[28%] z-20 flex justify-center transition-opacity duration-500"
         style={{ opacity: showHint ? 1 : 0 }}
       >
         <button

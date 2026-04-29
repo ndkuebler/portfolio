@@ -14,7 +14,8 @@ export default function WorkLayout({
 
   useEffect(() => {
     const scrollToTarget = () => {
-      if (pathname === "/work/air-dj") {
+      const isDesktop = window.innerWidth >= 640;
+      if (pathname === "/work/air-dj" && isDesktop) {
         const target = document.getElementById("project-info");
         if (target) {
           const rect = target.getBoundingClientRect();
