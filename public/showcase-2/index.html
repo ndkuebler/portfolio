@@ -57,6 +57,16 @@
     background: #1a1f26; color: var(--muted); border: 1px solid var(--line); margin-right: 6px;}
   .v1 { color: var(--bad); }
   .v2 { color: var(--good); }
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 22px 0 8px; }
+  .compare figure { margin: 0; background: var(--panel); border: 1px solid var(--line);
+    border-radius: 12px; overflow: hidden; }
+  .compare img { width: 100%; height: 240px; object-fit: cover; display: block; background: #000; }
+  .compare figcaption { padding: 10px 14px; font-size: 13px; color: var(--muted);
+    border-top: 1px solid var(--line); }
+  .compare figcaption strong { display: block; font-size: 14px; margin-bottom: 2px; }
+  .compare figcaption.cv1 strong { color: var(--bad); }
+  .compare figcaption.cv2 strong { color: var(--good); }
+  @media (max-width: 600px) { .compare { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -70,6 +80,16 @@
     <span class="pill">V1 vs. V2</span>
   </p>
   <p class="sub">A one-page engineering breakdown of the forces on the WaterShield longboard fender, comparing the original one-piece PLA body (V1) against the two-body friction-fit + dual D-shaft design (V2).</p>
+  <div class="compare">
+    <figure>
+      <img src="/work/watershield-final.webp" alt="V1 — one-piece 3D printed PLA WaterShield mounted on a longboard, deflecting water from the wheel" />
+      <figcaption class="cv1"><strong>V1 — one-piece PLA</strong>Single 3D-printed body. Snapped after a few rides + one big bump.</figcaption>
+    </figure>
+    <figure>
+      <img src="/work/watershield-v2-1.jpg" alt="V2 — two-body WaterShield connected by two D-shafts" />
+      <figcaption class="cv2"><strong>V2 — two-body + 2× D-shafts</strong>Mount body and shield body joined by two 0.25" D-shafts in a tight friction fit.</figcaption>
+    </figure>
+  </div>
 </header>
 
 <h2>1. The Setup</h2>
