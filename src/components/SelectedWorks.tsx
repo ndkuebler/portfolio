@@ -15,16 +15,35 @@ export function SelectedWorks() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  // Scroll to a #work-<slug> hash on mount. Cross-page Next.js navigation to
-  // a hash sometimes runs before the target is mounted, so handle it here.
+  // Scroll to a #work-<slug> hash on mount. Browsers report the same
+  // offsetTop for every stacked sticky card, so we can't rely on the target
+  // card's offsetTop. Instead, walk the container's offsetTop chain and
+  // add (index * cardHeight) to land on the right card's natural position.
   useEffect(() => {
     const hash = window.location.hash;
     if (!hash.startsWith("#work-")) return;
-    const id = hash.slice(1);
-    requestAnimationFrame(() => {
-      const el = document.getElementById(id);
-      if (el) el.scrollIntoView({ behavior: "instant", block: "start" });
-    });
+    const slug = hash.slice("#work-".length);
+    const index = works.findIndex((w) => w.slug === slug);
+    if (index < 0) return;
+    const scrollToCard = () => {
+      const firstCard = document.getElementById(`work-${works[0].slug}`);
+      const container = firstCard?.parentElement;
+      if (!container) return;
+      let containerTop = 0;
+      let node: HTMLElement | null = container;
+      while (node) {
+        containerTop += node.offsetTop;
+        node = node.offsetParent as HTMLElement | null;
+      }
+      const cardHeight = container.offsetHeight / works.length;
+      // Sit a few px inside the card's sticky range to avoid landing exactly
+      // on the boundary with the next card.
+      const target = containerTop + index * cardHeight - 72 + 8;
+      window.scrollTo({ top: Math.max(0, target), behavior: "instant" });
+    };
+    requestAnimationFrame(scrollToCard);
+    const t = setTimeout(scrollToCard, 80);
+    return () => clearTimeout(t);
   }, []);
 
   // On mobile, use a uniformly shorter card height for every card — this
