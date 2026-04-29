@@ -16,6 +16,9 @@
   html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Inter","Segoe UI",sans-serif}
   a{color:var(--accent)}
   .wrap{max-width:880px;margin:0 auto;padding:48px 24px 96px}
+  .hero{margin:-48px -24px 32px;background:#000;border-bottom:1px solid var(--line)}
+  .hero img{display:block;width:100%;height:auto;max-height:520px;object-fit:contain;background:#000}
+  @media (min-width:880px){.hero{margin-left:calc((100vw - 880px)/-2 + 0px);margin-right:calc((100vw - 880px)/-2 + 0px)}}
   header{border-bottom:1px solid var(--line);padding-bottom:24px;margin-bottom:32px}
   .eyebrow{color:var(--accent);text-transform:uppercase;letter-spacing:.12em;font-size:12px;font-weight:600}
   h1{font-size:40px;line-height:1.15;margin:8px 0 12px;letter-spacing:-.02em}
@@ -46,6 +49,10 @@
 </head>
 <body>
 <div class="wrap">
+
+<div class="hero">
+  <img src="/work/ringalletsbbg.webp" alt="Ringallets — pair of aluminum gymnastics training rings mounted on milled vertical legs.">
+</div>
 
 <header>
   <div class="eyebrow">Structural Analysis · 2026</div>
@@ -191,6 +198,12 @@
 
 <section>
   <h2>6. Recommended Numbers</h2>
+
+  <figure>
+    <img src="/work/ringalletplanche.webp" alt="Designer holding a planche on the Ringallets — body fully supported on the rings with legs extended horizontally.">
+    <figcaption>Real-world validation: a planche held on the prototype, ~160 lb of bodyweight loaded statically with no visible deformation.</figcaption>
+  </figure>
+
   <table>
     <thead><tr><th>Category</th><th>Load</th></tr></thead>
     <tbody>
