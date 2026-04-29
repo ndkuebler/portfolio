@@ -15,7 +15,7 @@ export default function AirDjPage() {
       <AirDjHero />
 
       {/* ===== PROJECT INFO ===== */}
-      <section className="bg-[#0a0a0a] px-6 sm:px-10 lg:px-14 pt-16 pb-20">
+      <section id="project-info" className="bg-[#0a0a0a] px-6 sm:px-10 lg:px-14 pt-16 pb-20">
         <div className="mx-auto max-w-[1200px]">
           <BackButton />
 

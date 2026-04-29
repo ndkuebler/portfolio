@@ -82,7 +82,7 @@ export function ResumeModal({ open, onClose, pdfUrl = "/nick-resume.pdf" }: Prop
               right="Expected June 2026"
             />
             <p className="text-sm text-[#0a0a0a]/80 mt-1">
-              Major: Product Design (Mechanical Engineering / Design School). GPA: 3.73/4.00
+              Major: Product Design (Mechanical Engineering / Design School). GPA: 3.744/4.00
             </p>
 
             <Entry
