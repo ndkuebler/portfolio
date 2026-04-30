@@ -202,19 +202,16 @@
   <div class="callout">
     <strong>Safe working load: ~500 lb (227 kg) per Ringallet</strong> (SF = 3, static use). The 160 lb static planche has roughly 3× margin to the analytical limit.
   </div>
+
+  <p>One model note: the horizontal peg reaction <code>Ax = P/2</code> comes from a 2-pin arch idealization. A closed ring is much stiffer than that model assumes, so the real horizontal thrust is meaningfully lower. Combined with the fact that calisthenics loads (handstand, support holds, dips) are nearly pure vertical, sliding has not been observed in testing.</p>
 </section>
 
 <section>
-  <h2>5. Caveats &amp; Next Steps</h2>
-
-  <h3>Sliding (the honest caveat)</h3>
-  <p>The arch idealization predicts the legs need <code>μ ≥ 1.0</code> at the floor. Bare aluminum on most surfaces sits at μ ≈ 0.3–0.6, yet the rig holds in real use. The most likely explanation is that the closed-ring stiffness reduces the actual horizontal thrust below the P/2 estimate.</p>
-
-  <h3>Highest-impact design improvements</h3>
-  <p>A bottom crossbar between the legs is the obvious structural fix — but it's incompatible with this design because the user's hand grips the ring at the 6 o'clock position, exactly where a crossbar would land. So the next two changes do most of the work:</p>
+  <h2>5. Design Improvements</h2>
+  <p>A bottom crossbar between the legs is the obvious structural fix — but it's incompatible with this design because the user's hand grips the ring at the 6 o'clock position, exactly where a crossbar would land. The two changes below do most of the work:</p>
   <ol>
     <li><strong>Pin or bolt the peg through the leg.</strong> Eliminates the friction-fit pullout unknown and locks the joint against creep. Closes the only remaining un-quantified failure mode.</li>
-    <li><strong>Add rubber feet under the baseplates.</strong> Raises effective μ from ~0.4 to ~0.7+ and resists tipping — directly addresses the sliding caveat without adding mass or geometry.</li>
+    <li><strong>Add rubber feet under the baseplates.</strong> Defensive measure for slick surfaces (polished tile, hardwood). Adds margin against any residual horizontal thrust.</li>
   </ol>
 </section>
 
