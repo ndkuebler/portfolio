@@ -39,9 +39,6 @@
   .pill{display:inline-block;background:#1c1f26;border:1px solid var(--line);border-radius:999px;padding:2px 10px;font-size:12px;color:var(--muted);margin-right:6px;margin-bottom:6px}
   .callout{background:linear-gradient(180deg,#1d1a12 0%,#16181d 100%);border:1px solid #3a2f17;border-left:3px solid var(--accent);border-radius:10px;padding:16px 18px;margin:18px 0}
   .callout strong{color:var(--accent)}
-  .note{background:#15171c;border-left:2px solid var(--muted);padding:10px 14px;margin:10px 0 14px;font-size:14px;color:#b8bec8;border-radius:0 8px 8px 0;line-height:1.55}
-  .note strong{color:var(--ink)}
-  .note .term{color:var(--accent);font-weight:600}
   ol{padding-left:20px}
   ol li{margin:6px 0}
   figure{margin:14px 0;text-align:center}
@@ -75,10 +72,6 @@
   <p>Two milled 6061-T6 legs hold a sand-cast A356-T6 ring between them. The ring has two integrated hex pegs at its 3 and 9 o'clock points; each peg slides into a matching hex hole in a leg (hand-pressed friction fit, no glue or pin). Load <code>P</code> is a downward point force applied at the bottom of the ring during use.</p>
 
   <p>The ring sits with intentional clearance between its bottom (6 o'clock) and the floor — that gap is what lets a hand wrap fully around the ring while gripping. It also rules out a bottom crossbar between the legs, since a crossbar would land exactly where the hand goes.</p>
-
-  <div class="note">
-    <span class="term">"-T6"</span> is a heat-treatment designation in aluminum alloys. <strong>T</strong> means "thermally treated"; <strong>6</strong> means "solution heat-treated and then artificially aged" — the alloy is heated, quenched, and then baked at moderate temperature to grow tiny precipitates inside the metal that block dislocation motion. <strong>Result: roughly 2× the strength of the same alloy in its as-cast or as-extruded state.</strong> 6061-T6 is the standard milling-grade aluminum; A356-T6 is its sand-casting cousin.
-  </div>
 
   <figure>
     <img src="/showcase-1/fbd-system.jpeg" alt="Hand-drawn diagram of the Ringallets assembly: ring body between two vertical legs with the applied load at the bottom of the ring.">
@@ -130,31 +123,19 @@
 
   <h3>Vertical equilibrium of the ring</h3>
   <span class="eq">ΣFy = 0  →  Ay + By − P = 0  →  Ay = By = P / 2</span>
-  <div class="note">
-    <strong>What's happening:</strong> the ring isn't moving, so up-forces must equal down-forces. The hand pulls the ring down with <code>P</code>; the two pegs push the ring up with <code>Ay</code> and <code>By</code>. Because the load is centered between the pegs (symmetry), each peg carries exactly half. <em>Sticky version: split the weight evenly across the two supports.</em>
-  </div>
 
   <h3>Horizontal equilibrium of the ring</h3>
   <span class="eq">ΣFx = 0  →  Ax = Bx ≈ P / 2</span>
-  <div class="note">
-    <strong>What's happening:</strong> sideways forces must also cancel, so the left peg's pull and the right peg's pull are equal and opposite. The trickier part is the <em>magnitude</em> — statics alone only proves they match, not how big they are. The ring acts like a shallow arch (load below the supports), and that arch geometry sets the horizontal "thrust" at roughly P/2 per side. <em>Sticky version: an arch wants to spread; the supports hold it in.</em>
-  </div>
+  <p>The closed ring is statically indeterminate in the horizontal direction. Treating the lower half as a shallow arch (span L = 2r, rise = r, point load at midspan) gives a first-order estimate of P/2 per side.</p>
 
   <h3>Leg reactions at the base</h3>
   <span class="eq">N₁ = N₂ = P / 2     F₁ = F₂ = P / 2</span>
-  <div class="note">
-    <strong>What's happening:</strong> each leg is also a free body in equilibrium. Whatever the ring pushes <em>down</em> on the leg (Ay), the floor pushes back <em>up</em> with the same force (N). Whatever the ring pulls the leg <em>sideways</em> (Ax), the floor resists <em>sideways</em> through friction (F). <em>Sticky version: every push has an equal-and-opposite floor reaction.</em>
-  </div>
-  <p>Required friction coefficient to prevent sliding is <code>μ ≥ 1.0</code> — addressed in §5.</p>
+  <p>Each foot carries half of <code>P</code> vertically and resists half of <code>P</code> horizontally. The required friction coefficient to prevent sliding is <code>μ ≥ 1.0</code> — addressed in §5.</p>
 </section>
 
 <section>
   <h2>3. Failure-Mode Checks</h2>
   <p>Three modes can fail the assembly: ring bending, peg shear, and leg bending. Material yield strengths used: A356-T6 = 24 ksi, 6061-T6 = 40 ksi. Safety factor SF = 3 for safe working load.</p>
-
-  <div class="note">
-    <span class="term">ksi</span> = "kilopound per square inch" = <strong>1,000 psi</strong>. It's the engineering-friendly unit for stress strong enough that pounds-per-square-inch get unwieldy. 24 ksi = 24,000 psi = 165 MPa. <em>Sticky version: ksi is to psi what km is to meters.</em>
-  </div>
 
   <h3>3.1 Ring bending</h3>
   <p>Approximate the lower path of the ring as a simply-supported beam between the two pegs, with <code>P</code> applied at midspan.</p>
@@ -228,10 +209,6 @@
 
   <h3>Sliding (the honest caveat)</h3>
   <p>The arch idealization predicts the legs need <code>μ ≥ 1.0</code> at the floor. Bare aluminum on most surfaces sits at μ ≈ 0.3–0.6, yet the rig holds in real use. The most likely explanation is that the closed-ring stiffness reduces the actual horizontal thrust below the P/2 estimate.</p>
-
-  <div class="note">
-    <span class="term">μ (mu)</span> is the <strong>coefficient of friction</strong> — a unitless number that says how much sideways force a surface can resist before it starts sliding, expressed as a fraction of the normal (downward) force pressing the surfaces together. <strong>μ = 0.3</strong> means the floor can resist 30% of the weight before the part slides; <strong>μ = 1.0</strong> means it can resist a sideways force equal to the entire weight. Typical values: aluminum on steel ≈ 0.3, aluminum on rubber ≈ 0.6, rubber on rubber ≈ 1.0+. <em>Sticky version: μ is the "grip rating" between two surfaces.</em>
-  </div>
 
   <h3>Highest-impact design improvements</h3>
   <p>A bottom crossbar between the legs is the obvious structural fix — but it's incompatible with this design because the user's hand grips the ring at the 6 o'clock position, exactly where a crossbar would land. So the next two changes do most of the work:</p>
