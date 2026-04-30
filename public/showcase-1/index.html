@@ -39,6 +39,9 @@
   .pill{display:inline-block;background:#1c1f26;border:1px solid var(--line);border-radius:999px;padding:2px 10px;font-size:12px;color:var(--muted);margin-right:6px;margin-bottom:6px}
   .callout{background:linear-gradient(180deg,#1d1a12 0%,#16181d 100%);border:1px solid #3a2f17;border-left:3px solid var(--accent);border-radius:10px;padding:16px 18px;margin:18px 0}
   .callout strong{color:var(--accent)}
+  .note{background:#15171c;border-left:2px solid var(--muted);padding:10px 14px;margin:10px 0 14px;font-size:14px;color:#b8bec8;border-radius:0 8px 8px 0;line-height:1.55}
+  .note strong{color:var(--ink)}
+  .note .term{color:var(--accent);font-weight:600}
   ol{padding-left:20px}
   ol li{margin:6px 0}
   figure{margin:14px 0;text-align:center}
@@ -71,6 +74,12 @@
   <h2>1. The System</h2>
   <p>Two milled 6061-T6 legs hold a sand-cast A356-T6 ring between them. The ring has two integrated hex pegs at its 3 and 9 o'clock points; each peg slides into a matching hex hole in a leg (hand-pressed friction fit, no glue or pin). Load <code>P</code> is a downward point force applied at the bottom of the ring during use.</p>
 
+  <p>The ring sits with intentional clearance between its bottom (6 o'clock) and the floor — that gap is what lets a hand wrap fully around the ring while gripping. It also rules out a bottom crossbar between the legs, since a crossbar would land exactly where the hand goes.</p>
+
+  <div class="note">
+    <span class="term">"-T6"</span> is a heat-treatment designation in aluminum alloys. <strong>T</strong> means "thermally treated"; <strong>6</strong> means "solution heat-treated and then artificially aged" — the alloy is heated, quenched, and then baked at moderate temperature to grow tiny precipitates inside the metal that block dislocation motion. <strong>Result: roughly 2× the strength of the same alloy in its as-cast or as-extruded state.</strong> 6061-T6 is the standard milling-grade aluminum; A356-T6 is its sand-casting cousin.
+  </div>
+
   <figure>
     <img src="/showcase-1/fbd-system.jpeg" alt="Hand-drawn diagram of the Ringallets assembly: ring body between two vertical legs with the applied load at the bottom of the ring.">
     <figcaption>System overview. The applied load is below the peg centerline, so the ring also acts like a shallow arch.</figcaption>
@@ -81,23 +90,23 @@
       <h3>Ring (FIG-standard)</h3>
       <p>Inner Ø: <strong>18 cm</strong> (7.09 in)<br>
       Grip Ø: <strong>2.8 cm</strong> (1.10 in)<br>
-      Centerline span between pegs: <strong>L = 8.19 in</strong></p>
+      Centerline span between pegs: <strong>L = 20.8 cm</strong> (8.19 in)</p>
     </div>
     <div class="panel">
       <h3>Pegs (hex, integral to ring)</h3>
-      <p>Across flats: <strong>1.000 in</strong><br>
-      Across corners: <strong>1.155 in</strong><br>
-      Length: <strong>0.986 in</strong> (fully buried in leg)</p>
+      <p>Across flats: <strong>2.54 cm</strong> (1.000 in)<br>
+      Across corners: <strong>2.93 cm</strong> (1.155 in)<br>
+      Length: <strong>2.50 cm</strong> (0.986 in) — fully buried in leg</p>
     </div>
     <div class="panel">
       <h3>Legs (milled)</h3>
-      <p>Cross-section: <strong>1.376 × 1.000 in</strong> (bending depth = 1.0)<br>
-      Total height: <strong>6.251 in</strong><br>
-      Peg center above floor: <strong>h = 5.65 in</strong></p>
+      <p>Cross-section: <strong>3.50 × 2.54 cm</strong> (1.376 × 1.000 in)<br>
+      Total height: <strong>15.88 cm</strong> (6.251 in)<br>
+      Peg center above floor: <strong>h = 14.35 cm</strong> (5.65 in)</p>
     </div>
     <div class="panel">
       <h3>Baseplate</h3>
-      <p>6 × 1 × 0.125 in, screwed to leg<br>
+      <p>15.24 × 2.54 × 0.318 cm (6 × 1 × 0.125 in), screwed to leg<br>
       Underside: <strong>bare aluminum</strong><br>
       No rubber pad or floor anchor</p>
     </div>
@@ -120,38 +129,50 @@
   </div>
 
   <h3>Vertical equilibrium of the ring</h3>
-  <span class="eq">ΣFy = 0  →  Ay = By = P / 2</span>
+  <span class="eq">ΣFy = 0  →  Ay + By − P = 0  →  Ay = By = P / 2</span>
+  <div class="note">
+    <strong>What's happening:</strong> the ring isn't moving, so up-forces must equal down-forces. The hand pulls the ring down with <code>P</code>; the two pegs push the ring up with <code>Ay</code> and <code>By</code>. Because the load is centered between the pegs (symmetry), each peg carries exactly half. <em>Sticky version: split the weight evenly across the two supports.</em>
+  </div>
 
   <h3>Horizontal equilibrium of the ring</h3>
-  <p>The closed ring is statically indeterminate in the horizontal direction. Treating the lower half as a shallow arch (span L = 2r, rise = r, point load at midspan) gives a first-order estimate:</p>
-  <span class="eq">Ax = Bx ≈ P / 2</span>
+  <span class="eq">ΣFx = 0  →  Ax = Bx ≈ P / 2</span>
+  <div class="note">
+    <strong>What's happening:</strong> sideways forces must also cancel, so the left peg's pull and the right peg's pull are equal and opposite. The trickier part is the <em>magnitude</em> — statics alone only proves they match, not how big they are. The ring acts like a shallow arch (load below the supports), and that arch geometry sets the horizontal "thrust" at roughly P/2 per side. <em>Sticky version: an arch wants to spread; the supports hold it in.</em>
+  </div>
 
   <h3>Leg reactions at the base</h3>
   <span class="eq">N₁ = N₂ = P / 2     F₁ = F₂ = P / 2</span>
-  <p>Each foot carries half of <code>P</code> vertically and resists half of <code>P</code> horizontally. The required friction coefficient to prevent sliding is <code>μ ≥ 1.0</code> — addressed in §5.</p>
+  <div class="note">
+    <strong>What's happening:</strong> each leg is also a free body in equilibrium. Whatever the ring pushes <em>down</em> on the leg (Ay), the floor pushes back <em>up</em> with the same force (N). Whatever the ring pulls the leg <em>sideways</em> (Ax), the floor resists <em>sideways</em> through friction (F). <em>Sticky version: every push has an equal-and-opposite floor reaction.</em>
+  </div>
+  <p>Required friction coefficient to prevent sliding is <code>μ ≥ 1.0</code> — addressed in §5.</p>
 </section>
 
 <section>
   <h2>3. Failure-Mode Checks</h2>
   <p>Three modes can fail the assembly: ring bending, peg shear, and leg bending. Material yield strengths used: A356-T6 = 24 ksi, 6061-T6 = 40 ksi. Safety factor SF = 3 for safe working load.</p>
 
+  <div class="note">
+    <span class="term">ksi</span> = "kilopound per square inch" = <strong>1,000 psi</strong>. It's the engineering-friendly unit for stress strong enough that pounds-per-square-inch get unwieldy. 24 ksi = 24,000 psi = 165 MPa. <em>Sticky version: ksi is to psi what km is to meters.</em>
+  </div>
+
   <h3>3.1 Ring bending</h3>
   <p>Approximate the lower path of the ring as a simply-supported beam between the two pegs, with <code>P</code> applied at midspan.</p>
 
   <figure>
     <img src="/showcase-1/fbd-ring-beam.jpeg" alt="Hand-drawn simply-supported beam representing the ring, with span 8.19 in, point load P at midspan, supports labeled Peg A and Peg B with reactions P/2, and shear and moment diagrams below.">
-    <figcaption>Ring as a simply-supported beam — V steps from +P/2 to −P/2 at the load; M peaks at midspan with M_max = PL/4.</figcaption>
+    <figcaption>Ring as a simply-supported beam — V (shear) steps from +P/2 to −P/2 at the load; M (bending moment) peaks at midspan with M_max = PL/4.</figcaption>
   </figure>
 
-  <p>Solid round cross-section, d = 1.10 in:</p>
+  <p>Solid round cross-section, d = 1.10 in (2.8 cm):</p>
   <span class="eq">M_max = P · L / 4 = 2.05 P  lb·in</span>
-  <span class="eq">I = π d⁴ / 64 = 0.0725 in⁴       c = d / 2 = 0.55 in</span>
+  <span class="eq">I = π d⁴ / 64 = 0.0725 in⁴ (3.02 cm⁴)       c = d / 2 = 0.55 in (1.40 cm)</span>
   <span class="eq">σ_ring = M c / I = 15.6 P  psi</span>
-  <p>Solving σ_ring · SF = σy for P:</p>
-  <span class="eq">P_safe = (24,000 / 3) / 15.6 ≈ <strong>513 lb</strong></span>
+  <p>Solving σ_ring · SF = σ<sub>yield</sub> for P:</p>
+  <span class="eq">P_safe = (24,000 / 3) / 15.6 ≈ <strong>513 lb</strong> (233 kg)</span>
 
   <h3>3.2 Peg shear</h3>
-  <p>Each hex peg carries Ay = P/2 across an area of 0.866 in² (regular hex, AF = 1.0 in). Shear stress is ~0.58 P psi — even at P = 1,000 lb that's 580 psi, far below A356 shear yield (~12 ksi). <strong>Not limiting.</strong></p>
+  <p>Each hex peg carries Ay = P/2 across an area of 0.866 in² (5.59 cm²) — regular hex with 1.0 in across flats. Shear stress is about 0.58 P psi — even at P = 1,000 lb that's 580 psi, far below A356 shear yield (~12 ksi). <strong>Not limiting.</strong></p>
 
   <h3>3.3 Leg bending</h3>
   <p>The horizontal peg reaction <code>Ax = P/2</code> creates a cantilever moment in the leg that peaks at the base.</p>
@@ -159,7 +180,7 @@
   <div class="twocol">
     <figure>
       <img src="/showcase-1/fbd-leg-cantilever.jpeg" alt="Hand-drawn FBD of one leg as a vertical cantilever with Ax = P/2 applied at peg height 5.65 in, fixed at the base, with N = P/2 and F = P/2 at the floor.">
-      <figcaption>Leg cantilever FBD. Ax acts at h = 5.65 in.</figcaption>
+      <figcaption>Leg cantilever FBD. Ax acts at h = 5.65 in (14.35 cm).</figcaption>
     </figure>
     <figure>
       <img src="/showcase-1/fbd-leg-moment.jpeg" alt="Hand-drawn bending-moment diagram for the leg cantilever: M = 0 at peg height, M_max = Ax·h = (P/2)(5.65) = 2.83P lb·in at the base.">
@@ -167,14 +188,14 @@
     </figure>
   </div>
 
-  <p>The leg bends about its weak axis (bending depth = 1.0 in, the thin dimension). Section modulus:</p>
+  <p>The leg bends about its weak axis — bending depth is the 1.0 in (2.54 cm) thin dimension. Section modulus:</p>
   <span class="eq">M_max = Ax · h = (P/2)(5.65) = 2.83 P  lb·in</span>
-  <span class="eq">S = b h² / 6 = (1.376)(1.0)² / 6 = 0.229 in³</span>
+  <span class="eq">S = b h² / 6 = (1.376)(1.0)² / 6 = 0.229 in³ (3.75 cm³)</span>
   <span class="eq">σ_leg = M_max / S = 12.3 P  psi</span>
-  <span class="eq">P_safe = (40,000 / 3) / 12.3 ≈ <strong>1,080 lb</strong></span>
+  <span class="eq">P_safe = (40,000 / 3) / 12.3 ≈ <strong>1,080 lb</strong> (490 kg)</span>
 
   <h3>3.4 Friction-fit pullout</h3>
-  <p>The peg is hand-pressed into the leg with no mechanical lock. <code>Ax = P/2</code> tries to pull it out sideways. Pullout force was not measured analytically, but the demonstrated 160 lb planche bounds it from below: pullout per peg ≥ 80 lb under static use.</p>
+  <p>The peg is hand-pressed into the leg with no mechanical lock. <code>Ax = P/2</code> tries to pull it out sideways. Pullout force was not measured analytically, but the demonstrated 160 lb (73 kg) planche bounds it from below: pullout per peg ≥ 80 lb (36 kg) under static use.</p>
 </section>
 
 <section>
@@ -183,22 +204,22 @@
 
   <figure>
     <img src="/work/ringalletplanche.webp" alt="Designer holding a planche on the Ringallets — body fully supported on the rings with legs extended horizontally.">
-    <figcaption>Real-world validation: a planche held on the prototype, ~160 lb of bodyweight loaded statically with no visible deformation.</figcaption>
+    <figcaption>Real-world validation: a planche held on the prototype, ~160 lb (73 kg) of bodyweight loaded statically with no visible deformation.</figcaption>
   </figure>
 
   <table>
-    <thead><tr><th>Category</th><th>Load (lb)</th></tr></thead>
+    <thead><tr><th>Category</th><th>Load</th></tr></thead>
     <tbody>
-      <tr><td>Demonstrated prototype load (planche, static)</td><td><strong>160</strong></td></tr>
-      <tr><td>Ring-bending safe load (governs), per Ringallet</td><td><strong>~500</strong></td></tr>
-      <tr><td>Leg-bending safe load, per Ringallet</td><td>~1,080</td></tr>
-      <tr><td>Pair, two hands evenly loaded</td><td><strong>~1,000</strong></td></tr>
+      <tr><td>Demonstrated prototype load (planche, static)</td><td><strong>160 lb (73 kg)</strong></td></tr>
+      <tr><td>Ring-bending safe load (governs), per Ringallet</td><td><strong>~500 lb (227 kg)</strong></td></tr>
+      <tr><td>Leg-bending safe load, per Ringallet</td><td>~1,080 lb (490 kg)</td></tr>
+      <tr><td>Pair, two hands evenly loaded</td><td><strong>~1,000 lb (454 kg)</strong></td></tr>
       <tr><td>Margin over demonstrated load</td><td>~3×</td></tr>
     </tbody>
   </table>
 
   <div class="callout">
-    <strong>Safe working load: ~500 lb per Ringallet</strong> (SF = 3, static use). The 160 lb static planche has roughly 3× margin to the analytical limit.
+    <strong>Safe working load: ~500 lb (227 kg) per Ringallet</strong> (SF = 3, static use). The 160 lb static planche has roughly 3× margin to the analytical limit.
   </div>
 </section>
 
@@ -206,13 +227,17 @@
   <h2>5. Caveats &amp; Next Steps</h2>
 
   <h3>Sliding (the honest caveat)</h3>
-  <p>The arch idealization predicts the legs need <code>μ ≥ 1.0</code> at the floor. Bare aluminum on most surfaces sits at μ ≈ 0.3–0.6, yet the rig holds in real use. The most likely explanation is that the closed-ring stiffness reduces actual horizontal thrust below the P/2 estimate. A quick fix is more important than a refined model:</p>
+  <p>The arch idealization predicts the legs need <code>μ ≥ 1.0</code> at the floor. Bare aluminum on most surfaces sits at μ ≈ 0.3–0.6, yet the rig holds in real use. The most likely explanation is that the closed-ring stiffness reduces the actual horizontal thrust below the P/2 estimate.</p>
+
+  <div class="note">
+    <span class="term">μ (mu)</span> is the <strong>coefficient of friction</strong> — a unitless number that says how much sideways force a surface can resist before it starts sliding, expressed as a fraction of the normal (downward) force pressing the surfaces together. <strong>μ = 0.3</strong> means the floor can resist 30% of the weight before the part slides; <strong>μ = 1.0</strong> means it can resist a sideways force equal to the entire weight. Typical values: aluminum on steel ≈ 0.3, aluminum on rubber ≈ 0.6, rubber on rubber ≈ 1.0+. <em>Sticky version: μ is the "grip rating" between two surfaces.</em>
+  </div>
 
   <h3>Highest-impact design improvements</h3>
+  <p>A bottom crossbar between the legs is the obvious structural fix — but it's incompatible with this design because the user's hand grips the ring at the 6 o'clock position, exactly where a crossbar would land. So the next two changes do most of the work:</p>
   <ol>
-    <li><strong>Add a bottom crossbar</strong> tying the two legs together. Directly resists Ax/Bx so the joint no longer depends on floor friction.</li>
-    <li><strong>Pin or bolt the peg through the leg.</strong> Eliminates the friction-fit pullout unknown and locks the joint against creep.</li>
-    <li><strong>Add rubber feet under the baseplates.</strong> Raises effective μ from ~0.4 to ~0.7+ and resists tipping.</li>
+    <li><strong>Pin or bolt the peg through the leg.</strong> Eliminates the friction-fit pullout unknown and locks the joint against creep. Closes the only remaining un-quantified failure mode.</li>
+    <li><strong>Add rubber feet under the baseplates.</strong> Raises effective μ from ~0.4 to ~0.7+ and resists tipping — directly addresses the sliding caveat without adding mass or geometry.</li>
   </ol>
 </section>
 
