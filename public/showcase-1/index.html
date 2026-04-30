@@ -46,6 +46,10 @@
   figcaption{color:var(--muted);font-size:13px;margin-top:8px}
   footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
   .meta{display:flex;flex-wrap:wrap;gap:0;margin-top:14px}
+  .tabs{display:flex;gap:4px;margin:24px 0 32px;border-bottom:1px solid var(--line)}
+  .tab{padding:12px 18px;color:var(--muted);text-decoration:none;border-bottom:2px solid transparent;font-weight:500;font-size:14px;transition:color .15s}
+  .tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+  .tab:hover:not(.active){color:var(--ink)}
 </style>
 </head>
 <body>
@@ -62,6 +66,11 @@
     <span class="pill">SF = 3 (static)</span>
   </div>
 </header>
+
+<nav class="tabs">
+  <a class="tab active" href="/showcase-1">Force Analysis</a>
+  <a class="tab" href="/showcase-1/process">Process</a>
+</nav>
 
 <div class="hero">
   <img src="/work/ringalletsbbg.webp" alt="Ringallets — pair of aluminum gymnastics training rings mounted on milled vertical legs.">
