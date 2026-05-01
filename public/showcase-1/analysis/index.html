@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ringallets — Force Analysis</title>
+<meta name="description" content="Structural force analysis of the Ringallets gymnastics training tool: free-body diagrams, equilibrium, governing failure mode, and recommended safe working load.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="googlebot" content="noindex, nofollow">
+<style>
+  :root{
+    --bg:#0e0f12; --panel:#16181d; --ink:#eef0f3; --muted:#9aa3af;
+    --accent:#ffb347; --line:#262932;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Inter","Segoe UI",sans-serif}
+  a{color:var(--accent)}
+  .wrap{max-width:880px;margin:0 auto;padding:48px 24px 96px}
+  .hero{margin:0 -24px 32px;background:#000;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .hero img{display:block;width:100%;height:auto;max-height:520px;object-fit:contain;background:#000}
+  @media (min-width:880px){.hero{margin-left:calc((100vw - 880px)/-2 + 0px);margin-right:calc((100vw - 880px)/-2 + 0px)}}
+  header{border-bottom:1px solid var(--line);padding-bottom:24px;margin-bottom:32px}
+  .eyebrow{color:var(--accent);text-transform:uppercase;letter-spacing:.12em;font-size:12px;font-weight:600}
+  h1{font-size:40px;line-height:1.15;margin:8px 0 12px;letter-spacing:-.02em}
+  h2{font-size:22px;margin:48px 0 12px;letter-spacing:-.01em;border-left:3px solid var(--accent);padding-left:12px}
+  h3{font-size:14px;margin:24px 0 8px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+  p{color:#d6dae1}
+  .lede{font-size:18px;color:#c8cdd5}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin:14px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media (max-width:640px){.grid{grid-template-columns:1fr}}
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media (max-width:640px){.twocol{grid-template-columns:1fr}}
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+  code{font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13.5px;background:#1c1f26;padding:1px 6px;border-radius:4px}
+  .eq{display:block;background:#1c1f26;border:1px solid var(--line);padding:12px 14px;border-radius:8px;margin:10px 0;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:14px;color:#e8ecf2;overflow-x:auto}
+  .pill{display:inline-block;background:#1c1f26;border:1px solid var(--line);border-radius:999px;padding:2px 10px;font-size:12px;color:var(--muted);margin-right:6px;margin-bottom:6px}
+  .callout{background:linear-gradient(180deg,#1d1a12 0%,#16181d 100%);border:1px solid #3a2f17;border-left:3px solid var(--accent);border-radius:10px;padding:16px 18px;margin:18px 0}
+  .callout strong{color:var(--accent)}
+  ol{padding-left:20px}
+  ol li{margin:6px 0}
+  figure{margin:14px 0;text-align:center}
+  figure img{max-width:100%;max-height:65vh;height:auto;width:auto;object-fit:contain;border-radius:10px;background:#fff;padding:8px;border:1px solid var(--line)}
+  figcaption{color:var(--muted);font-size:13px;margin-top:8px}
+  footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+  .meta{display:flex;flex-wrap:wrap;gap:0;margin-top:14px}
+  .tabs{display:flex;gap:4px;margin:24px 0 32px;border-bottom:1px solid var(--line)}
+  .tab{padding:12px 18px;color:var(--muted);text-decoration:none;border-bottom:2px solid transparent;font-weight:500;font-size:14px;transition:color .15s}
+  .tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+  .tab:hover:not(.active){color:var(--ink)}
+  @media (max-width:640px){
+    .wrap{padding:32px 16px 64px}
+    .hero{margin:0 -16px 24px}
+    .hero img{max-height:360px}
+    h1{font-size:30px;line-height:1.18}
+    h2{font-size:20px;margin:36px 0 10px}
+    .lede{font-size:16px}
+    .tabs{margin:16px 0 24px}
+    .tab{padding:10px 12px;font-size:13px}
+    figure img{max-height:60vh}
+    .eq{font-size:12.5px;padding:10px 12px}
+    table{font-size:13px}
+    th,td{padding:8px 10px}
+    .panel{padding:16px 18px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Ringallets — Force Analysis</h1>
+  <p class="lede">Free-body diagrams, equilibrium, and the load each Ringallet can safely carry.</p>
+  <div class="meta">
+    <span class="pill">A356-T6 sand-cast ring + pegs</span>
+    <span class="pill">6061-T6 milled legs</span>
+    <span class="pill">Hex friction-fit joint</span>
+    <span class="pill">SF = 3 (static)</span>
+  </div>
+</header>
+
+<nav class="tabs">
+  <a class="tab active" href="/showcase-1">Force Analysis</a>
+  <a class="tab" href="/showcase-1/process">Process</a>
+</nav>
+
+<div class="hero">
+  <img loading="lazy" decoding="async" src="/work/ringalletsbbg.webp" alt="Ringallets — pair of aluminum gymnastics training rings mounted on milled vertical legs.">
+</div>
+
+<section>
+  <h2>1. The System</h2>
+  <p>Two milled 6061-T6 legs hold a sand-cast A356-T6 ring between them. The ring has two integrated hex pegs at its 3 and 9 o'clock points; each peg slides into a matching hex hole in a leg (hand-pressed friction fit, no glue or pin). Load <code>P</code> is a downward point force applied at the bottom of the ring during use.</p>
+
+  <p>The ring sits with intentional clearance between its bottom (6 o'clock) and the floor — that gap is what lets a hand wrap fully around the ring while gripping. It also rules out a bottom crossbar between the legs, since a crossbar would land exactly where the hand goes.</p>
+
+  <figure>
+    <img loading="lazy" decoding="async" src="/showcase-1/fbd-system.jpeg" alt="Hand-drawn diagram of the Ringallets assembly: ring body between two vertical legs with the applied load at the bottom of the ring.">
+    <figcaption>System overview. The applied load is below the peg centerline, so the ring also acts like a shallow arch.</figcaption>
+  </figure>
+
+  <div class="grid">
+    <div class="panel">
+      <h3>Ring (FIG-standard)</h3>
+      <p>Inner Ø: <strong>18 cm</strong> (7.09 in)<br>
+      Grip Ø: <strong>2.8 cm</strong> (1.10 in)<br>
+      Centerline span between pegs: <strong>L = 20.8 cm</strong> (8.19 in)</p>
+    </div>
+    <div class="panel">
+      <h3>Pegs (hex, integral to ring)</h3>
+      <p>Across flats: <strong>2.54 cm</strong> (1.000 in)<br>
+      Across corners: <strong>2.93 cm</strong> (1.155 in)<br>
+      Length: <strong>2.50 cm</strong> (0.986 in) — fully buried in leg</p>
+    </div>
+    <div class="panel">
+      <h3>Legs (milled)</h3>
+      <p>Cross-section: <strong>3.50 × 2.54 cm</strong> (1.376 × 1.000 in)<br>
+      Total height: <strong>15.88 cm</strong> (6.251 in)<br>
+      Peg center above floor: <strong>h = 14.35 cm</strong> (5.65 in)</p>
+    </div>
+    <div class="panel">
+      <h3>Baseplate</h3>
+      <p>15.24 × 2.54 × 0.318 cm (6 × 1 × 0.125 in), screwed to leg<br>
+      Underside: <strong>bare aluminum</strong><br>
+      No rubber pad or floor anchor</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>2. Reactions</h2>
+  <p>The ring is loaded by <code>P</code> and supported through the two pegs. Isolating the ring gives the four peg reactions (<code>Ax, Ay</code> on the left, <code>Bx, By</code> on the right). Newton's third law transfers those reactions onto the legs, which are reacted at the floor by normal force <code>N</code> and friction <code>F</code>.</p>
+
+  <div class="twocol">
+    <figure>
+      <img loading="lazy" decoding="async" src="/showcase-1/fbd-ring.jpeg" alt="FBD of the ring with peg reactions Ax, Ay, Bx, By and applied load P.">
+      <figcaption>FBD — ring isolated.</figcaption>
+    </figure>
+    <figure>
+      <img loading="lazy" decoding="async" src="/showcase-1/fbd-legs.jpeg" alt="FBDs of the two legs with reactions at the top and N, F at the base.">
+      <figcaption>FBD — legs isolated.</figcaption>
+    </figure>
+  </div>
+
+  <h3>Vertical equilibrium of the ring</h3>
+  <span class="eq">ΣFy = 0  →  Ay + By − P = 0  →  Ay = By = P / 2</span>
+
+  <h3>Horizontal equilibrium of the ring</h3>
+  <span class="eq">ΣFx = 0  →  Ax = Bx ≈ P / 2</span>
+  <p>The closed ring is statically indeterminate in the horizontal direction. Treating the lower half as a shallow arch (span L = 2r, rise = r, point load at midspan) gives a first-order estimate of P/2 per side.</p>
+
+  <h3>Leg reactions at the base</h3>
+  <span class="eq">N₁ = N₂ = P / 2     F₁ = F₂ = P / 2</span>
+  <p>Each foot carries half of <code>P</code> vertically and resists half of <code>P</code> horizontally. The required friction coefficient to prevent sliding is <code>μ ≥ 1.0</code> — addressed in §5.</p>
+</section>
+
+<section>
+  <h2>3. Failure-Mode Checks</h2>
+  <p>Three modes can fail the assembly: ring bending, peg shear, and leg bending. Material yield strengths used: A356-T6 = 24 ksi, 6061-T6 = 40 ksi. Safety factor SF = 3 for safe working load.</p>
+
+  <h3>3.1 Ring bending</h3>
+  <p>Approximate the lower path of the ring as a simply-supported beam between the two pegs, with <code>P</code> applied at midspan.</p>
+
+  <figure>
+    <img loading="lazy" decoding="async" src="/showcase-1/fbd-ring-beam.jpeg" alt="Hand-drawn simply-supported beam representing the ring, with span 8.19 in, point load P at midspan, supports labeled Peg A and Peg B with reactions P/2, and shear and moment diagrams below.">
+    <figcaption>Ring as a simply-supported beam — V (shear) steps from +P/2 to −P/2 at the load; M (bending moment) peaks at midspan with M_max = PL/4.</figcaption>
+  </figure>
+
+  <p>Solid round cross-section, d = 1.10 in (2.8 cm):</p>
+  <span class="eq">M_max = P · L / 4 = 2.05 P  lb·in</span>
+  <span class="eq">I = π d⁴ / 64 = 0.0725 in⁴ (3.02 cm⁴)       c = d / 2 = 0.55 in (1.40 cm)</span>
+  <span class="eq">σ_ring = M c / I = 15.6 P  psi</span>
+  <p>Solving σ_ring · SF = σ<sub>yield</sub> for P:</p>
+  <span class="eq">P_safe = (24,000 / 3) / 15.6 ≈ <strong>513 lb</strong> (233 kg)</span>
+
+  <h3>3.2 Peg shear</h3>
+  <p>Each hex peg carries Ay = P/2 across an area of 0.866 in² (5.59 cm²) — regular hex with 1.0 in across flats. Shear stress is about 0.58 P psi — even at P = 1,000 lb that's 580 psi, far below A356 shear yield (~12 ksi). <strong>Not limiting.</strong></p>
+
+  <h3>3.3 Leg bending</h3>
+  <p>The horizontal peg reaction <code>Ax = P/2</code> creates a cantilever moment in the leg that peaks at the base.</p>
+
+  <div class="twocol">
+    <figure>
+      <img loading="lazy" decoding="async" src="/showcase-1/fbd-leg-cantilever.jpeg" alt="Hand-drawn FBD of one leg as a vertical cantilever with Ax = P/2 applied at peg height 5.65 in, fixed at the base, with N = P/2 and F = P/2 at the floor.">
+      <figcaption>Leg cantilever FBD. Ax acts at h = 5.65 in (14.35 cm).</figcaption>
+    </figure>
+    <figure>
+      <img loading="lazy" decoding="async" src="/showcase-1/fbd-leg-moment.jpeg" alt="Hand-drawn bending-moment diagram for the leg cantilever: M = 0 at peg height, M_max = Ax·h = (P/2)(5.65) = 2.83P lb·in at the base.">
+      <figcaption>Bending-moment diagram. M_max at the base.</figcaption>
+    </figure>
+  </div>
+
+  <p>The leg bends about its weak axis — bending depth is the 1.0 in (2.54 cm) thin dimension. Section modulus:</p>
+  <span class="eq">M_max = Ax · h = (P/2)(5.65) = 2.83 P  lb·in</span>
+  <span class="eq">S = b h² / 6 = (1.376)(1.0)² / 6 = 0.229 in³ (3.75 cm³)</span>
+  <span class="eq">σ_leg = M_max / S = 12.3 P  psi</span>
+  <span class="eq">P_safe = (40,000 / 3) / 12.3 ≈ <strong>1,080 lb</strong> (490 kg)</span>
+
+  <h3>3.4 Friction-fit pullout</h3>
+  <p>The peg is hand-pressed into the leg with no mechanical lock. <code>Ax = P/2</code> tries to pull it out sideways. Pullout force was not measured analytically, but the demonstrated 160 lb (73 kg) planche bounds it from below: pullout per peg ≥ 80 lb (36 kg) under static use.</p>
+</section>
+
+<section>
+  <h2>4. Result &amp; Validation</h2>
+  <p>The governing analytical mode is <strong>ring bending</strong> at ~513 lb per Ringallet. Leg bending and peg shear both have ~2× more headroom.</p>
+
+  <figure>
+    <img loading="lazy" decoding="async" src="/work/ringalletplanche.webp" alt="Designer holding a planche on the Ringallets — body fully supported on the rings with legs extended horizontally.">
+    <figcaption>Real-world validation: a planche held on the prototype, ~160 lb (73 kg) of bodyweight loaded statically with no visible deformation.</figcaption>
+  </figure>
+
+  <table>
+    <thead><tr><th>Category</th><th>Load</th></tr></thead>
+    <tbody>
+      <tr><td>Demonstrated prototype load (planche, static)</td><td><strong>160 lb (73 kg)</strong></td></tr>
+      <tr><td>Ring-bending safe load (governs), per Ringallet</td><td><strong>~500 lb (227 kg)</strong></td></tr>
+      <tr><td>Leg-bending safe load, per Ringallet</td><td>~1,080 lb (490 kg)</td></tr>
+      <tr><td>Pair, two hands evenly loaded</td><td><strong>~1,000 lb (454 kg)</strong></td></tr>
+      <tr><td>Margin over demonstrated load</td><td>~3×</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <strong>Safe working load: ~500 lb (227 kg) per Ringallet</strong> (SF = 3, static use). The 160 lb static planche has roughly 3× margin to the analytical limit.
+  </div>
+
+  <p>One model note: the horizontal peg reaction <code>Ax = P/2</code> comes from a 2-pin arch idealization. A closed ring is much stiffer than that model assumes, so the real horizontal thrust is meaningfully lower. Combined with the fact that calisthenics loads (handstand, support holds, dips) are nearly pure vertical, sliding has not been observed in testing.</p>
+</section>
+
+<section>
+  <h2>5. Design Improvements</h2>
+  <p>A bottom crossbar between the legs is the obvious structural fix — but it's incompatible with this design because the user's hand grips the ring at the 6 o'clock position, exactly where a crossbar would land. The two changes below do most of the work:</p>
+  <ol>
+    <li><strong>Pin or bolt the peg through the leg.</strong> Eliminates the friction-fit pullout unknown and locks the joint against creep. Closes the only remaining un-quantified failure mode.</li>
+    <li><strong>Add rubber feet under the baseplates.</strong> Defensive measure for slick surfaces (polished tile, hardwood). Adds margin against any residual horizontal thrust.</li>
+  </ol>
+</section>
+
+<footer>
+  Ringallets — structural analysis writeup. Project page: <a href="https://www.nkuebler.com/work/ringallets">nkuebler.com/work/ringallets</a>. <a href="/showcase-1/process">View Process →</a>.
+</footer>
+
+</div>
+</body>
+</html>
