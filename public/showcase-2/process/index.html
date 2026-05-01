@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WaterShield — Process</title>
+<meta name="description" content="WaterShield fabrication process: V1 single-body PLA print, mount, ride, and failure; V2 two-body redesign with friction-fit steel D-shaft joint.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="googlebot" content="noindex, nofollow">
+<style>
+  :root{
+    --bg:#0e0f12; --panel:#16181d; --ink:#eef0f3; --muted:#9aa3af;
+    --accent:#ffb347; --line:#262932;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Inter","Segoe UI",sans-serif}
+  a{color:var(--accent)}
+  .wrap{max-width:880px;margin:0 auto;padding:48px 24px 96px}
+  header{border-bottom:1px solid var(--line);padding-bottom:24px;margin-bottom:0}
+  h1{font-size:40px;line-height:1.15;margin:8px 0 12px;letter-spacing:-.02em}
+  h2{font-size:22px;margin:48px 0 12px;letter-spacing:-.01em;border-left:3px solid var(--accent);padding-left:12px}
+  h3{font-size:14px;margin:28px 0 8px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+  p{color:#d6dae1}
+  .lede{font-size:18px;color:#c8cdd5}
+  .pill{display:inline-block;background:#1c1f26;border:1px solid var(--line);border-radius:999px;padding:2px 10px;font-size:12px;color:var(--muted);margin-right:6px;margin-bottom:6px}
+  .meta{display:flex;flex-wrap:wrap;gap:0;margin-top:14px}
+  .tabs{display:flex;gap:4px;margin:24px 0 32px;border-bottom:1px solid var(--line)}
+  .tab{padding:12px 18px;color:var(--muted);text-decoration:none;border-bottom:2px solid transparent;font-weight:500;font-size:14px;transition:color .15s}
+  .tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+  .tab:hover:not(.active){color:var(--ink)}
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media (max-width:640px){.twocol{grid-template-columns:1fr}}
+  figure{margin:14px 0;text-align:center}
+  figure img,figure video{max-width:100%;max-height:65vh;height:auto;width:auto;object-fit:contain;border-radius:10px;background:#0a0a0a;border:1px solid var(--line);display:block;margin:0 auto}
+  figure video{width:100%;max-width:100%}
+  figcaption{color:var(--muted);font-size:13px;margin-top:8px}
+  footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+  @media (max-width:640px){
+    .wrap{padding:32px 16px 64px}
+    h1{font-size:30px;line-height:1.18}
+    h2{font-size:20px;margin:36px 0 10px}
+    h3{margin:20px 0 6px}
+    .lede{font-size:16px}
+    .tabs{margin:16px 0 24px}
+    .tab{padding:10px 12px;font-size:13px}
+    figure img,figure video{max-height:60vh}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>WaterShield — Process</h1>
+  <p class="lede">From the CAD model through three printed iterations of V1, the on-board failure, and the two-body friction-fit redesign that now carries every ride.</p>
+  <div class="meta">
+    <span class="pill">PLA, vertical print</span>
+    <span class="pill">Bambu Lab</span>
+    <span class="pill">5 mm steel D-shafts</span>
+    <span class="pill">Truck-mount fixity</span>
+  </div>
+</header>
+
+<nav class="tabs">
+  <a class="tab" href="/showcase-2">Force Analysis</a>
+  <a class="tab active" href="/showcase-2/process">Process</a>
+</nav>
+
+<section>
+  <h2>1. CAD Models</h2>
+  <p>Both versions share the same external geometry: a base plate sized to the truck-mount screws and an arc shaped to wrap the wheel from above with clearance. The structural change between V1 and V2 lives entirely on the interior — V1 is one continuous PLA body, V2 splits into two bodies joined by two steel D-shafts.</p>
+
+  <div class="twocol">
+    <figure>
+      <img loading="lazy" decoding="async" src="/showcase-2/process/v1-cad.jpeg" alt="V1 CAD render — single PLA body with the base plate flowing continuously into the arc.">
+      <figcaption>V1 — single PLA body, continuous base→arc geometry.</figcaption>
+    </figure>
+    <figure>
+      <img loading="lazy" decoding="async" src="/showcase-2/process/v2-cad.jpeg" alt="V2 CAD render — two-body design with separate base plate and arc body, joined by two D-shafts.">
+      <figcaption>V2 — two PLA bodies, joined by two 5 mm steel D-shafts (not visible in the render).</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section>
+  <h2>2. V1 — Print, Mount, Failure</h2>
+  <p>V1 went through three printed iterations on the Bambu Lab. The earliest prints used a thicker, "doorstop"-like base plate that worked structurally but looked oversized. Subsequent iterations slimmed the geometry down to the final form factor, then a painted refinement pass for the field test.</p>
+
+  <figure>
+    <img loading="lazy" decoding="async" src="/showcase-2/process/v1-prints.jpeg" alt="Multiple V1 PLA print iterations laid out on a blue cutting mat, showing the base plate and arc geometry refining across versions.">
+    <figcaption>Three V1 print iterations side by side — early bulky base plate (top) trimmed down to the final form (bottom).</figcaption>
+  </figure>
+
+  <figure>
+    <img loading="lazy" decoding="async" src="/showcase-2/process/v1-refined.jpeg" alt="V1 final refined version, primed and painted dark gray, sitting on a white surface.">
+    <figcaption>The refined V1 — primed and painted before the on-board test.</figcaption>
+  </figure>
+
+  <figure>
+    <img loading="lazy" decoding="async" src="/showcase-2/v1-cracked-cad.jpeg" alt="V1 CAD render with red hatching marking the failure location at the body-to-arc geometric transition.">
+    <figcaption>Failure location annotated on the CAD: the part snapped at the body→arc transition where the cross-section steps and the print layer lines run perpendicular to the bending stress.</figcaption>
+  </figure>
+
+  <figure>
+    <img loading="lazy" decoding="async" src="/showcase-2/process/v1-testride.jpeg" alt="V1 WaterShield mounted on the longboard during a test ride, white fenders visible covering the wheels.">
+    <figcaption>V1 mounted on the longboard. Survived ~3 rides before cracking at the location shown above; see the <a href="/showcase-2">force-analysis writeup</a> for the full failure breakdown.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <h2>3. V2 — Two-Body Redesign</h2>
+  <p>V2 keeps the V1 silhouette but splits the part along the deck edge. The new base plate is a thin mounting block that screws to the deck through the truck holes; the arc body is a separate piece that slides onto two 5 mm steel D-shafts press-fit into pockets on the base. The shafts have a machined flat that bears against the pocket wall to prevent rotation, and the pocket is sized with kerf compensation so the assembly is a tight friction fit by hand — no glue, no fasteners.</p>
+
+  <figure>
+    <img loading="lazy" decoding="async" src="/work/watershield-v2-1.jpg" alt="V2 components laid out: arc body, two steel D-shafts, and base body.">
+    <figcaption>V2 components — arc body, two D-shafts, base body. Friction-fit assembly.</figcaption>
+  </figure>
+
+  <figure>
+    <img loading="lazy" decoding="async" src="/work/watershield-v2-2.jpg" alt="V2 partially assembled, top-down view with the two D-shafts spanning the gap between base and arc bodies.">
+    <figcaption>Top-down view with the joint plane gapped open — the two D-shafts visible spanning between the bodies.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <h2>4. In the Wild</h2>
+  <p>V2 mounted, ridden, water-tested. Fifteen+ rides in, the joint shows no slop, the bodies show no visible deformation, and water spray is consistently knocked down — the design works as intended.</p>
+
+  <figure>
+    <video src="/work/watershield-v2-demo1.mp4" autoplay loop muted playsinline preload="metadata" controls></video>
+    <figcaption>V2 in motion — wheel turning, fender holding position, water deflected downward.</figcaption>
+  </figure>
+
+  <figure>
+    <video src="/work/watershield-v2-demo2.mp4" autoplay loop muted playsinline preload="metadata" controls></video>
+    <figcaption>Second clip — different angle, same outcome.</figcaption>
+  </figure>
+</section>
+
+<footer>
+  WaterShield — fabrication and field-test writeup. Project page: <a href="https://www.nkuebler.com/work/watershield">nkuebler.com/work/watershield</a>.
+</footer>
+
+</div>
+</body>
+</html>
