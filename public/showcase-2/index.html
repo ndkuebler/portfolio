@@ -1,72 +1,70 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>WaterShield — Force Analysis</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+<meta name="description" content="Structural force analysis of the WaterShield longboard wheel fender: free-body diagrams, cantilever bending, V1 fatigue failure, and the V2 redesign that fixes it.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="googlebot" content="noindex, nofollow">
 <style>
-  :root {
-    --bg: #0b0d10;
-    --panel: #14181d;
-    --ink: #e8ecf1;
-    --muted: #98a2b3;
-    --accent: #5ec2ff;
-    --line: #232932;
-    --good: #6ee7b7;
-    --warn: #fbbf24;
-    --bad: #fb7185;
+  :root{
+    --bg:#0e0f12; --panel:#16181d; --ink:#eef0f3; --muted:#9aa3af;
+    --accent:#ffb347; --line:#262932;
   }
-  * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink);
-    font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, system-ui, sans-serif; }
-  .wrap { max-width: 880px; margin: 0 auto; padding: 48px 24px 96px; }
-  header { border-bottom: 1px solid var(--line); padding-bottom: 24px; margin-bottom: 32px; }
-  h1 { font-size: 32px; margin: 0 0 6px; letter-spacing: -0.01em; }
-  h2 { font-size: 22px; margin: 40px 0 12px; letter-spacing: -0.01em; }
-  h3 { font-size: 17px; margin: 24px 0 8px; color: var(--accent); }
-  .sub { color: var(--muted); font-size: 15px; }
-  p { margin: 0 0 14px; }
-  ul { padding-left: 20px; }
-  pre.ascii {
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    padding: 16px;
-    overflow-x: auto;
-    font: 13px/1.5 ui-monospace, "SF Mono", Menlo, monospace;
-    color: #cbd5e1;
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Inter","Segoe UI",sans-serif}
+  a{color:var(--accent)}
+  .wrap{max-width:880px;margin:0 auto;padding:48px 24px 96px}
+  .hero{margin:0 -24px 32px;background:#000;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .hero img{display:block;width:100%;height:auto;max-height:520px;object-fit:contain;background:#000}
+  @media (min-width:880px){.hero{margin-left:calc((100vw - 880px)/-2 + 0px);margin-right:calc((100vw - 880px)/-2 + 0px)}}
+  header{border-bottom:1px solid var(--line);padding-bottom:24px;margin-bottom:32px}
+  .eyebrow{color:var(--accent);text-transform:uppercase;letter-spacing:.12em;font-size:12px;font-weight:600}
+  h1{font-size:40px;line-height:1.15;margin:8px 0 12px;letter-spacing:-.02em}
+  h2{font-size:22px;margin:48px 0 12px;letter-spacing:-.01em;border-left:3px solid var(--accent);padding-left:12px}
+  h3{font-size:14px;margin:24px 0 8px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+  p{color:#d6dae1}
+  .lede{font-size:18px;color:#c8cdd5}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin:14px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media (max-width:640px){.grid{grid-template-columns:1fr}}
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media (max-width:640px){.twocol{grid-template-columns:1fr}}
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+  code{font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13.5px;background:#1c1f26;padding:1px 6px;border-radius:4px}
+  .eq{display:block;background:#1c1f26;border:1px solid var(--line);padding:12px 14px;border-radius:8px;margin:10px 0;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:14px;color:#e8ecf2;overflow-x:auto}
+  .pill{display:inline-block;background:#1c1f26;border:1px solid var(--line);border-radius:999px;padding:2px 10px;font-size:12px;color:var(--muted);margin-right:6px;margin-bottom:6px}
+  .callout{background:linear-gradient(180deg,#1d1a12 0%,#16181d 100%);border:1px solid #3a2f17;border-left:3px solid var(--accent);border-radius:10px;padding:16px 18px;margin:18px 0}
+  .callout strong{color:var(--accent)}
+  ol{padding-left:20px}
+  ol li{margin:6px 0}
+  figure{margin:14px 0;text-align:center}
+  figure img{max-width:100%;max-height:65vh;height:auto;width:auto;object-fit:contain;border-radius:10px;background:#fff;padding:8px;border:1px solid var(--line)}
+  figcaption{color:var(--muted);font-size:13px;margin-top:8px}
+  footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+  .meta{display:flex;flex-wrap:wrap;gap:0;margin-top:14px}
+  .tabs{display:flex;gap:4px;margin:24px 0 32px;border-bottom:1px solid var(--line)}
+  .tab{padding:12px 18px;color:var(--muted);text-decoration:none;border-bottom:2px solid transparent;font-weight:500;font-size:14px;transition:color .15s}
+  .tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+  .tab:hover:not(.active){color:var(--ink)}
+  @media (max-width:640px){
+    .wrap{padding:32px 16px 64px}
+    .hero{margin:0 -16px 24px}
+    .hero img{max-height:360px}
+    h1{font-size:30px;line-height:1.18}
+    h2{font-size:20px;margin:36px 0 10px}
+    .lede{font-size:16px}
+    .tabs{margin:16px 0 24px}
+    .tab{padding:10px 12px;font-size:13px}
+    figure img{max-height:60vh}
+    .eq{font-size:12.5px;padding:10px 12px}
+    table{font-size:13px}
+    th,td{padding:8px 10px}
+    .panel{padding:16px 18px}
   }
-  table { width: 100%; border-collapse: collapse; margin: 12px 0 18px;
-    background: var(--panel); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
-  th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--line); font-size: 14.5px; }
-  th { background: #1a1f26; color: var(--muted); font-weight: 600; }
-  tr:last-child td { border-bottom: none; }
-  .callout {
-    background: linear-gradient(180deg, rgba(94,194,255,0.08), rgba(94,194,255,0.02));
-    border: 1px solid rgba(94,194,255,0.25);
-    border-left: 3px solid var(--accent);
-    padding: 14px 16px; border-radius: 8px; margin: 14px 0 22px;
-  }
-  .callout strong { color: var(--accent); }
-  .equation { background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
-    padding: 14px 18px; margin: 12px 0; overflow-x: auto; }
-  code { background: #1a1f26; padding: 1px 6px; border-radius: 4px; font-size: 0.92em; }
-  footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
-  .pill { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px;
-    background: #1a1f26; color: var(--muted); border: 1px solid var(--line); margin-right: 6px;}
-  .v1 { color: var(--bad); }
-  .v2 { color: var(--good); }
-  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 22px 0 8px; }
-  .compare figure { margin: 0; background: var(--panel); border: 1px solid var(--line);
-    border-radius: 12px; overflow: hidden; }
-  .compare img { width: 100%; height: 240px; object-fit: cover; display: block; background: #000; }
-  .compare figcaption { padding: 10px 14px; font-size: 13px; color: var(--muted);
-    border-top: 1px solid var(--line); }
-  .compare figcaption strong { display: block; font-size: 14px; margin-bottom: 2px; }
-  .compare figcaption.cv1 strong { color: var(--bad); }
-  .compare figcaption.cv2 strong { color: var(--good); }
-  @media (max-width: 600px) { .compare { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -74,170 +72,174 @@
 
 <header>
   <h1>WaterShield — Force Analysis</h1>
-  <p class="sub">
-    <span class="pill">Cantilever beam model</span>
+  <p class="lede">Why the original PLA fender cracked after a few rides, and how a two-body / steel-shaft redesign moved the failure mode out of the operating envelope.</p>
+  <div class="meta">
     <span class="pill">PLA, vertical print</span>
-    <span class="pill">V1 vs. V2</span>
-  </p>
-  <p class="sub">A one-page engineering breakdown of the forces on the WaterShield longboard fender, comparing the original one-piece PLA body (V1) against the two-body friction-fit + dual D-shaft design (V2).</p>
-  <div class="compare">
-    <figure>
-      <img src="/work/watershield-final.webp" alt="V1 — one-piece 3D printed PLA WaterShield mounted on a longboard, deflecting water from the wheel" />
-      <figcaption class="cv1"><strong>V1 — one-piece PLA</strong>Single 3D-printed body. Snapped after a few rides + one big bump.</figcaption>
-    </figure>
-    <figure>
-      <img src="/work/watershield-v2-1.jpg" alt="V2 — two-body WaterShield connected by two D-shafts" />
-      <figcaption class="cv2"><strong>V2 — two-body + 2× D-shafts</strong>Mount body and shield body joined by two 0.25" D-shafts in a tight friction fit.</figcaption>
-    </figure>
+    <span class="pill">5 mm steel D-shafts</span>
+    <span class="pill">Truck-mount screw fixity</span>
+    <span class="pill">SF = 3 (PLA bending)</span>
   </div>
 </header>
 
-<h2>1. The Setup</h2>
-<p>The WaterShield mounts to the underside of a longboard deck with <strong>two vertically stacked screws</strong> and <strong>cantilevers off the edge of the board</strong>. The curved arc hangs in free space behind the wheel.</p>
-<p>Mechanically, both versions behave as a <strong>cantilever beam</strong>:</p>
-<ul>
-  <li><strong>Fixed support</strong> = the two screws / board contact area</li>
-  <li><strong>Free end</strong> = tip of the arc</li>
-  <li><strong>Load</strong> = vertical impulses from road bumps, vibration, water, or accidental ground contact</li>
-</ul>
-<p>Bending moment is highest <strong>near the mount</strong>, not at the tip.</p>
+<nav class="tabs">
+  <a class="tab active" href="/showcase-2">Force Analysis</a>
+  <a class="tab" href="/showcase-2/process">Process</a>
+</nav>
 
-<h2>2. Free Body Diagrams</h2>
-
-<h3 class="v1">V1 — One-Piece PLA</h3>
-<p>The crack happened <strong>~¼ of the way inward</strong> from the board edge — inside the screw-supported region — so the effective moment arm runs from that crack section to the tip of the arc.</p>
-<pre class="ascii">   Top view
-   ┌──────────────────────┐  ┌──────────────────────)
-   │     ● screw 2        │  │                      )
-   │                      │  │                      )
-   │     ● screw 1        │  │                      )
-   └──────────────────────┘  └──────────────────────)
-                          ↑
-              crack section (~¼ inward)</pre>
-
-<pre class="ascii">   Beam-equivalent
-        screws form a reaction couple
-              ● R2 ↑
-              │
-              ● R1 ↓
-                    crack section
-                       │───────────────────────↓ F_end
-                       &lt;──── L_eff ≈ 3.5–4.5 in ──&gt;</pre>
-<p>The two stacked screws act as a <strong>reaction couple</strong> resisting rotation. The PLA body between the screws and the tip carries the full bending moment.</p>
-
-<h3 class="v2">V2 — Two-Body Friction-Fit + Two D-Shafts</h3>
-<p>Same external load on the tip, but the joint changes the load path.</p>
-<pre class="ascii">   mount body         joint            shield body
-   ┌──────────┐      ╔════╗      ┌──────────────────)
-   │  ● scr 2 │      ║ ⊙  ║      │                  )
-   │          │══════║    ║══════│                  )
-   │  ● scr 1 │      ║ ⊙  ║      │                  )
-   └──────────┘      ╚════╝      └──────────────────)
-                  two 0.25" D-shafts,
-                  spacing s ≈ 1 in           ↓ F_end
-                                  &lt;─── L_eff ───&gt;</pre>
-<p>The bending moment at the joint is reacted as a <strong>force couple</strong> across the two D-shafts:</p>
-<div class="equation"><span id="eq-pshaft"></span></div>
-
-<h2>3. Calculations</h2>
-
-<h3>Common assumptions</h3>
-<table>
-  <tr><th>Parameter</th><th>Value</th></tr>
-  <tr><td>Material</td><td>PLA, vertical print orientation</td></tr>
-  <tr><td>Weak-section width, <em>b</em></td><td>~1.5 in</td></tr>
-  <tr><td>Weak-section thickness, <em>t</em></td><td>~0.25–0.5 in (effective ~0.25–0.30 in based on real failure)</td></tr>
-  <tr><td>Effective lever arm, <em>L<sub>eff</sub></em></td><td>~3.5–4.5 in (crack ¼" inward + 3–3.5" overhang)</td></tr>
-  <tr><td>Effective PLA bending stress (one-time)</td><td>~2,500 psi</td></tr>
-  <tr><td>Effective PLA bending stress (fatigue)</td><td>~1,500 psi</td></tr>
-  <tr><td>D-shaft diameter, <em>d</em></td><td>0.25 in</td></tr>
-  <tr><td>D-shaft spacing, <em>s</em></td><td>1 in</td></tr>
-  <tr><td>D-shaft insertion depth</td><td>1 in each side</td></tr>
-</table>
-
-<h3 class="v1">V1 — Cantilever bending of a rectangular PLA section</h3>
-<div class="equation"><span id="eq-v1"></span></div>
-
-<table>
-  <tr><th>Effective thickness</th><th>Repeated-use crack force (σ ≈ 1,500 psi)</th><th>One-time snap force (σ ≈ 2,500 psi)</th></tr>
-  <tr><td>0.25 in</td><td>~7 lbf</td><td>~12 lbf</td></tr>
-  <tr><td>0.375 in</td><td>~16 lbf</td><td>~27 lbf</td></tr>
-  <tr><td>0.50 in</td><td>~29 lbf</td><td>~48 lbf</td></tr>
-</table>
-
-<p>Adjusting for the inward crack location, vertical-print layer weakness, screw-hole stress concentration, and fatigue:</p>
-<div class="callout">
-  <strong>V1 best estimate</strong>
-  <ul style="margin:6px 0 0;">
-    <li>Repeated-use cracking: <strong>~4–8 lbf (18–36 N)</strong> at the tip</li>
-    <li>One-time snap-off: <strong>~7–13 lbf (31–58 N)</strong> at the tip</li>
-  </ul>
-</div>
-<p>Matches the real failure: survived a few short rides, snapped after repeated vibration + one big bump.</p>
-
-<h3 class="v2">V2 — Force couple across the D-shaft pair</h3>
-<p>Tip moment:</p>
-<div class="equation"><span id="eq-m"></span></div>
-<p>Shaft load:</p>
-<div class="equation"><span id="eq-p"></span></div>
-<p>A 10 lbf tip load → ~35–45 lbf reaction at each D-shaft pocket.</p>
-
-<p>Shaft cross-sectional area:</p>
-<div class="equation"><span id="eq-area"></span></div>
-<p>Using PLA shear strength of τ ≈ 2,000–3,000 psi for the joint pocket:</p>
-<div class="equation"><span id="eq-pmax"></span></div>
-<p>Solving back for tip load:</p>
-<div class="equation"><span id="eq-ftip"></span></div>
-
-<div class="callout">
-  <strong>V2 best estimate</strong>
-  <ul style="margin:6px 0 0;">
-    <li>Joint/shaft failure: <strong>~25–50 lbf (110–220 N)</strong> at the tip</li>
-  </ul>
+<div class="hero">
+  <img loading="lazy" decoding="async" src="/work/watershield-v2-1.jpg" alt="WaterShield V2 — assembled two-body PLA wheel fender with two steel D-shafts joining the base plate to the arc.">
 </div>
 
-<h2>4. V1 vs. V2 Comparison</h2>
-<table>
-  <tr><th></th><th class="v1">V1 — one-piece PLA</th><th class="v2">V2 — two-body + 2× D-shaft</th></tr>
-  <tr><td>Load path</td><td>Tip → curved shield → single PLA neck → screws</td><td>Tip → shield body → D-shafts/friction joint → mount body → screws</td></tr>
-  <tr><td>Failure mode</td><td>Bending crack at PLA section ~¼" inside board edge</td><td>Shaft pocket bearing / shear in joint</td></tr>
-  <tr><td>Repeated-use damage threshold</td><td><strong>~4–8 lbf</strong></td><td>well above normal ride loads</td></tr>
-  <tr><td>One-time failure load (tip)</td><td><strong>~7–13 lbf</strong> (~31–58 N)</td><td><strong>~25–50 lbf</strong> (~110–220 N)</td></tr>
-  <tr><td>Real-world result</td><td>Snapped after ~3 rides + one big bump</td><td>Has not broken</td></tr>
-  <tr><td>Approximate strength multiplier</td><td>1× (baseline)</td><td><strong>~3–5× stronger</strong></td></tr>
-</table>
+<section>
+  <h2>1. The System</h2>
+  <p>The WaterShield is a longboard wheel fender. It mounts to the deck via the existing truck-mount screws (no board modification) and cantilevers past the deck edge to cover the wheel from above. The arc is shaped to match the wheel profile — close enough to block the upward water spray, with clearance to never contact the wheel.</p>
 
-<h3>Why V2 survives</h3>
-<p>The external tip force is essentially <strong>the same</strong> in both versions — same rider, same board, same bump produces the same input. What changed is <strong>how the moment is reacted</strong>:</p>
-<ul>
-  <li><span class="v1"><strong>V1</strong></span> forces the entire bending moment through one continuous, vertically-printed PLA section. Layer lines run perpendicular to the bending stress — the worst orientation for PLA. A small tip force becomes a large bending stress at one fragile cross-section.</li>
-  <li><span class="v2"><strong>V2</strong></span> converts the bending moment into a <strong>force couple</strong> across two D-shafts spaced 1" apart, plus the friction-fit contact area between the two bodies. The PLA is loaded in <strong>bearing</strong> — a much friendlier mode for printed plastic — instead of cross-layer tension.</li>
-</ul>
+  <p><strong>V1</strong> is a single PLA body: the base plate flows continuously into the arc as one printed piece. After roughly three rides on rough pavement plus one large bump, it cracked at the geometric transition where the base plate meets the arc — exactly at the deck edge.</p>
 
-<h3>Estimated real ride loads</h3>
-<p>Hard riding bumps probably apply <strong>~5–10 lbf at the tip</strong>, occasionally higher on a sharp hit. That sits <strong>above V1's fatigue threshold</strong> but <strong>well below V2's joint capacity</strong> — exactly matching the field results.</p>
+  <p><strong>V2</strong> splits the part into two PLA bodies (base + arc) joined by two 5 mm (0.197 in) steel D-shafts in tight friction-fit pockets. The D-shafts have a machined flat that bears against the pocket wall to prevent rotation. The joint sits inboard of the deck edge. External geometry, screws, and wheel coverage are unchanged — only the load path inside the part is different.</p>
+
+  <figure>
+    <img loading="lazy" decoding="async" src="/showcase-2/fbd-system.jpeg" alt="Hand-drawn system overview: longboard deck with screw passing through the base plate, D-shaft connecting base plate to arc body, wheel below the arc, and a vertical load F at the tip with horizontal lever arm L.">
+    <figcaption>System overview. Side view looking along the board's direction of travel. The arc and wheel appear as rectangles because we're sighting down the curve axis.</figcaption>
+  </figure>
+
+  <div class="grid">
+    <div class="panel">
+      <h3>V1 — single body</h3>
+      <p>Screw → tip: <strong>L_total = 4.937 in</strong> (12.54 cm)<br>
+      Screw → deck edge / crack section: <strong>1.375 in</strong> (3.49 cm)<br>
+      Effective lever arm: <strong>L_eff = 3.562 in</strong> (9.05 cm)<br>
+      Crack-section cross-section: <strong>b = 1.7 in × t = 0.3 in</strong> (4.32 × 0.76 cm)</p>
+    </div>
+    <div class="panel">
+      <h3>V2 — two-body + D-shafts</h3>
+      <p>Screw → tip: <strong>L_total = 5.000 in</strong> (12.70 cm)<br>
+      Screw → joint plane: <strong>0.938 in</strong> (2.38 cm)<br>
+      Effective lever arm: <strong>L_eff = 4.062 in</strong> (10.32 cm)<br>
+      Arc-body section just outboard of joint: <strong>b = 4.8 in × t = 0.442 in</strong> (12.19 × 1.12 cm)</p>
+    </div>
+    <div class="panel">
+      <h3>D-shafts (V2 only)</h3>
+      <p>Diameter: <strong>5 mm</strong> (0.197 in), steel<br>
+      Spacing (centerline): <strong>1.193 in</strong> (3.03 cm), side-by-side along the board<br>
+      Insertion depth: <strong>1.0 in</strong> (2.54 cm) into each body<br>
+      Pocket: ~0.03 in (0.76 mm) diametral oversize for kerf compensation</p>
+    </div>
+    <div class="panel">
+      <h3>Mounting (both versions)</h3>
+      <p>Two truck-mount screws, stacked along the board's length<br>
+      Center-to-center spacing: <strong>2.5 in</strong> (6.35 cm)<br>
+      Material: <strong>PLA</strong>, Bambu Lab, vertical print orientation<br>
+      Loading: <code>F</code> = vertical force at the arc tip from road bumps and water spray</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>2. Reactions</h2>
+  <p>Both versions are cantilever beams. The screw pair forms the fixed support; <code>F</code> is applied at the tip of the arc. The relevant internal loads at any cross-section a distance <code>x</code> from the tip are:</p>
+
+  <span class="eq">V(x) = F      (constant)</span>
+  <span class="eq">M(x) = F · x      (zero at the tip, max at the support)</span>
+
+  <p>V1 fails where the cross-section is weakest, not where <code>M</code> is largest in absolute terms — the two happen to coincide at the body→arc transition. V2 moves the support inboard (the joint takes over from the screw pair as the practical fixity point for the arc) and adds a much stronger PLA section outboard of it.</p>
+
+  <figure>
+    <img loading="lazy" decoding="async" src="/showcase-2/fbd-v1-cantilever.jpeg" alt="Hand-drawn cantilever idealization: fixed support at the crack section on the left, beam extending to the right, vertical force F at the free end, lever arm L below.">
+    <figcaption>V1 idealized as a cantilever fixed at the crack section.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <h2>3. Failure-Mode Checks</h2>
+  <p>Three modes can fail the assembly: V1 PLA bending at the body→arc transition, V2 PLA bending outboard of the joint, and V2 joint capacity. Material strength: PLA in vertical-print orientation puts the layer lines perpendicular to the bending stress (the worst orientation). Effective layer-perpendicular bending strength is taken at <code>σ_y = 5,000 psi</code> — conservative against the 7–9 ksi isotropic value, accounting for layer adhesion. Safety factor SF = 3.</p>
+
+  <h3>3.1 V1 — PLA bending at the body→arc transition</h3>
+  <p>Rectangular section under simple bending. With <code>b = 1.7 in</code>, <code>t = 0.3 in</code>, <code>L_eff = 3.562 in</code>:</p>
+
+  <figure>
+    <img loading="lazy" decoding="async" src="/showcase-2/fbd-v1-shear-moment.jpeg" alt="Hand-drawn cantilever with shear and moment diagrams below: V(x) constant at F from support to tip, M(x) linear from FL at the support to zero at the tip.">
+    <figcaption>V(x) is constant. M(x) ramps linearly to <code>F · L_eff</code> at the crack section.</figcaption>
+  </figure>
+
+  <span class="eq">M_max = F · L_eff = 3.562 F  lb·in</span>
+  <span class="eq">I = b t³ / 12 = (1.7)(0.3)³ / 12 = 0.00383 in⁴ (0.159 cm⁴)     c = t/2 = 0.15 in (0.38 cm)</span>
+  <span class="eq">σ = M_max · c / I = 139.7 F  psi</span>
+  <p>Solving <code>σ · SF = σ_y</code> for F:</p>
+  <span class="eq">F_safe(V1) = (5,000 / 3) / 139.7 ≈ <strong>11.9 lbf</strong> (5.4 kg)</span>
+
+  <h3>3.2 V2 — PLA bending in the arc body, outboard of the joint</h3>
+  <p>Same approach, applied to the arc body at the section just outboard of the joint plane. With <code>b = 4.8 in</code>, <code>t = 0.442 in</code>, <code>L_eff = 4.062 in</code>:</p>
+
+  <span class="eq">I = (4.8)(0.442)³ / 12 = 0.0345 in⁴ (1.44 cm⁴)     c = 0.221 in (0.56 cm)</span>
+  <span class="eq">σ = M_max · c / I = 26.0 F  psi</span>
+  <span class="eq">F_safe(V2 arc body) = (5,000 / 3) / 26.0 ≈ <strong>64 lbf</strong> (29 kg)</span>
+
+  <p>The V2 arc body is wider <em>and</em> thicker than V1's crack section, so it carries about <strong>5.4× more bending stress per unit of tip force</strong>. That single change accounts for the bulk of V2's strength gain.</p>
+
+  <h3>3.3 V2 — joint capacity</h3>
+  <p>The two D-shafts sit side-by-side along the board, both at the same height (forced by a 0.6 in tall base body and 1.193 in shaft spacing — they cannot fit stacked vertically). They therefore do not form a vertical force couple resisting the bending moment directly. The joint reacts the moment through three mechanisms working together:</p>
+
+  <figure>
+    <img loading="lazy" decoding="async" src="/showcase-2/fbd-v2-joint.jpeg" alt="Hand-drawn V2 joint: base body and arc body separated by a small gap, joined by a horizontal D-shaft. Vertical load F applied off to the right of the arc body.">
+    <figcaption>V2 joint isolated. Moment at the joint = <code>F · L_eff</code>, reacted by joint-face compression + pin shear + pocket friction.</figcaption>
+  </figure>
+
+  <ol>
+    <li><strong>PLA-on-PLA compression</strong> at the bottom edge of the joint face — the two bodies push against each other where bending closes the joint.</li>
+    <li><strong>Pin shear</strong> — both pins together carry the transverse shear <code>F</code>; each pin sees <code>F/2</code> across an area of <code>π d²/4 ≈ 0.030 in²</code>. At a steel shear yield of ~21 ksi (mild steel, SF = 3), each pin can carry ~210 lbf — the joint is nowhere near pin-shear-limited.</li>
+    <li><strong>Pocket friction</strong> — when bending tries to open the top of the joint, friction along the 1 in shaft insertion in each body resists axial pullout.</li>
+  </ol>
+
+  <p>The combined joint capacity is dominated by PLA-on-PLA contact and friction-fit behavior, which don't have clean closed-form solutions in simple statics. The honest answer here is empirical: V2 has been ridden ~15 times with no detectable joint slop, deformation, or shaft motion, so the joint has not been the limit in practice. The page-side bound is the §3.2 PLA bending number.</p>
+</section>
+
+<section>
+  <h2>4. Result &amp; Validation</h2>
+  <p>The governing analytical mode for V1 is <strong>PLA bending at the body→arc transition</strong> at ~11.9 lbf. The governing analytical mode for V2 is <strong>PLA bending in the arc body outboard of the joint</strong> at ~64 lbf — about 5.4× stronger. Joint capacity in V2 is empirically validated; pin shear has ~10× more headroom than the PLA bending check.</p>
+
+  <figure>
+    <img loading="lazy" decoding="async" src="/showcase-2/v1-cracked-cad.jpeg" alt="CAD render of the V1 WaterShield with red hatching marking the crack location at the geometric transition between the base plate and the arc body.">
+    <figcaption>V1 failure location (red): the body→arc transition. Both stress concentration (geometry step) and fatigue weakness (vertical print layer lines run perpendicular to the bending stress) peak here.</figcaption>
+  </figure>
+
+  <table>
+    <thead><tr><th>Version</th><th>Governing mode</th><th>Safe load at tip</th></tr></thead>
+    <tbody>
+      <tr><td>V1 (single PLA body)</td><td>PLA bending at body→arc transition</td><td><strong>~12 lbf (5.4 kg)</strong></td></tr>
+      <tr><td>V2 (two-body + 2× steel D-shaft)</td><td>PLA bending in arc body, outboard of joint</td><td><strong>~64 lbf (29 kg)</strong></td></tr>
+      <tr><td>V2 — pin shear (sanity check)</td><td>Steel D-shaft cross-section</td><td>~420 lbf (190 kg) total</td></tr>
+      <tr><td>V2 — joint contact + friction</td><td>not analytically closed</td><td>empirically validated, no slop after ~15 rides</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Fatigue life — how many rides before V2 fails?</h3>
+  <p>V1 failed in roughly 3 rides at the operational riding load. V2's PLA weak section sees <code>σ_V2 / σ_V1 = 26.0 / 139.7 ≈ 0.186</code> — about 1/5.4 of V1's stress at the same tip force. Using Basquin's law for plastic fatigue with exponent <code>k ≈ 8</code> (typical for PLA):</p>
+  <span class="eq">N_V2 / N_V1 = (σ_V1 / σ_V2)^k = (5.37)^8 ≈ 700,000</span>
+  <p>So at the same operational load, V2's fatigue life is on the order of <strong>700,000× longer</strong> than V1's. Translated to ride count, that's well into the millions. Fatigue is no longer the design driver — V2's realistic failure mode is a single catastrophic impact (curb strike, drop, wheel-against-arc contact in a hard turn), not cyclic vibration.</p>
+
+  <div class="callout">
+    <strong>Safe working load: ~64 lbf (29 kg) at the arc tip</strong> (SF = 3, PLA bending). At normal riding loads (~5–10 lbf at the tip from bumps), V2 carries roughly <strong>6–13× safety margin</strong>. V2 has survived ~15 rides with no visible degradation; V1 cracked in ~3.
+  </div>
+
+  <p>One model note: the operational load itself (the actual <code>F</code> at the tip during a ride) was not measured directly — it's bounded by V1's failure case (around 8–12 lbf at peak, since V1 was cracking near its analytical limit) and by V2's continued survival. Both versions experience the same external load; only the load path through the part changed.</p>
+</section>
+
+<section>
+  <h2>5. Design Improvements</h2>
+  <p>V2 already moves the failure mode out of the fatigue regime. The remaining improvements are about hardening V2 against the impact case and tightening the analysis on the joint:</p>
+  <ol>
+    <li><strong>Stack the D-shafts vertically.</strong> Currently they sit side-by-side at the same height because the base body is only 0.6 in tall. Increasing the body height to ~1.7 in would let the shafts be vertically separated, forming a proper moment couple — the joint would then resist bending directly through pin tension/compression rather than relying on PLA-on-PLA contact + friction. That's the single biggest analytical win available.</li>
+    <li><strong>Add a fillet at the body→arc transition (V1-style geometry, if reverting).</strong> Even if the part stays a single piece, removing the sharp geometric step would significantly improve fatigue life by reducing the stress concentration at the crack section.</li>
+    <li><strong>Print the arc body in the bending-favorable orientation.</strong> Vertical print puts the layer lines perpendicular to the bending stress. Printing flat (or at an angle that aligns layers with the principal stress direction) would close the gap between layer-perpendicular and isotropic PLA strength.</li>
+    <li><strong>Add a mechanical retention feature to the shafts.</strong> The current friction-fit relies on uniform print-kerf compensation. A small pin or set screw across each shaft would lock the joint against creep over the long term.</li>
+  </ol>
+</section>
 
 <footer>
-  Conservative effective stresses used for vertical-print PLA. Tightening the estimate would require: exact crack-section thickness, infill %, wall count, and a measured distance from crack location to arc tip.
+  WaterShield — structural analysis writeup. Project page: <a href="https://www.nkuebler.com/work/watershield">nkuebler.com/work/watershield</a>.
 </footer>
 
 </div>
-
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-<script defer>
-window.addEventListener('DOMContentLoaded', () => {
-  const render = (id, tex) => {
-    const el = document.getElementById(id);
-    if (el && window.katex) katex.render(tex, el, { throwOnError: false, displayMode: true });
-  };
-  render('eq-pshaft', 'P_{shaft} = \\frac{M}{s} = \\frac{F_{end}\\,L_{eff}}{s}');
-  render('eq-v1', '\\sigma = \\frac{Mc}{I} \\;\\Rightarrow\\; F_{snap} = \\frac{\\sigma\\,b\\,t^2}{6L}');
-  render('eq-m', 'M = F_{end}\\,L_{eff}');
-  render('eq-p', 'P = \\frac{M}{s} = \\frac{F_{end}\\,L_{eff}}{1\\,\\text{in}} \\approx (3.5\\text{–}4.5)\\,F_{end}');
-  render('eq-area', 'A = \\frac{\\pi d^2}{4} = \\frac{\\pi(0.25)^2}{4} \\approx 0.049\\,\\text{in}^2');
-  render('eq-pmax', 'P_{max} = \\tau\\,A \\approx 98\\text{–}147\\,\\text{lbf}');
-  render('eq-ftip', 'F_{tip,max} = \\frac{P_{max}\\,s}{L_{eff}} \\approx 25\\text{–}50\\,\\text{lbf}');
-});
-</script>
 </body>
 </html>
