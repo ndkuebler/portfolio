@@ -59,12 +59,13 @@ export default function AirDjPage() {
               The idea
             </h2>
             <p className="mt-4 text-[1rem] sm:text-[1.0625rem] leading-[1.8] text-[#f5f5f5]/75">
-              DJing with physical controllers is wonderful but expensive.
-              Most people have laptops instead, and laptops are cheap. I
-              wanted to collapse the gap by using the one camera everyone
-              already has, training a custom gesture model on my own hands,
-              and routing the classified motions out as MIDI so any DJ
-              software can consume them.
+              Physical DJ controllers feel great, but the price keeps the
+              hobby out of reach for most people. Even an entry level board
+              runs around $400, while almost everyone already owns a laptop
+              with a webcam. Air DJ closes that gap by turning the camera
+              into the controller. A gesture model trained on my own hands
+              classifies motions in real time and routes them out as MIDI,
+              so any DJ software can read them like a regular controller.
             </p>
           </div>
 
