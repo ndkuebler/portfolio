@@ -280,8 +280,16 @@ export default function WaterShieldPage() {
           </div>
         </div>
       </section>
-      <section className="bg-[#0a0a0a] flex justify-center pb-8">
+      <section className="bg-[#0a0a0a] flex flex-wrap justify-center items-center gap-3 pb-8">
         <BackButton slug="watershield" />
+        <a
+          href="/showcase-2/process"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 rounded-full border border-white/30 px-5 py-2 text-sm font-medium text-white hover:bg-white hover:text-black transition-all duration-200 mb-12"
+        >
+          View case study →
+        </a>
       </section>
     </main>
   );
