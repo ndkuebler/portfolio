@@ -56,7 +56,7 @@
 </header>
 
 <div class="hero">
-  <img src="/showcase-three/hero.png" alt="Helix self-coiling USB-C cable: white silicone jacket coiled into a flat spiral with magnetic latches visible along each turn, and three exposed magnets in a transparent section near the USB-C connector.">
+  <img src="/showcase-three/hero.png" alt="Helix self-coiling USB-C cable: white TPE jacket coiled into a flat spiral with magnetic latches visible along each turn, and three exposed magnets in a transparent section near the USB-C connector.">
 </div>
 
 <section>
@@ -87,7 +87,7 @@
   <p>Two systems doing two jobs.</p>
 
   <h3>The jacket wants to coil</h3>
-  <p>The outer TPE is wound on a heated mandrel during cure. Same process as a 1970s telephone handset cord. The relaxed shape is a helix at 75&nbsp;mm coil diameter. Energy is stored when you pull it straight, released when you let go.</p>
+  <p>The outer TPE is wound on a heated mandrel during cure so its relaxed shape is a helix at 75&nbsp;mm coil diameter. Energy is stored when you pull it straight, released when you let go.</p>
 
   <h3>The magnets lock the coil</h3>
   <p>Identical N42 discs (3 × 1&nbsp;mm) are embedded at a 59&nbsp;mm pitch, which works out to four magnets per coil turn. All discs are oriented the same way: poles point along what becomes the helix axis once coiled.</p>
@@ -166,20 +166,20 @@
   </figure>
 
   <h3>Why pulling is easy</h3>
-  <p>Total coil retention sums across ~16 pairs (~4&nbsp;N). But when you pull, pairs release <strong>one at a time</strong>. The lever arm forces the closest pair to fail before the next pair sees any load. Same principle as velcro: peels easily, resists shear.</p>
-  <p>Extension force per click ≈ single-pair force ≈ 0.25&nbsp;N. The target feel is pulling tape: light, single-stage, never a fight.</p>
+  <p>When you pull on the connector, pairs release <strong>one at a time</strong>. The geometry forces the nearest pair to peel before the next pair sees any load. Same principle as velcro: peels easily, resists shear.</p>
+  <p>So the extension force is per-pair, not bulk. Target feel: pulling tape. Light, single-stage, never a fight.</p>
 </section>
 
 <section>
   <h2>The manufacturing problem I'd have to solve</h2>
   <p>Most of this is a normal cable. The interesting problem is <strong>getting 34 magnets into a 2&nbsp;m cable with consistent orientation</strong>. Magnets in a bulk hopper rotate, repel, and chain together. They will not sit still on a vibratory feeder.</p>
-  <p>My answer: order them on <strong>tape-and-reel</strong>, pre-oriented, the way SMD components ship. A 15–25¢ premium per magnet over loose stock. Pick-and-place uses a ceramic, non-magnetic tooling head so magnets don't strip off the pick nozzle. A small Hall-sensor array verifies pole direction inline at 100% AOI. Visual inspection alone can't see orientation.</p>
+  <p>My answer: order them on <strong>tape-and-reel</strong>, pre-oriented, the way SMD components ship. Modest cost premium over loose stock. Pick-and-place uses a ceramic, non-magnetic tooling head so magnets don't strip off the pick nozzle. A small Hall-sensor array checks pole direction at every magnet on the line, since cameras can't see field direction.</p>
   <p>Everything else is standard cable manufacturing: inner jacket co-extruded with magnet pockets, outer TPE overmold seals the magnets, final shape-set on a 75&nbsp;mm mandrel at ~110&nbsp;°C. The novel content is the magnet-handling step.</p>
 </section>
 
 <section>
   <h2>How I'd think about materials</h2>
-  <p><strong>TPE jacket.</strong> Specify a recyclable SEBS-based grade over the cheaper, less recyclable alternatives. Adds ~5% to jacket material cost. Both meet the durability spec; I'd argue for the recyclable grade in a trade-study and lose only if leadership explicitly chose cost.</p>
+  <p><strong>TPE jacket.</strong> Specify a recyclable SEBS-based grade over the cheaper, less recyclable alternatives. Both meet the durability spec. I'd argue for the recyclable grade in a trade-study and lose only if leadership explicitly chose cost.</p>
   <p><strong>Magnets.</strong> N42 neodymium is the honest weakness here. Rare-earth mined, environmentally costly, and supply-chain concentrated. Roughly 2 grams per 2 m cable. No drop-in substitute exists today at this size and field strength. Worth naming clearly rather than papering over.</p>
   <p><strong>The strongest sustainability case is durability.</strong> A cable that doesn't tangle, kink, or get yanked crooked lasts measurably longer in the field. At Apple volumes, displacing even one cable replacement per user over a product life is the largest impact this design has, bigger than any material substitution at the BOM level.</p>
   <p><strong>End of life.</strong> Magnets can be recovered at the recycler if the jacket strips cleanly off the conductor stack. The recyclable TPE choice enables this; today's heavily bonded cable jackets don't.</p>
@@ -187,21 +187,21 @@
 
 <section>
   <h2>Where I'd expect it to break</h2>
-  <p>The dominant failure mode I'd worry about is <strong>fatigue at the magnet inclusion sites in the conductor stack</strong>. Each magnet creates a local stiffness discontinuity. When the cable bends at that point, strain concentrates at the boundary between rigid (magnet plus pocket) and compliant (jacket). The conductors directly under a magnet would see higher cycle stress than the conductors 5&nbsp;mm away.</p>
+  <p>The dominant failure mode I'd worry about is <strong>fatigue at the magnet inclusion sites in the conductor stack</strong>. Each magnet creates a local stiffness discontinuity. When the cable bends at that point, strain concentrates at the boundary between the rigid magnet and the compliant jacket around it. The conductors directly under a magnet would see higher cycle stress than the conductors a few millimeters away.</p>
   <p>Two ways to mitigate, both worth testing:</p>
   <ul>
     <li><strong>Graded durometer transition.</strong> Soften the jacket immediately around each magnet so curvature distributes over a longer length instead of concentrating at the edge.</li>
     <li><strong>Move the magnets radially outboard</strong> of the conductor stack so the strain at the conductor stays low even if the jacket strains.</li>
   </ul>
-  <p>This is the kind of thing IEC 62680-1-3 flex testing would answer in a week of bench time. I'd want 50,000 bend cycles before I trust it.</p>
+  <p>This is the kind of thing standard cable flex testing would answer in a week of bench time. I'd want tens of thousands of bend cycles before I trust it.</p>
 </section>
 
 <section>
   <h2>What I don't know yet</h2>
   <ul>
     <li>Whether the 1&nbsp;mm inter-turn air gap is the right operating point. Peel force scales as 1/g⁴, so this is the most sensitive dimension in the whole design. Small jacket thickness variation has a big effect on feel.</li>
-    <li>Whether the MacBook lid's Hall sensor would falsely trigger when the coil rests directly against a closed laptop. The math says fine at 50&nbsp;mm+; pressed flat against the hinge it's worth measuring.</li>
-    <li>Whether approach #3 (magnets plus slugs) wins on a real BOM trade-study. The snap-feel is product equity, and I haven't held a slug version next to a magnet version to know how much weaker it actually feels.</li>
+    <li>Whether the MacBook lid's Hall sensor would falsely trigger when the coil rests directly against a closed laptop. Field drops off fast, so at typical bag positions it should be fine. Pressed flat against the hinge is worth measuring.</li>
+    <li>Whether approach #3 (magnets plus slugs) wins on a real BOM trade-study. The snap-feel is part of the product, and I haven't compared a slug version side-by-side with a magnet version to know how much weaker it actually feels.</li>
   </ul>
 </section>
 
