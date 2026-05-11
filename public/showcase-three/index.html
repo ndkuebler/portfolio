@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Helix — Concept</title>
+<meta name="description" content="Helix: a self-coiling MacBook charging cable that latches itself into a tidy spiral using selectively paired magnets. Concept exploration, design rationale, and human factors.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="googlebot" content="noindex, nofollow">
+<style>
+  :root{
+    --bg:#0e0f12; --panel:#16181d; --ink:#eef0f3; --muted:#9aa3af;
+    --accent:#ffb347; --line:#262932;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Inter","Segoe UI",sans-serif}
+  a{color:var(--accent)}
+  .wrap{max-width:880px;margin:0 auto;padding:48px 24px 96px}
+  .hero{margin:0 -24px 32px;background:#000;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .hero svg{display:block;width:100%;height:auto;max-height:520px;background:#000}
+  @media (min-width:880px){.hero{margin-left:calc((100vw - 880px)/-2 + 0px);margin-right:calc((100vw - 880px)/-2 + 0px)}}
+  header{border-bottom:1px solid var(--line);padding-bottom:24px;margin-bottom:0}
+  .eyebrow{color:var(--accent);text-transform:uppercase;letter-spacing:.12em;font-size:12px;font-weight:600}
+  h1{font-size:40px;line-height:1.15;margin:8px 0 12px;letter-spacing:-.02em}
+  h2{font-size:22px;margin:48px 0 12px;letter-spacing:-.01em;border-left:3px solid var(--accent);padding-left:12px}
+  h3{font-size:14px;margin:28px 0 8px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+  p{color:#d6dae1}
+  .lede{font-size:18px;color:#c8cdd5}
+  .pill{display:inline-block;background:#1c1f26;border:1px solid var(--line);border-radius:999px;padding:2px 10px;font-size:12px;color:var(--muted);margin-right:6px;margin-bottom:6px}
+  .meta{display:flex;flex-wrap:wrap;gap:0;margin-top:14px}
+  .tabs{display:flex;gap:4px;margin:24px 0 32px;border-bottom:1px solid var(--line)}
+  .tab{padding:12px 18px;color:var(--muted);text-decoration:none;border-bottom:2px solid transparent;font-weight:500;font-size:14px;transition:color .15s}
+  .tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+  .tab:hover:not(.active){color:var(--ink)}
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .threecol{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+  @media (max-width:720px){.twocol,.threecol{grid-template-columns:1fr}}
+  figure{margin:14px 0;text-align:center}
+  figure svg{max-width:100%;height:auto;background:#16181d;border-radius:10px;border:1px solid var(--line);padding:14px}
+  figcaption{color:var(--muted);font-size:13px;margin-top:8px}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin:14px 0}
+  .callout{background:linear-gradient(180deg,#1d1a12 0%,#16181d 100%);border:1px solid #3a2f17;border-left:3px solid var(--accent);border-radius:10px;padding:16px 18px;margin:18px 0}
+  .callout strong{color:var(--accent)}
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+  code{font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13.5px;background:#1c1f26;padding:1px 6px;border-radius:4px}
+  ul,ol{padding-left:20px}
+  ul li,ol li{margin:6px 0}
+  .check{color:#86d68c}
+  .x{color:#e87878}
+  .approach{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px}
+  .approach h4{margin:0 0 6px;font-size:15px;color:var(--ink)}
+  .approach .verdict{font-size:12px;color:var(--muted);margin-top:8px;text-transform:uppercase;letter-spacing:.08em}
+  footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+  @media (max-width:640px){
+    .wrap{padding:32px 16px 64px}
+    h1{font-size:30px;line-height:1.18}
+    h2{font-size:20px;margin:36px 0 10px}
+    h3{margin:20px 0 6px}
+    .lede{font-size:16px}
+    .tabs{margin:16px 0 24px}
+    .tab{padding:10px 12px;font-size:13px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <span class="eyebrow">Concept Study</span>
+  <h1>Helix — a self-coiling charging cable</h1>
+  <p class="lede">A MacBook charging cable that latches itself into a tidy spiral when you put it down, and unspools one click at a time when you pull. Powered by selectively paired magnets, not springs, motors, or shape memory alone.</p>
+  <div class="meta">
+    <span class="pill">USB-C 240W cable</span>
+    <span class="pill">N42 disc magnets</span>
+    <span class="pill">TPE overmold</span>
+    <span class="pill">Design for Manufacturing</span>
+    <span class="pill">Human Factors</span>
+  </div>
+</header>
+
+<nav class="tabs">
+  <a class="tab active" href="/showcase-three">Concept</a>
+  <a class="tab" href="/showcase-three/analysis">Engineering Analysis</a>
+</nav>
+
+<div class="hero">
+<svg viewBox="0 0 880 420" xmlns="http://www.w3.org/2000/svg" aria-label="Cable coiled in a flat spiral with magnet pairs holding adjacent turns together.">
+  <defs>
+    <radialGradient id="bgglow" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#1d2230"/>
+      <stop offset="100%" stop-color="#000"/>
+    </radialGradient>
+    <linearGradient id="cable" x1="0" x2="1">
+      <stop offset="0" stop-color="#d8dde5"/>
+      <stop offset="1" stop-color="#9aa3af"/>
+    </linearGradient>
+  </defs>
+  <rect width="880" height="420" fill="url(#bgglow)"/>
+  <!-- Flat spiral cable -->
+  <g transform="translate(440,210)" fill="none" stroke="url(#cable)" stroke-width="9" stroke-linecap="round">
+    <path d="M 0,0
+      m 0,-20 a 20,20 0 1 1 -0.01,0
+      m -10,-10 a 35,35 0 1 1 -0.01,0
+      m -10,-15 a 55,55 0 1 1 -0.01,0
+      m -10,-20 a 80,80 0 1 1 -0.01,0
+      m -10,-25 a 110,110 0 1 1 -0.01,0
+      m -10,-30 a 145,145 0 1 1 -0.01,0"/>
+  </g>
+  <!-- Magnet dots along turns -->
+  <g transform="translate(440,210)">
+    <g fill="#ffb347" stroke="#7a4f10" stroke-width="1">
+      <!-- 4 dots per turn at 12,3,6,9 o'clock for each turn -->
+      <!-- Turn 1 r=20 -->
+      <circle cx="0" cy="-20" r="3"/><circle cx="20" cy="0" r="3"/><circle cx="0" cy="20" r="3"/><circle cx="-20" cy="0" r="3"/>
+      <!-- Turn 2 r=45 -->
+      <circle cx="0" cy="-45" r="3"/><circle cx="45" cy="0" r="3"/><circle cx="0" cy="45" r="3"/><circle cx="-45" cy="0" r="3"/>
+      <!-- Turn 3 r=70 -->
+      <circle cx="0" cy="-70" r="3"/><circle cx="70" cy="0" r="3"/><circle cx="0" cy="70" r="3"/><circle cx="-70" cy="0" r="3"/>
+      <!-- Turn 4 r=100 -->
+      <circle cx="0" cy="-100" r="3"/><circle cx="100" cy="0" r="3"/><circle cx="0" cy="100" r="3"/><circle cx="-100" cy="0" r="3"/>
+      <!-- Turn 5 r=130 -->
+      <circle cx="0" cy="-130" r="3"/><circle cx="130" cy="0" r="3"/><circle cx="0" cy="130" r="3"/><circle cx="-130" cy="0" r="3"/>
+      <!-- Turn 6 r=165 -->
+      <circle cx="0" cy="-165" r="3"/><circle cx="165" cy="0" r="3"/><circle cx="0" cy="165" r="3"/><circle cx="-165" cy="0" r="3"/>
+    </g>
+  </g>
+  <!-- USB-C tail leaving the spiral -->
+  <g transform="translate(440,210)" fill="none" stroke="url(#cable)" stroke-width="9" stroke-linecap="round">
+    <path d="M -190,-30 Q -260,-60 -310,-30"/>
+  </g>
+  <rect x="115" y="170" width="34" height="14" rx="4" fill="#2a2e36" stroke="#4a4f59"/>
+  <!-- Captions -->
+  <text x="40" y="40" fill="#9aa3af" font-family="-apple-system,Inter,sans-serif" font-size="13" letter-spacing="2">HELIX — RESTING STATE</text>
+  <text x="40" y="60" fill="#ffb347" font-family="-apple-system,Inter,sans-serif" font-size="13" font-weight="600">Self-coiling MacBook charger concept</text>
+</svg>
+</div>
+
+<section>
+  <h2>1. The problem worth solving</h2>
+  <p>The MacBook charging cable is in millions of bags. It tangles in every one of them. Coiling it manually is annoying, and any human-applied coil unravels the moment the bag moves. The cable's natural enemy isn't damage. It's chaos.</p>
+
+  <p>There are existing fixes — velcro straps, silicone cinches, retractable enclosures — and none have caught on. They all require a second object you can lose or a deliberate two-handed action. The cable should organize itself.</p>
+
+  <div class="callout">
+    <strong>Design target.</strong> The cable should auto-coil into a pocket-sized spiral within two seconds of being released, hold that coil through a backpack commute, and uncoil one click at a time when pulled. No second object. No motor. No batteries. No instructions.
+  </div>
+</section>
+
+<section>
+  <h2>2. Why magnets are the right answer (and why they're the hard answer)</h2>
+  <p>Magnets are appealing because they hold without contact, store no energy, and never wear out. The catch is that magnets attract indiscriminately. Embed a row of identical magnets along a cable and you don't get a coil — you get a knot. The cable bunches into the densest configuration it can find, regardless of geometry.</p>
+
+  <p>The interesting engineering question becomes: <em>can the magnets be made to pair only with the right partner?</em></p>
+
+  <h3>Three approaches considered</h3>
+  <div class="threecol">
+    <div class="approach">
+      <h4>A. Coded multipole magnets</h4>
+      <p>Each magnet has a printed N/S pattern (a magnetic "key"). Two magnets only latch when their patterns are mirrored partners. Commercial offerings exist (Correlated Magnetics / Polymagnets).</p>
+      <div class="verdict"><span class="x">✗</span> Exotic, expensive, fragile to manufacture at cable density. Not DFM-friendly.</div>
+    </div>
+    <div class="approach">
+      <h4>B. Polarity sequencing</h4>
+      <p>Every magnet is identical and inexpensive. Selectivity comes from <em>how they are oriented</em> along the cable's length, combined with cable pitch. Magnets at the right helix separation attract; magnets in the wrong relationship to each other don't.</p>
+      <div class="verdict"><span class="check">✓</span> Cheap parts, geometry does the work. Manufacturing complexity moves to orientation control.</div>
+    </div>
+    <div class="approach">
+      <h4>C. Magnets + ferrous slugs</h4>
+      <p>Alternate real magnets with soft-iron slugs along the cable. A magnet sticks to a slug but not to another magnet. Selectivity is automatic.</p>
+      <div class="verdict"><span class="check">✓</span> Simplest. Half the magnetic content. Coil registration is less crisp and the snap-feel is softer.</div>
+    </div>
+  </div>
+
+  <p>I chose <strong>approach B (polarity sequencing)</strong> for the main design, with approach C noted as a viable manufacturing-cost alternative that could win on a BOM cost trade-study. Both deserve to live in the same design review.</p>
+</section>
+
+<section>
+  <h2>3. The Helix architecture</h2>
+
+  <p>The cable does two things at once: it <em>wants</em> to be coiled, and it <em>locks</em> when coiled.</p>
+
+  <h3>Wants to be coiled — shape-set TPE jacket</h3>
+  <p>The outer jacket is a thermoplastic elastomer wound around a small heated mandrel during the final cure step. Like the spiral cord of a 1970s telephone handset, the jacket's relaxed energy state is a helix, not a straight line. Pulled straight, it stores elastic energy. Released, it snaps back. This is mature, well-understood manufacturing.</p>
+
+  <h3>Locks when coiled — paired magnetic latches</h3>
+  <p>Identical N42 neodymium disc magnets (3&nbsp;mm × 1&nbsp;mm) are embedded in the jacket at a fixed pitch <code>P</code> along the cable's length, with their pole axes aligned along the local <em>binormal</em> of the natural helix — that is, pointing along what becomes the helix's central axis once the cable coils up.</p>
+
+  <p>Here is what that buys:</p>
+  <ul>
+    <li><strong>When coiled:</strong> the magnet at angular position θ on turn <em>n</em> sits axially next to the magnet at the same θ on turn <em>n+1</em>, north face to south face across a small air gap. They attract. Every turn latches to the turn above and below it.</li>
+    <li><strong>When straight:</strong> adjacent magnets along the cable are spaced by <code>P</code> with their pole axes parallel and same-direction. In that side-by-side configuration, like-poles face the same way and the dominant interaction is mild repulsion, not attraction. The cable doesn't clump.</li>
+  </ul>
+
+  <figure>
+    <svg viewBox="0 0 800 380" xmlns="http://www.w3.org/2000/svg" aria-label="Two states of the cable: straight with non-attracting magnets, coiled with attracting magnet pairs.">
+      <style>
+        .label{fill:#9aa3af;font-family:-apple-system,Inter,sans-serif;font-size:12px}
+        .title{fill:#eef0f3;font-family:-apple-system,Inter,sans-serif;font-size:13px;font-weight:600}
+        .cable{fill:none;stroke:#c8cdd5;stroke-width:8;stroke-linecap:round}
+        .magN{fill:#e87878;stroke:#5a2020;stroke-width:1}
+        .magS{fill:#7896e8;stroke:#1f3a82;stroke-width:1}
+        .arrow{stroke:#9aa3af;stroke-width:1;fill:none;marker-end:url(#ah)}
+        .force-rep{stroke:#e87878;stroke-width:1.4;fill:none;marker-end:url(#ahr)}
+        .force-att{stroke:#86d68c;stroke-width:1.4;fill:none;marker-end:url(#aha)}
+      </style>
+      <defs>
+        <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9aa3af"/></marker>
+        <marker id="ahr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#e87878"/></marker>
+        <marker id="aha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#86d68c"/></marker>
+      </defs>
+
+      <!-- LEFT: straight cable, side view -->
+      <text x="30" y="30" class="title">STRAIGHT — adjacent magnets mildly repel</text>
+      <line x1="30" y1="120" x2="370" y2="120" class="cable"/>
+      <g>
+        <circle cx="60"  cy="120" r="9" class="magN"/><text x="60" y="124" class="label" text-anchor="middle" fill="#fff">N</text>
+        <circle cx="120" cy="120" r="9" class="magN"/><text x="120" y="124" class="label" text-anchor="middle" fill="#fff">N</text>
+        <circle cx="180" cy="120" r="9" class="magN"/><text x="180" y="124" class="label" text-anchor="middle" fill="#fff">N</text>
+        <circle cx="240" cy="120" r="9" class="magN"/><text x="240" y="124" class="label" text-anchor="middle" fill="#fff">N</text>
+        <circle cx="300" cy="120" r="9" class="magN"/><text x="300" y="124" class="label" text-anchor="middle" fill="#fff">N</text>
+      </g>
+      <!-- Repulsion arrows between adjacent pairs -->
+      <g>
+        <line x1="78"  y1="145" x2="98"  y2="145" class="force-rep"/>
+        <line x1="142" y1="145" x2="122" y2="145" class="force-rep"/>
+        <line x1="138" y1="145" x2="158" y2="145" class="force-rep"/>
+        <line x1="202" y1="145" x2="182" y2="145" class="force-rep"/>
+      </g>
+      <text x="200" y="172" class="label" text-anchor="middle">N-faces pointing same way → side-by-side like poles repel</text>
+      <text x="200" y="188" class="label" text-anchor="middle">No clumping. Cable rests straight.</text>
+      <!-- pitch annotation -->
+      <line x1="60" y1="92" x2="120" y2="92" class="arrow"/>
+      <line x1="120" y1="92" x2="60" y2="92" class="arrow"/>
+      <text x="90" y="84" class="label" text-anchor="middle">pitch P</text>
+
+      <!-- RIGHT: coiled cable, axial cross-section through coil -->
+      <text x="430" y="30" class="title">COILED — turn-to-turn pairs attract</text>
+      <!-- show 4 stacked turns in cross section -->
+      <g transform="translate(560,170)">
+        <!-- cable circles representing turns in cross section -->
+        <circle cx="0" cy="-60" r="12" fill="none" stroke="#c8cdd5" stroke-width="3"/>
+        <circle cx="0" cy="-20" r="12" fill="none" stroke="#c8cdd5" stroke-width="3"/>
+        <circle cx="0" cy="20"  r="12" fill="none" stroke="#c8cdd5" stroke-width="3"/>
+        <circle cx="0" cy="60"  r="12" fill="none" stroke="#c8cdd5" stroke-width="3"/>
+        <!-- magnets sitting axially: N face up, S face down -->
+        <rect x="-7" y="-66" width="14" height="3" class="magS"/>
+        <rect x="-7" y="-55" width="14" height="3" class="magN"/>
+        <rect x="-7" y="-26" width="14" height="3" class="magS"/>
+        <rect x="-7" y="-15" width="14" height="3" class="magN"/>
+        <rect x="-7" y="14"  width="14" height="3" class="magS"/>
+        <rect x="-7" y="25"  width="14" height="3" class="magN"/>
+        <rect x="-7" y="54"  width="14" height="3" class="magS"/>
+        <rect x="-7" y="65"  width="14" height="3" class="magN"/>
+        <!-- attraction arrows between adjacent turns -->
+        <line x1="22" y1="-50" x2="22" y2="-30" class="force-att"/>
+        <line x1="22" y1="-30" x2="22" y2="-50" class="force-att"/>
+        <line x1="22" y1="-10" x2="22" y2="10"  class="force-att"/>
+        <line x1="22" y1="10"  x2="22" y2="-10" class="force-att"/>
+        <line x1="22" y1="30"  x2="22" y2="50"  class="force-att"/>
+        <line x1="22" y1="50"  x2="22" y2="30"  class="force-att"/>
+        <!-- coil axis -->
+        <line x1="-40" y1="-90" x2="-40" y2="90" stroke="#9aa3af" stroke-dasharray="3 3"/>
+        <text x="-48" y="0" class="label" text-anchor="end">coil axis</text>
+        <text x="50" y="-50" class="label">N↔S</text>
+        <text x="50" y="0"   class="label">N↔S</text>
+        <text x="50" y="50"  class="label">N↔S</text>
+      </g>
+      <text x="595" y="320" class="label" text-anchor="middle">Same orientation, but the helix geometry places</text>
+      <text x="595" y="336" class="label" text-anchor="middle">opposite poles face-to-face across each turn gap.</text>
+    </svg>
+    <figcaption>Same magnets, different geometry. The cable's two operating states are decoupled: orientation along the straight cable produces mild repulsion (no clumping); the helix geometry brings opposite poles into proximity (latching pairs).</figcaption>
+  </figure>
+</section>
+
+<section>
+  <h2>4. Cable cross-section</h2>
+
+  <p>Standard USB-C 240W (EPR) conductor stack stays intact. The novel content lives in the jacket.</p>
+
+  <figure>
+    <svg viewBox="0 0 720 360" xmlns="http://www.w3.org/2000/svg" aria-label="Cable cross-section showing conductor bundle, inner jacket, magnet pocket layer, and overmolded outer jacket.">
+      <style>
+        .lab{fill:#9aa3af;font-family:-apple-system,Inter,sans-serif;font-size:12px}
+        .ltitle{fill:#eef0f3;font-family:-apple-system,Inter,sans-serif;font-size:13px;font-weight:600}
+        .lead{stroke:#9aa3af;stroke-width:1;fill:none}
+      </style>
+      <!-- Cross section -->
+      <g transform="translate(240,180)">
+        <circle r="120" fill="#2a2e36" stroke="#4a4f59" stroke-width="1.5"/>
+        <text y="-138" text-anchor="middle" class="ltitle">Outer jacket — shape-set TPE (Shore 70A)</text>
+        <circle r="92" fill="#16181d" stroke="#3a3f49"/>
+        <text y="-110" text-anchor="middle" class="lab">Overmold seal layer</text>
+        <circle r="78" fill="#1c1f26" stroke="#3a3f49"/>
+        <!-- magnet pocket layer with embedded disc -->
+        <rect x="-12" y="-80" width="24" height="8" fill="#ffb347" stroke="#7a4f10"/>
+        <text y="-60" text-anchor="middle" class="lab">Magnet pocket layer (PA12)</text>
+        <circle r="56" fill="#0e0f12" stroke="#3a3f49"/>
+        <text y="-40" text-anchor="middle" class="lab">Aramid braid shield</text>
+        <!-- conductors -->
+        <g>
+          <circle cx="-18" cy="0" r="14" fill="#c98a3b"/>
+          <circle cx="18"  cy="0" r="14" fill="#c98a3b"/>
+          <circle cx="0"   cy="-22" r="6" fill="#86c2ff"/>
+          <circle cx="0"   cy="22"  r="6" fill="#86c2ff"/>
+          <circle cx="-22" cy="20"  r="5" fill="#86d68c"/>
+          <circle cx="22"  cy="20"  r="5" fill="#86d68c"/>
+        </g>
+        <text y="62" text-anchor="middle" class="lab">VBUS (2) + CC/SBU + D±</text>
+      </g>
+
+      <!-- Callouts to side -->
+      <g transform="translate(0,0)">
+        <line x1="362" y1="100" x2="500" y2="80"  class="lead"/>
+        <text x="510" y="84" class="ltitle">Embedded magnet</text>
+        <text x="510" y="102" class="lab">N42 neodymium disc, 3 × 1 mm</text>
+        <text x="510" y="118" class="lab">Pole axis ⟂ to cable, aligned to helix binormal</text>
+
+        <line x1="362" y1="180" x2="500" y2="180" class="lead"/>
+        <text x="510" y="184" class="ltitle">Conductor bundle</text>
+        <text x="510" y="202" class="lab">Standard USB-C 240W (EPR) — unchanged</text>
+
+        <line x1="362" y1="252" x2="500" y2="266" class="lead"/>
+        <text x="510" y="270" class="ltitle">Jacket helix shape-set</text>
+        <text x="510" y="288" class="lab">TPE cured on heated mandrel</text>
+        <text x="510" y="304" class="lab">Natural resting shape = helix with D ≈ 75 mm</text>
+      </g>
+    </svg>
+    <figcaption>The conductor stack is identical to a standard USB-C 240W cable. The magnet pocket layer sits between the braid and the overmold, with discs molded at fixed pitch and orientation. Magnetic insertion happens before the outer shape-set step.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <h2>5. Human factors</h2>
+
+  <table>
+    <thead><tr><th>Attribute</th><th>Target</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td>Resting coil OD</td><td>~75 mm</td><td>Smaller than a paperback. Fits a jeans pocket or laptop sleeve.</td></tr>
+      <tr><td>Peak extension force</td><td>0.2 – 0.4 N per click</td><td>Pulls like peeling tape — light, satisfying, never a fight. Pairs release one at a time.</td></tr>
+      <tr><td>Re-coil time</td><td>&lt; 2 s</td><td>Drop the cable, look up, it's coiled. Sub-second commitment.</td></tr>
+      <tr><td>Audio signature</td><td>Soft tick-tick on re-coil</td><td>Confirmation feedback. The cable tells you it's organized.</td></tr>
+      <tr><td>Cycles to failure</td><td>&gt; 10,000</td><td>3,000 daily-use cycles over 3 years × 3× safety. Limit is jacket fatigue, not magnetic strength.</td></tr>
+      <tr><td>Yank survival</td><td>Releases before conductor strain</td><td>Foot caught in cable: pairs peel one at a time, cable extends, conductor never loads.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Failure modes the user should never notice</h3>
+  <ul>
+    <li>A turn skips a register and pairs misalign by one pitch: the next coil-down realigns by itself (geometry is self-correcting).</li>
+    <li>Cable gets tangled <em>around something else</em> in the bag (the headphones): the magnets release individually as the user pulls — no kinks, no permanent set.</li>
+    <li>Adjacent equipment near the coil (credit card, USB drive): see Engineering Analysis §4. Field at 25 mm is below the threshold for any consumer-grade magnetic media.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>6. What I would prototype first</h2>
+  <p>A working bench prototype isn't 80 magnets in a finished cable. It's a 30 cm test section with twelve magnets, hand-assembled in a 3D-printed jig, used to validate three things in this order:</p>
+  <ol>
+    <li><strong>Orientation tolerance.</strong> How much rotational error in magnet placement can the system absorb before pairs miss each other across turns? This sets the manufacturing inspection budget.</li>
+    <li><strong>Peel force vs. air gap.</strong> Measure single-pair release across a sweep of jacket overmold thicknesses (0.5 / 0.75 / 1.0 / 1.5 mm). Find the sweet spot between "too easy to uncoil" and "fights to extend."</li>
+    <li><strong>Shape-set retention after thermal cycling.</strong> The TPE helix is the actual coil driver. Verify that 1,000 cycles at 50&nbsp;°C (worst-case hot car) doesn't soften the curl below the magnet hold threshold.</li>
+  </ol>
+
+  <p>If those three pass, the rest is industrialization, not invention.</p>
+</section>
+
+<section>
+  <h2>7. Open questions and honest limits</h2>
+  <p>Things I would want a real PDE conversation about, not things I'm pretending I've solved:</p>
+  <ul>
+    <li>Effect of magnet inclusion on cable bend radius and conductor fatigue life. Each magnet is a local stiffness discontinuity — needs a graded-durometer transition or it becomes a stress riser.</li>
+    <li>Hall-sensor interference with the MacBook lid-closed magnet, if the cable rests against the closed lid. Distance is on Helix's side, but it needs to be measured, not asserted.</li>
+    <li>Cost adder vs. perceived value: a $19 cable replacement with a magnetic spine is plausible; a $39 one is not. The BOM impact of 80 N42 discs at scale needs a real costing pass before this concept earns a charter.</li>
+    <li>Whether approach C (magnets + ferrous slugs) wins on cost without losing enough of the snap-feel to matter. That's a perceptual study, not a calculation.</li>
+  </ul>
+</section>
+
+<footer>
+  Helix — concept study by Nick Kuebler.
+  <a href="/showcase-three/analysis">View Engineering Analysis →</a>
+</footer>
+
+</div>
+</body>
+</html>
