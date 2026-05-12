@@ -128,8 +128,8 @@ export function SelectedWorks() {
             <div className="mx-auto w-full max-w-[1400px] px-6 sm:px-10 lg:px-14">
               <div className="flex">
                 {/* Left side — pill button centered vertically */}
-                <div className="hidden md:flex md:w-2/5 items-center justify-start pl-6">
-                  <span className="inline-flex rounded-full border border-[#f5f5f5]/30 px-6 py-2.5 text-sm font-medium text-[#f5f5f5]/70 group-hover:bg-[#f5f5f5] group-hover:text-[#0a0a0a] transition-all duration-200">
+                <div className="hidden md:flex md:w-2/5 items-center justify-center">
+                  <span className="inline-flex rounded-full border border-[#f5f5f5] bg-[#f5f5f5] px-6 py-2.5 text-sm font-medium text-[#0a0a0a] hover:border-[#d4af37] transition-colors duration-200">
                     View project →
                   </span>
                 </div>
