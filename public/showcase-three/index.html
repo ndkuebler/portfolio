@@ -246,7 +246,6 @@
     if (history.replaceState) {
       history.replaceState(null, '', view === 'analysis' ? '#analysis' : window.location.pathname);
     }
-    window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
   }
   document.querySelectorAll('.tab').forEach(function (t) {
     t.addEventListener('click', function () { showView(t.dataset.view); });
