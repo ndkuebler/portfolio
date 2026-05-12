@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Helix: a self-coiling MacBook charging cable</title>
-<meta name="description" content="Concept walkthrough for a magnetically self-coiling MacBook charging cable: problem framing, design pivot, and the architecture I'd commit to.">
+<meta name="description" content="Concept walkthrough and engineering analysis for a magnetically self-coiling MacBook charging cable.">
 <meta name="robots" content="noindex, nofollow">
 <meta name="googlebot" content="noindex, nofollow">
 <style>
@@ -28,14 +28,18 @@
   .lede{font-size:18px;color:#c8cdd5}
   .note{font-size:13.5px;color:var(--muted);border-left:2px solid var(--line);padding:6px 0 6px 12px;margin:18px 0 0}
   .tabs{display:flex;gap:4px;margin:24px 0 32px;border-bottom:1px solid var(--line)}
-  .tab{padding:12px 18px;color:var(--muted);text-decoration:none;border-bottom:2px solid transparent;font-weight:500;font-size:14px;transition:color .15s}
+  .tab{padding:12px 18px;color:var(--muted);background:none;border:none;border-bottom:2px solid transparent;font-weight:500;font-size:14px;cursor:pointer;font-family:inherit;transition:color .15s}
   .tab.active{color:var(--accent);border-bottom-color:var(--accent)}
   .tab:hover:not(.active){color:var(--ink)}
+  .view[hidden]{display:none}
   ul,ol{padding-left:20px}
   ul li,ol li{margin:8px 0;color:#d6dae1}
   figure{margin:20px 0;text-align:center}
   figure svg{max-width:100%;height:auto;background:#16181d;border-radius:10px;border:1px solid var(--line);padding:14px}
   figcaption{color:var(--muted);font-size:13px;margin-top:8px;text-align:left}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;color:#d6dae1}
+  th{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.08em}
   footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
   @media (max-width:640px){
     .wrap{padding:32px 16px 64px}
@@ -57,44 +61,200 @@
   <p class="note"><em>Paper concept, not built. The render below is a visualization. Numbers on this page are calculated from dipole physics and N42 spec sheets, not bench measurements. The point of this writeup is the thinking: how I'd frame the problem, where I'd pivot, and what I'd test next.</em></p>
 </header>
 
-<nav class="tabs">
-  <a class="tab active" href="/showcase-three">Concept</a>
-  <a class="tab" href="/showcase-three/analysis">Engineering Analysis</a>
-</nav>
-
 <div class="hero">
   <img src="/showcase-three/hero.png" alt="Helix self-coiling USB-C cable: white TPE jacket coiled into a flat spiral with magnetic latches visible along each turn, and three exposed magnets in a transparent section near the USB-C connector.">
 </div>
 
-<section>
-  <h2>The problem</h2>
-  <p>The MacBook charging cable is in millions of bags. It tangles in every one of them. Coiling it manually unravels the moment the bag moves. The fixes that exist (velcro straps, silicone cinches, retractable enclosures) all require a second object you can lose or a deliberate two-handed action. The cable should organize itself.</p>
-</section>
+<nav class="tabs" role="tablist">
+  <button class="tab active" data-view="concept" role="tab" aria-selected="true">Concept</button>
+  <button class="tab" data-view="analysis" role="tab" aria-selected="false">Engineering Analysis</button>
+</nav>
 
-<section>
-  <h2>My first instinct (and where it falls apart)</h2>
-  <p>The obvious first move: embed a row of identical magnets along the cable, evenly spaced, and let them latch wherever they meet.</p>
-  <p>Thinking it through, this doesn't work. Magnets attract indiscriminately. The cable would find the densest configuration it can: a knot, not a coil.</p>
-  <p>That reframes the problem on paper. I don't need <em>more</em> magnets. I need <em>selective</em> magnets: pairs that only latch with the right partner, in the right place.</p>
-</section>
+<!-- ===================== CONCEPT VIEW ===================== -->
+<div class="view" id="view-concept">
 
-<section>
-  <h2>Three ways to get selectivity</h2>
-  <ol>
-    <li><strong>Coded multipole magnets.</strong> Printed N/S patterns that only mate with a mirror partner (Polymagnets). Cleanest physics. Too expensive and too fragile to manufacture at cable density.</li>
-    <li><strong>Polarity sequencing.</strong> Every magnet is identical and cheap, but their orientation and spacing are tuned so that on a straight cable they mildly repel, and on a coiled cable they attract across each turn-gap. Selectivity comes from geometry, not from coded magnets.</li>
-    <li><strong>Magnets plus soft-iron slugs.</strong> Alternate real magnets with passive steel along the cable. A magnet sticks to a slug, not to another magnet. Simplest, automatic, half the magnet cost, but the snap-feel is softer and coil registration is less crisp.</li>
-  </ol>
+  <section>
+    <h2>The problem</h2>
+    <p>The MacBook charging cable is in millions of bags. It tangles in every one of them. Coiling it manually unravels the moment the bag moves. The fixes that exist (velcro straps, silicone cinches, retractable enclosures) all require a second object you can lose or a deliberate two-handed action. The cable should organize itself.</p>
+  </section>
 
-  <p><strong>I picked #2, with #3 as a known fallback.</strong> The tradeoff I'd take to a design review: option #2 buys the cleanest snap-feel and the simplest supply chain (one SKU, one supplier, one inspection step), at the cost of a harder magnetic-orientation problem to solve on the factory floor. Option #3 trades a softer feel for a meaningfully cheaper BOM and a simpler line. Same cable architecture either way. That's the decision I'd want to make alongside whoever owns cost, not on my own.</p>
+  <section>
+    <h2>My first instinct (and where it falls apart)</h2>
+    <p>The obvious first move: embed a row of identical magnets along the cable, evenly spaced, and let them latch wherever they meet.</p>
+    <p>Thinking it through, this doesn't work. Magnets attract indiscriminately. The cable would find the densest configuration it can: a knot, not a coil.</p>
+    <p>That reframes the problem on paper. I don't need <em>more</em> magnets. I need <em>selective</em> magnets: pairs that only latch with the right partner, in the right place.</p>
+  </section>
 
-  <p>The Engineering Analysis tab walks through the architecture for #2: how the magnetic latching actually works, the manufacturing problem I'd have to solve, how I'd think about materials, and where I'd expect it to break.</p>
-</section>
+  <section>
+    <h2>Three ways to get selectivity</h2>
+    <ol>
+      <li><strong>Coded multipole magnets.</strong> Printed N/S patterns that only mate with a mirror partner (Polymagnets). Cleanest physics. Too expensive and too fragile to manufacture at cable density.</li>
+      <li><strong>Polarity sequencing.</strong> Every magnet is identical and cheap, but their orientation and spacing are tuned so that on a straight cable they mildly repel, and on a coiled cable they attract across each turn-gap. Selectivity comes from geometry, not from coded magnets.</li>
+      <li><strong>Magnets plus soft-iron slugs.</strong> Alternate real magnets with passive steel along the cable. A magnet sticks to a slug, not to another magnet. Simplest, automatic, half the magnet cost, but the snap-feel is softer and coil registration is less crisp.</li>
+    </ol>
+
+    <p><strong>I picked #2, with #3 as a known fallback.</strong> The tradeoff I'd take to a design review: option #2 buys the cleanest snap-feel and the simplest supply chain (one SKU, one supplier, one inspection step), at the cost of a harder magnetic-orientation problem to solve on the factory floor. Option #3 trades a softer feel for a meaningfully cheaper BOM and a simpler line. Same cable architecture either way. That's the decision I'd want to make alongside whoever owns cost, not on my own.</p>
+
+    <p>The Engineering Analysis tab walks through the architecture for #2: how the magnetic latching actually works, the manufacturing problem I'd have to solve, how I'd think about materials, and where I'd expect it to break.</p>
+  </section>
+
+</div>
+
+<!-- ===================== ENGINEERING ANALYSIS VIEW ===================== -->
+<div class="view" id="view-analysis" hidden>
+
+  <section>
+    <h2>The architecture I'd commit to</h2>
+    <p>Two systems doing two jobs.</p>
+
+    <h3>The jacket wants to coil</h3>
+    <p>The outer TPE is wound on a heated mandrel during cure so its relaxed shape is a helix at 75&nbsp;mm coil diameter. Energy is stored when you pull it straight, released when you let go.</p>
+
+    <h3>The magnets lock the coil</h3>
+    <p>Identical N42 discs (3 × 1&nbsp;mm) are embedded at a 59&nbsp;mm pitch, which works out to four magnets per coil turn. All discs are oriented the same way: poles point along what becomes the helix axis once coiled.</p>
+
+    <p>The result is two clean states, same hardware:</p>
+
+    <table>
+      <thead><tr><th>State</th><th>What adjacent magnets see</th><th>Behavior</th></tr></thead>
+      <tbody>
+        <tr><td>Straight</td><td>Side-by-side, parallel poles</td><td>Mild repulsion, no clumping</td></tr>
+        <tr><td>Coiled</td><td>Stacked turn-on-turn, N facing S</td><td>~0.25 N attraction per pair</td></tr>
+      </tbody>
+    </table>
+
+    <figure>
+      <svg viewBox="0 0 760 280" xmlns="http://www.w3.org/2000/svg" aria-label="Two states: straight cable with non-attracting magnets, coiled cable with attracting pairs.">
+        <style>
+          .l{fill:#9aa3af;font-family:-apple-system,Inter,sans-serif;font-size:12px}
+          .t{fill:#eef0f3;font-family:-apple-system,Inter,sans-serif;font-size:13px;font-weight:600}
+          .cable{fill:none;stroke:#c8cdd5;stroke-width:7;stroke-linecap:round}
+          .magN{fill:#e87878;stroke:#5a2020;stroke-width:1}
+          .magS{fill:#7896e8;stroke:#1f3a82;stroke-width:1}
+          .rep{stroke:#e87878;stroke-width:1.4;fill:none;marker-end:url(#ahr)}
+          .att{stroke:#86d68c;stroke-width:1.4;fill:none;marker-end:url(#aha)}
+        </style>
+        <defs>
+          <marker id="ahr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#e87878"/></marker>
+          <marker id="aha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#86d68c"/></marker>
+        </defs>
+
+        <text x="30" y="32" class="t">Straight: adjacent magnets mildly repel</text>
+        <line x1="30" y1="110" x2="350" y2="110" class="cable"/>
+        <g>
+          <circle cx="65"  cy="110" r="8" class="magN"/><text x="65"  y="114" class="l" text-anchor="middle" fill="#fff">N</text>
+          <circle cx="125" cy="110" r="8" class="magN"/><text x="125" y="114" class="l" text-anchor="middle" fill="#fff">N</text>
+          <circle cx="185" cy="110" r="8" class="magN"/><text x="185" y="114" class="l" text-anchor="middle" fill="#fff">N</text>
+          <circle cx="245" cy="110" r="8" class="magN"/><text x="245" y="114" class="l" text-anchor="middle" fill="#fff">N</text>
+          <circle cx="305" cy="110" r="8" class="magN"/><text x="305" y="114" class="l" text-anchor="middle" fill="#fff">N</text>
+        </g>
+        <g>
+          <line x1="82"  y1="135" x2="102" y2="135" class="rep"/>
+          <line x1="142" y1="135" x2="122" y2="135" class="rep"/>
+          <line x1="142" y1="135" x2="162" y2="135" class="rep"/>
+          <line x1="202" y1="135" x2="182" y2="135" class="rep"/>
+        </g>
+        <text x="190" y="170" class="l" text-anchor="middle">Same-side poles → mild side-by-side repulsion. No clumping.</text>
+
+        <text x="430" y="32" class="t">Coiled: turn-to-turn pairs attract</text>
+        <g transform="translate(560,150)">
+          <circle cx="0" cy="-50" r="11" fill="none" stroke="#c8cdd5" stroke-width="2.5"/>
+          <circle cx="0" cy="-17" r="11" fill="none" stroke="#c8cdd5" stroke-width="2.5"/>
+          <circle cx="0" cy="17"  r="11" fill="none" stroke="#c8cdd5" stroke-width="2.5"/>
+          <circle cx="0" cy="50"  r="11" fill="none" stroke="#c8cdd5" stroke-width="2.5"/>
+          <rect x="-7" y="-55" width="14" height="3" class="magS"/>
+          <rect x="-7" y="-45" width="14" height="3" class="magN"/>
+          <rect x="-7" y="-22" width="14" height="3" class="magS"/>
+          <rect x="-7" y="-12" width="14" height="3" class="magN"/>
+          <rect x="-7" y="12"  width="14" height="3" class="magS"/>
+          <rect x="-7" y="22"  width="14" height="3" class="magN"/>
+          <rect x="-7" y="45"  width="14" height="3" class="magS"/>
+          <rect x="-7" y="55"  width="14" height="3" class="magN"/>
+          <line x1="22" y1="-40" x2="22" y2="-25" class="att"/>
+          <line x1="22" y1="-25" x2="22" y2="-40" class="att"/>
+          <line x1="22" y1="-7"  x2="22" y2="7"   class="att"/>
+          <line x1="22" y1="7"   x2="22" y2="-7"  class="att"/>
+          <line x1="22" y1="25"  x2="22" y2="40"  class="att"/>
+          <line x1="22" y1="40"  x2="22" y2="25"  class="att"/>
+          <line x1="-40" y1="-80" x2="-40" y2="80" stroke="#9aa3af" stroke-dasharray="3 3"/>
+          <text x="-48" y="0" class="l" text-anchor="end">coil axis</text>
+        </g>
+        <text x="555" y="250" class="l" text-anchor="middle">Helix geometry stacks opposite poles face-to-face.</text>
+      </svg>
+      <figcaption>Same magnets, same orientation. Only the cable's shape changes what they feel. Selectivity is geometric, not magnetic.</figcaption>
+    </figure>
+
+    <h3>Why pulling is easy</h3>
+    <p>When you pull on the connector, pairs release <strong>one at a time</strong>. The geometry forces the nearest pair to peel before the next pair sees any load. Same principle as velcro: peels easily, resists shear.</p>
+    <p>So the extension force is per-pair, not bulk. Target feel: pulling tape. Light, single-stage, never a fight.</p>
+  </section>
+
+  <section>
+    <h2>The manufacturing problem I'd have to solve</h2>
+    <p>Most of this is a normal cable. The interesting problem is <strong>getting 34 magnets into a 2&nbsp;m cable with consistent orientation</strong>. Magnets in a bulk hopper rotate, repel, and chain together. They will not sit still on a vibratory feeder.</p>
+    <p>My answer: order them on <strong>tape-and-reel</strong>, pre-oriented, the way SMD components ship. Modest cost premium over loose stock. Pick-and-place uses a ceramic, non-magnetic tooling head so magnets don't strip off the pick nozzle. A small Hall-sensor array checks pole direction at every magnet on the line, since cameras can't see field direction.</p>
+    <p>Everything else is standard cable manufacturing: inner jacket co-extruded with magnet pockets, outer TPE overmold seals the magnets, final shape-set on a 75&nbsp;mm mandrel at ~110&nbsp;°C. The novel content is the magnet-handling step.</p>
+  </section>
+
+  <section>
+    <h2>How I'd think about materials</h2>
+    <p><strong>TPE jacket.</strong> Specify a recyclable SEBS-based grade over the cheaper, less recyclable alternatives. Both meet the durability spec. I'd argue for the recyclable grade in a trade-study and lose only if leadership explicitly chose cost.</p>
+    <p><strong>Magnets.</strong> N42 neodymium is the honest weakness here. Rare-earth mined, environmentally costly, and supply-chain concentrated. Roughly 2 grams per 2 m cable. No drop-in substitute exists today at this size and field strength. Worth naming clearly rather than papering over.</p>
+    <p><strong>The strongest sustainability case is durability.</strong> A cable that doesn't tangle, kink, or get yanked crooked lasts measurably longer in the field. At Apple volumes, displacing even one cable replacement per user over a product life is the largest impact this design has, bigger than any material substitution at the BOM level.</p>
+    <p><strong>End of life.</strong> Magnets can be recovered at the recycler if the jacket strips cleanly off the conductor stack. The recyclable TPE choice enables this; today's heavily bonded cable jackets don't.</p>
+  </section>
+
+  <section>
+    <h2>Where I'd expect it to break</h2>
+    <p>The dominant failure mode I'd worry about is <strong>fatigue at the magnet inclusion sites in the conductor stack</strong>. Each magnet creates a local stiffness discontinuity. When the cable bends at that point, strain concentrates at the boundary between the rigid magnet and the compliant jacket around it. The conductors directly under a magnet would see higher cycle stress than the conductors a few millimeters away.</p>
+    <p>Two ways to mitigate, both worth testing:</p>
+    <ul>
+      <li><strong>Graded durometer transition.</strong> Soften the jacket immediately around each magnet so curvature distributes over a longer length instead of concentrating at the edge.</li>
+      <li><strong>Move the magnets radially outboard</strong> of the conductor stack so the strain at the conductor stays low even if the jacket strains.</li>
+    </ul>
+    <p>This is the kind of thing standard cable flex testing would answer in a week of bench time. I'd want tens of thousands of bend cycles before I trust it.</p>
+  </section>
+
+  <section>
+    <h2>What I don't know yet</h2>
+    <ul>
+      <li>Whether the 1&nbsp;mm inter-turn air gap is the right operating point. Peel force scales as 1/g⁴, so this is the most sensitive dimension in the whole design. Small jacket thickness variation has a big effect on feel.</li>
+      <li>Whether the MacBook lid's Hall sensor would falsely trigger when the coil rests directly against a closed laptop. Field drops off fast, so at typical bag positions it should be fine. Pressed flat against the hinge is worth measuring.</li>
+      <li>Whether approach #3 (magnets plus slugs) wins on a real BOM trade-study. The snap-feel is part of the product, and I haven't compared a slug version side-by-side with a magnet version to know how much weaker it actually feels.</li>
+    </ul>
+  </section>
+
+</div>
 
 <footer>
-  Helix. Concept walkthrough by Nick Kuebler. <a href="/showcase-three/analysis">View Engineering Analysis →</a>
+  Helix. Concept walkthrough by Nick Kuebler.
 </footer>
 
 </div>
+
+<script>
+(function () {
+  function showView(view) {
+    document.querySelectorAll('.tab').forEach(function (t) {
+      var on = t.dataset.view === view;
+      t.classList.toggle('active', on);
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    document.getElementById('view-concept').hidden = view !== 'concept';
+    document.getElementById('view-analysis').hidden = view !== 'analysis';
+    // keep URL clean but support deep-linking via hash
+    if (history.replaceState) {
+      history.replaceState(null, '', view === 'analysis' ? '#analysis' : window.location.pathname);
+    }
+    window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
+  }
+  document.querySelectorAll('.tab').forEach(function (t) {
+    t.addEventListener('click', function () { showView(t.dataset.view); });
+  });
+  // load with #analysis to deep-link straight to the analysis view
+  if (window.location.hash === '#analysis') showView('analysis');
+})();
+</script>
+
 </body>
 </html>
