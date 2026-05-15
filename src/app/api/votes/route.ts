@@ -111,7 +111,16 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({ results });
   } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
     console.error("Vote fetch error:", err);
-    return NextResponse.json({ error: "Server error" }, { status: 500 });
+    return NextResponse.json(
+      {
+        error: "Server error",
+        detail: message,
+        hasUrl: Boolean(redisUrl),
+        hasToken: Boolean(redisToken),
+      },
+      { status: 500 },
+    );
   }
 }
