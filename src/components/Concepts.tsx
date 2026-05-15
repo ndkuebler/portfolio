@@ -241,7 +241,7 @@ export function Concepts() {
         >
           Concepts
           <span className="ml-2 font-normal text-[#f5f5f5]/45">
-            | potential builds in the future
+            | potential future builds
           </span>
         </h2>
       </div>
