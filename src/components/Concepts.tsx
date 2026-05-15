@@ -240,6 +240,9 @@ export function Concepts() {
           className="text-[0.8125rem] font-semibold tracking-[0.18em] text-[#f5f5f5] uppercase"
         >
           Concepts
+          <span className="ml-2 font-normal text-[#f5f5f5]/45">
+            | potential builds in the future
+          </span>
         </h2>
       </div>
 
