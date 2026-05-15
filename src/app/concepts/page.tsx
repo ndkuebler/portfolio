@@ -204,9 +204,9 @@ export default function ConceptsPage() {
       <div className={`nk-underlay ${expanded ? "is-hidden" : ""}`}>
         <div className="mx-auto max-w-6xl px-6 sm:px-10 lg:px-14">
           <div className="flex items-center justify-between mb-12">
-            <h1 className="text-4xl font-semibold tracking-tight text-[#f5f5f5]">
+            <h1 className="text-4xl font-semibold tracking-tight text-[#f5f5f5] flex items-baseline gap-3 flex-wrap">
               Concepts
-              <span className="ml-3 text-base font-normal text-[#f5f5f5]/45 align-middle">
+              <span className="text-xl font-normal text-[#f5f5f5]/50">
                 | potential future builds
               </span>
             </h1>
