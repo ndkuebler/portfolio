@@ -77,16 +77,21 @@ export default function RingalletsPage() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <img src="/work/ringallets-sketch.png" alt="Early sketches" className="w-full max-h-[80vh] object-contain rounded-xl" />
+              <img
+            loading="lazy"
+            src="/work/ringallets-sketch.png" alt="Early sketches" className="w-full max-h-[80vh] object-contain rounded-xl" />
               <p className="mt-3 text-sm text-[#f5f5f5]/50">Early sketches</p>
             </div>
             <div>
-              <img src="/work/ringallets-cad.webp" alt="CAD model" className="w-full max-h-[80vh] object-contain rounded-xl" />
+              <img
+            loading="lazy"
+            src="/work/ringallets-cad.webp" alt="CAD model" className="w-full max-h-[80vh] object-contain rounded-xl" />
               <p className="mt-3 text-sm text-[#f5f5f5]/50">CAD model</p>
             </div>
           </div>
 
           <img
+            loading="lazy"
             src="/work/ringallets-prototype.webp"
             alt="Physical prototype"
             className="w-full max-h-[80vh] object-contain rounded-xl mt-8"
@@ -118,11 +123,15 @@ export default function RingalletsPage() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <img src="/work/ringallets-testing1.webp" alt="Stability testing" className="w-full max-h-[80vh] object-contain rounded-xl" />
+              <img
+            loading="lazy"
+            src="/work/ringallets-testing1.webp" alt="Stability testing" className="w-full max-h-[80vh] object-contain rounded-xl" />
               <p className="mt-3 text-sm text-[#f5f5f5]/50">Stability testing</p>
             </div>
             <div>
-              <img src="/work/ringallets-testing2.webp" alt="Iteration feedback" className="w-full max-h-[80vh] object-contain rounded-xl" />
+              <img
+            loading="lazy"
+            src="/work/ringallets-testing2.webp" alt="Iteration feedback" className="w-full max-h-[80vh] object-contain rounded-xl" />
               <p className="mt-3 text-sm text-[#f5f5f5]/50">Iteration feedback</p>
             </div>
           </div>
@@ -147,14 +156,23 @@ export default function RingalletsPage() {
           <h2 className="text-xs uppercase tracking-[0.25em] text-[#f5f5f5]/40 mb-12">
             Product in action
           </h2>
-          <img src="/work/ringallets-final-alt.webp" alt="Final components" className="w-full max-h-[80vh] object-contain rounded-xl mb-8" />
-          <img src="/work/ringalleths.webp" alt="Ringallets in use" className="w-full max-h-[80vh] object-contain rounded-xl mb-8" />
+          <img
+            loading="lazy"
+            src="/work/ringallets-final-alt.webp" alt="Final components" className="w-full max-h-[80vh] object-contain rounded-xl mb-8" />
+          <img
+            loading="lazy"
+            src="/work/ringalleths.webp" alt="Ringallets in use" className="w-full max-h-[80vh] object-contain rounded-xl mb-8" />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <img src="/work/ringalletl.webp" alt="Ringallets L-sit" className="w-full max-h-[80vh] object-contain rounded-xl" />
-            <img src="/work/ringalletplanche.webp" alt="Ringallets planche" className="w-full max-h-[80vh] object-contain rounded-xl" />
+            <img
+            loading="lazy"
+            src="/work/ringalletl.webp" alt="Ringallets L-sit" className="w-full max-h-[80vh] object-contain rounded-xl" />
+            <img
+            loading="lazy"
+            src="/work/ringalletplanche.webp" alt="Ringallets planche" className="w-full max-h-[80vh] object-contain rounded-xl" />
           </div>
 
           <img
+            loading="lazy"
             src="/work/ringallets-final.webp"
             alt="Ringallets final product"
             className="w-full max-h-[80vh] object-contain rounded-xl mt-8"

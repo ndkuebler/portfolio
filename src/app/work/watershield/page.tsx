@@ -84,6 +84,7 @@ export default function WaterShieldPage() {
 
           {/* Full-width first prototype */}
           <img
+            loading="lazy"
             src="/work/wsprototypev1.webp"
             alt="First iteration prototype"
             className="w-full max-h-[80vh] object-contain rounded-xl"
@@ -97,6 +98,7 @@ export default function WaterShieldPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
             <div>
               <img
+            loading="lazy"
                 src="/work/wsprototypev1pic.webp"
                 alt="Prototype looked too bulky"
                 className="w-full max-h-[80vh] object-contain rounded-xl"
@@ -107,6 +109,7 @@ export default function WaterShieldPage() {
             </div>
             <div>
               <img
+            loading="lazy"
                 src="/work/watershield-design.webp"
                 alt="WaterShield design development"
                 className="w-full max-h-[80vh] object-contain rounded-xl"
@@ -131,6 +134,7 @@ export default function WaterShieldPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <img
+            loading="lazy"
                 src="/work/watershield-testing1-new.webp"
                 alt="WaterShield testing"
                 className="w-full max-h-[80vh] object-contain rounded-xl"
@@ -141,6 +145,7 @@ export default function WaterShieldPage() {
             </div>
             <div>
               <img
+            loading="lazy"
                 src="/work/watershield-testing2.webp"
                 alt="WaterShield splash testing"
                 className="w-full max-h-[80vh] object-contain rounded-xl"
@@ -192,6 +197,7 @@ export default function WaterShieldPage() {
             the bumps a longboard is meant to handle.
           </p>
           <img
+            loading="lazy"
             src="/work/watershield-v2-1.jpg"
             alt="WaterShield V2 with metal D-shaft assembly"
             className="w-full max-h-[80vh] object-contain rounded-xl mt-12"
@@ -210,11 +216,13 @@ export default function WaterShieldPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
             <img
+            loading="lazy"
               src="/work/watershield-v2-2.jpg"
               alt="WaterShield V2 — angled view of the two-part assembly"
               className="w-full max-h-[80vh] object-contain rounded-xl"
             />
             <img
+            loading="lazy"
               src="/work/watershield-v2-3.jpg"
               alt="WaterShield V2 — side view showing the D-shaft connection"
               className="w-full max-h-[80vh] object-contain rounded-xl"
