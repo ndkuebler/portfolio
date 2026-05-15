@@ -206,6 +206,9 @@ export default function ConceptsPage() {
           <div className="flex items-center justify-between mb-12">
             <h1 className="text-4xl font-semibold tracking-tight text-[#f5f5f5]">
               Concepts
+              <span className="ml-3 text-base font-normal text-[#f5f5f5]/45 align-middle">
+                | potential future builds
+              </span>
             </h1>
             <button
               type="button"
