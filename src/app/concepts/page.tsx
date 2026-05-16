@@ -206,8 +206,11 @@ export default function ConceptsPage() {
           <div className="flex items-center justify-between mb-12">
             <h1 className="text-4xl font-semibold tracking-tight text-[#f5f5f5] flex items-center gap-3 flex-wrap">
               Concepts
+              <span className="text-xl font-normal text-[#f5f5f5]/35 translate-y-[3px]">
+                |
+              </span>
               <span className="text-xl font-normal text-[#f5f5f5]/50 translate-y-[3px]">
-                | potential future builds
+                potential future builds
               </span>
             </h1>
             <button
