@@ -88,12 +88,11 @@
 <header>
   <span class="eyebrow">Concept walkthrough</span>
   <h1>Somni: a bedside dream-journal device</h1>
-  <p class="lede">A device that records and interprets your dream the moment you wake up — before the memory fades. The product story, the architecture I committed to, and the physical-stability problem I'm solving now.</p>
-  <p class="note"><em>Built prototype. End-to-end pipeline (alarm detect → record → transcribe → analyze → app) runs on real hardware as of this week. The force-analysis numbers below are calculated from the current v3 mass inventory, not bench-measured tip tests. Counterweight sizing is the live decision I'm working through.</em></p>
+  <p class="lede">A nightstand device that captures and interprets your dream the moment you wake up — before the memory fades.</p>
 </header>
 
 <div class="hero">
-  <img src="/showcase-four/hero.png" alt="Somni: a moon-shaped bedside device with a soft silicone bottom and a translucent resin top, glowing with an ambient purple LED ring during dream capture.">
+  <img src="/showcase-four/hero.png" alt="Somni: a moon-shaped bedside device with a silicone bottom and a translucent resin top.">
 </div>
 
 <nav class="tabs" role="tablist">
@@ -106,33 +105,25 @@
 
   <section>
     <h2>The problem</h2>
-    <p>Dream content fades within five to ten minutes of waking. By the time you've found your phone, unlocked it, opened an app, and typed, most of the recall window is gone. The people who actually want to remember their dreams — lucid-dreamers, therapy patients, writers — keep paper journals on the nightstand because the friction of any app is too high at 6 AM with sleep inertia.</p>
-    <p>The journal works, but it's slow, illegible, and dead text. There's no synthesis. After a month of entries you have a stack of pages, not a picture of your inner life.</p>
+    <p>Dream content fades within five to ten minutes of waking. By the time you've found your phone, unlocked it, and opened an app, most of the recall window is gone. A phone app can't fix this — picking up the phone <em>is</em> the friction.</p>
   </section>
 
   <section>
-    <h2>My first instinct (and where it falls apart)</h2>
-    <p>The obvious first move: build it as a phone app with a voice-memo button and an LLM analysis layer on top.</p>
-    <p>Thinking it through, this doesn't work. The phone is the problem. Picking it up triggers the same waking-state context-switch we're trying to avoid: lock screen, notifications, brightness assault, app-switcher temptation. Half the recall window evaporates before the user is even in the app.</p>
-    <p>That reframes the problem. The capture device has to live on the nightstand, has to be ambient, and has to listen <em>before</em> the user is awake enough to operate anything. The phone can come later — for review, not for capture.</p>
-  </section>
-
-  <section>
-    <h2>The architecture I committed to</h2>
+    <h2>The architecture</h2>
     <ol>
-      <li><strong>A bedside device.</strong> Always-on, listens for your iOS alarm, starts recording the moment the alarm fires. No buttons, no unlock, no app to open. The user speaks into the room and goes back to sleep.</li>
-      <li><strong>Cloud analysis, not on-device.</strong> The Pi handles capture and routing; Whisper transcribes and Claude analyzes themes, emotions, and symbols server-side. Keeps the bedside hardware cheap, quiet, and cool.</li>
-      <li><strong>A web app for review.</strong> Dreams appear in a journal you read at breakfast, with cross-dream synthesis (recurring symbols, emotion trends, characters across weeks). The phone is where you reflect, not where you capture.</li>
+      <li><strong>Bedside device.</strong> Always-on, listens for the iOS alarm, starts recording the moment it fires. No buttons, no unlock.</li>
+      <li><strong>Cloud analysis.</strong> Whisper transcribes; Claude extracts themes, emotions, and symbols.</li>
+      <li><strong>Web app for review.</strong> Dreams appear in a journal at breakfast, with cross-dream synthesis (recurring symbols, emotion trends, characters across weeks).</li>
     </ol>
+  </section>
 
-    <p><strong>The core tradeoffs I'd defend:</strong></p>
+  <section>
+    <h2>Key tradeoffs</h2>
     <ul>
-      <li><strong>Raspberry Pi vs. custom MCU.</strong> The Pi is overpowered and power-hungry for what it does, but it runs full Python, ships USB audio out of the box, and gets me to a working demo in weeks instead of months. The right call for a capstone; the wrong call for a product at scale.</li>
-      <li><strong>Capacitive touch zones vs. physical buttons.</strong> Touch (MPR121 + copper foil under the shell) keeps the surface clean and lets the whole device feel like one object. The cost is calibration drift and false triggers from a pillow brushing it. Worth it for the industrial-design payoff.</li>
-      <li><strong>Silicone bottom + resin top.</strong> A two-material body so the device doesn't slide on a nightstand and doesn't feel like a 3D print. The seam is the hard part — I've spent more time on that joint than on any single piece of software.</li>
+      <li><strong>Pi Zero 2 W over custom MCU.</strong> Overpowered, but runs full Python and ships USB audio. Right call for a capstone prototype.</li>
+      <li><strong>Capacitive touch over physical buttons.</strong> Keeps the surface clean. Cost: calibration drift.</li>
+      <li><strong>Silicone bottom + resin top.</strong> Two materials so the device grips the nightstand and doesn't feel like a 3D print.</li>
     </ul>
-
-    <p>The Engineering Analysis tab walks through the problem I'm working on right now: the v3 body tips backward under its own weight because the hardware all clusters on one side, and I need to size a counterweight without busting the budget on the bottom material.</p>
   </section>
 
 </div>
@@ -142,105 +133,43 @@
 
   <section>
     <h2>The stability problem</h2>
-    <p>The v3 enclosure puts every meaningful mass on the back half of the device: Pi Zero 2 W, USB mic, LED ring driver, I²S speaker amp + speaker, MPR121 board, and the cable strain relief. Together these total <strong>~87 g</strong> with a centroid sitting <strong>82 mm</strong> behind the front edge. The empty enclosure is roughly <strong>85 g</strong> with its centroid near the geometric middle (<strong>46 mm</strong>).</p>
-    <p>The device wants to tip backward about its rear bottom edge. Until the body is balanced about its pivot, any nudge from a hand reaching for an alarm, or a cable being pulled, walks the device around the nightstand and eventually tips it.</p>
-
-    <figure>
-      <svg viewBox="0 0 760 280" xmlns="http://www.w3.org/2000/svg" aria-label="Side view of Somni showing hardware mass clustered toward the back, with a counterweight placeholder at the front-bottom and the pivot edge at the rear bottom.">
-        <style>
-          .l{fill:#6e6e73;font-family:-apple-system,Inter,sans-serif;font-size:12px}
-          .t{fill:#1d1d1f;font-family:-apple-system,Inter,sans-serif;font-size:13px;font-weight:600}
-          .body{fill:#e8e8ed;stroke:#86868b;stroke-width:1.5}
-          .hw{fill:#3a86ff;stroke:#1c3f80;stroke-width:1}
-          .cw{fill:#e85a4f;stroke:#8a2e26;stroke-width:1}
-          .pivot{fill:#1d1d1f}
-          .axis{stroke:#86868b;stroke-dasharray:3 3}
-        </style>
-        <!-- ground line -->
-        <line x1="40" y1="220" x2="720" y2="220" stroke="#86868b" stroke-width="1.5"/>
-        <!-- enclosure silhouette (moon-shape side view) -->
-        <path d="M 130 220 Q 130 80 380 70 Q 630 80 630 220 Z" class="body"/>
-        <!-- hardware cluster (back half) -->
-        <rect x="430" y="140" width="160" height="60" rx="6" class="hw"/>
-        <text x="510" y="175" class="t" text-anchor="middle" fill="#fff">hardware ~87 g</text>
-        <text x="510" y="215" class="l" text-anchor="middle">centroid 82 mm behind front edge</text>
-        <!-- counterweight pocket (front-bottom) -->
-        <rect x="170" y="185" width="70" height="28" rx="4" class="cw"/>
-        <text x="205" y="203" class="t" text-anchor="middle" fill="#fff">CW</text>
-        <!-- pivot edge -->
-        <circle cx="630" cy="220" r="6" class="pivot"/>
-        <text x="640" y="245" class="l">pivot (rear bottom edge)</text>
-        <!-- front reference -->
-        <line x1="130" y1="60" x2="130" y2="240" class="axis"/>
-        <text x="135" y="56" class="l">front edge</text>
-        <!-- moment arms -->
-        <line x1="130" y1="255" x2="630" y2="255" stroke="#1d1d1f" stroke-width="1"/>
-        <text x="380" y="270" class="l" text-anchor="middle">device depth ~110 mm</text>
-      </svg>
-      <figcaption>Side view, schematic. The pivot is the back bottom edge; everything heavy sits forward of it but behind the body's center, so the net moment about the pivot is into the page (backward tip).</figcaption>
-    </figure>
+    <p>All meaningful mass — Pi, mic, amp, speaker, MPR121, LEDs — clusters on the back half of the v3 enclosure. The device wants to tip backward about its rear bottom edge. A counterweight in the front-bottom pocket cancels the moment.</p>
   </section>
 
   <section>
-    <h2>Mass inventory and net moment</h2>
-    <p>Taking moments about the rear bottom edge (positive = backward tip), with x measured forward from that edge:</p>
-
+    <h2>Mass inventory</h2>
+    <p>Moments taken about the rear bottom edge (positive = backward tip), x measured forward from that edge.</p>
     <table>
-      <thead><tr><th>Component</th><th>Mass</th><th>x from pivot</th><th>Moment</th></tr></thead>
+      <thead><tr><th>Component</th><th>Mass</th><th>x</th><th>Moment</th></tr></thead>
       <tbody>
-        <tr><td>Hardware cluster (Pi, mic, amp, speaker, MPR121, LEDs, cables)</td><td>87 g</td><td>28 mm</td><td>+2,436 g·mm</td></tr>
-        <tr><td>Enclosure (resin top + silicone bottom, empty)</td><td>85 g</td><td>64 mm</td><td>−5,440 g·mm (forward)</td></tr>
-        <tr><td>Sign convention</td><td colspan="2">positive = backward tipping about rear edge</td><td>—</td></tr>
-        <tr><td><strong>Net moment, no counterweight</strong></td><td>—</td><td>—</td><td><strong>+724 g·mm backward</strong></td></tr>
+        <tr><td>Hardware cluster</td><td>87 g</td><td>28 mm</td><td>+2,436 g·mm</td></tr>
+        <tr><td>Enclosure (empty)</td><td>85 g</td><td>64 mm</td><td>−5,440 g·mm</td></tr>
+        <tr><td><strong>Net</strong></td><td>—</td><td>—</td><td><strong>+724 g·mm backward</strong></td></tr>
       </tbody>
     </table>
-
-    <p>So the device wants to fall over backward by ~724 g·mm of unbalanced moment. The counterweight has to cancel that, plus a margin for the hand-bump and cable-pull cases.</p>
   </section>
 
   <section>
-    <h2>Sizing the counterweight</h2>
-    <p>The counterweight pocket lives in the front-bottom of the enclosure (opposite corner from the hardware cluster). Required mass scales inversely with how far forward I can place it — the closer to the front edge, the less mass I need.</p>
-
+    <h2>Counterweight sizing</h2>
+    <p>Front-bottom pocket sits ~100 mm forward of the pivot. Static balance needs ~7 g; dynamic cases (cable pull, hand bump applying ~1–2 N) set the real target.</p>
     <table>
-      <thead><tr><th>x_cw (mm forward of pivot)</th><th>Mass to cancel net moment</th><th>Mass with 50% safety factor</th></tr></thead>
+      <thead><tr><th>x_cw</th><th>Static</th><th>+50% margin</th></tr></thead>
       <tbody>
-        <tr><td>60 mm (near pivot, bad)</td><td>~12 g</td><td>~18 g</td></tr>
+        <tr><td>60 mm</td><td>~12 g</td><td>~18 g</td></tr>
         <tr><td>90 mm</td><td>~8 g</td><td>~12 g</td></tr>
-        <tr><td><strong>100 mm (front-bottom pocket)</strong></td><td><strong>~7 g</strong></td><td><strong>~11 g</strong></td></tr>
-        <tr><td>Practical target (accounts for cable-pull + hand-bump cases)</td><td colspan="2"><strong>20–25 g at x_cw ≈ 100 mm</strong></td></tr>
+        <tr><td>100 mm</td><td>~7 g</td><td>~11 g</td></tr>
+        <tr><td colspan="2"><strong>Practical target</strong></td><td><strong>20–25 g</strong></td></tr>
       </tbody>
     </table>
-
-    <p>The static-balance number is small (~7 g), but the dynamic cases dominate. A finger nudging the front of the device, or the USB-C cable getting tugged sideways, easily applies a 1–2 N impulse. To keep the device from rocking past its tipping angle under those impulses, I want the counterweight in the <strong>20–25 g range</strong>. That gives a comfortable stability margin without overloading the silicone bottom.</p>
   </section>
 
   <section>
-    <h2>How I'd think about materials</h2>
-    <p>The counterweight has to be (1) <strong>dense</strong> — the pocket is small, ~15 cm³ at most, (2) <strong>non-conductive or fully encapsulated</strong> — the LED data line and I²S clock run right above it, and a stray conductive mass next to those traces is a recipe for EMI weirdness, and (3) <strong>cheap and easy to install</strong>.</p>
-    <p><strong>Tungsten putty.</strong> Top pick. Tungsten powder bound in a polymer (typically PTFE or a rubber binder). Bulk density ~10 g/cm³, so 20 g fits in 2 cm³. The polymer binder fully insulates each tungsten particle from its neighbor, so bulk resistance is in the MΩ range — effectively non-conductive at the voltages on the board. Conforms to the pocket shape, no machining, no fastener. About $15 for enough material for many devices.</p>
-    <p><strong>Bagged lead shot.</strong> Honest fallback. Density ~11 g/cm³, dirt cheap, but raw lead is conductive and toxic, so it has to be sealed in a polymer pouch or epoxied in place. Loses on assembly cleanliness, wins on cost.</p>
-    <p><strong>Hematite or magnetite beads.</strong> Iron-oxide ceramics, density ~5 g/cm³, fully non-conductive. Need ~4 cm³ for 20 g, which just fits the pocket. Slightly magnetic, which is a yellow flag near the speaker magnet but probably tolerable at this distance. The "no EMI concerns at all" option if the pocket gets bigger in a later revision.</p>
-    <p>I'm going with tungsten putty for v3 and ordering hematite as a backup. The decision rule: if the pocket dimensions don't change between v3 and v4, putty stays; if the pocket grows enough to fit hematite without crowding the speaker, hematite wins on environmental footprint.</p>
-  </section>
-
-  <section>
-    <h2>Where I'd expect it to break</h2>
-    <p>The dominant failure mode I'm worried about is <strong>creep in the silicone bottom under the counterweight</strong>. Silicone is viscoelastic; a 20 g lump pressing on a thin shell for months will leave a permanent indent and shift the centroid. If that indent migrates the counterweight rearward over time, the stability margin shrinks.</p>
-    <p>Two ways to mitigate, both worth testing:</p>
+    <h2>Material choice</h2>
+    <p>Requirements: dense (pocket ≤ 15 cm³), non-conductive (LED data and I²S clock run nearby), easy to install.</p>
     <ul>
-      <li><strong>Rigid cup inside the silicone.</strong> A small PLA or PETG cup molded into the silicone bottom that the counterweight sits in. Transfers the load to the rigid body instead of the silicone.</li>
-      <li><strong>Bond the counterweight to the resin top, not the silicone bottom.</strong> Hangs the weight from the rigid half of the enclosure entirely. Slightly raises the centroid (worse for tip resistance) but eliminates the creep path.</li>
-    </ul>
-    <p>I'd run both versions on a nightstand for a month and look at the silicone surface under raking light. The one that doesn't show a permanent dimple wins.</p>
-  </section>
-
-  <section>
-    <h2>What I don't know yet</h2>
-    <ul>
-      <li>Whether the dynamic-load assumption (a 1–2 N impulse from a cable-pull) is realistic. I haven't instrumented the cable yet. A force gauge on the USB-C strain relief during a deliberate yank would settle this in an afternoon.</li>
-      <li>Whether the touch sensor (MPR121) sees the metallic counterweight as a permanent capacitance offset. The copper foil pads sit on the top shell and the counterweight is at the bottom, so the path should be too long to matter, but it's worth a calibration sweep before and after install.</li>
-      <li>Whether the v4 enclosure should just be heavier overall. A denser resin or a thicker silicone bottom could pull the empty-body centroid forward enough to make the counterweight unnecessary. That's a redesign, not a fix, but it's the cleaner answer if v4 gets a from-scratch body anyway.</li>
+      <li><strong>Tungsten putty — pick.</strong> ~10 g/cm³. Polymer binder insulates each particle, so bulk resistance is in the MΩ range. Conforms to the pocket; no fastener.</li>
+      <li><strong>Lead shot (bagged) — fallback.</strong> Cheaper, but conductive and toxic; needs full encapsulation.</li>
+      <li><strong>Hematite beads — alt.</strong> Fully non-conductive, ~5 g/cm³. Needs ~4 cm³ for 20 g.</li>
     </ul>
   </section>
 
