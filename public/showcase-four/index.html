@@ -133,43 +133,42 @@
 
   <section>
     <h2>The stability problem</h2>
-    <p>All meaningful mass — Pi, mic, amp, speaker, MPR121, LEDs — clusters on the back half of the v3 enclosure. The device wants to tip backward about its rear bottom edge. A counterweight in the front-bottom pocket cancels the moment.</p>
+    <p>The v5 black resin body (<strong>250 g</strong>) dominates the mass budget, and its back wall is thicker to host the hardware mounts — so the body's own centroid sits rearward. Add the 87 g hardware cluster on the same side and the combined center of mass falls within ~33 mm of the rear edge of a 110 mm-deep footprint. A nudge or cable tug tips it.</p>
   </section>
 
   <section>
     <h2>Mass inventory</h2>
-    <p>Moments taken about the rear bottom edge (positive = backward tip), x measured forward from that edge.</p>
+    <p>Moments about the rear bottom edge, x measured forward from that edge. Larger restoring moment = harder to tip backward.</p>
     <table>
-      <thead><tr><th>Component</th><th>Mass</th><th>x</th><th>Moment</th></tr></thead>
+      <thead><tr><th>Component</th><th>Mass</th><th>x</th><th>Restoring moment</th></tr></thead>
       <tbody>
-        <tr><td>Hardware cluster</td><td>87 g</td><td>28 mm</td><td>+2,436 g·mm</td></tr>
-        <tr><td>Enclosure (empty)</td><td>85 g</td><td>64 mm</td><td>−5,440 g·mm</td></tr>
-        <tr><td><strong>Net</strong></td><td>—</td><td>—</td><td><strong>+724 g·mm backward</strong></td></tr>
+        <tr><td>Body (v5 black resin)</td><td>250 g</td><td>35 mm</td><td>8,750 g·mm</td></tr>
+        <tr><td>Hardware cluster</td><td>87 g</td><td>28 mm</td><td>2,436 g·mm</td></tr>
+        <tr><td><strong>Total (no CW)</strong></td><td><strong>337 g</strong></td><td><strong>33 mm (COM)</strong></td><td><strong>11,186 g·mm</strong></td></tr>
       </tbody>
     </table>
   </section>
 
   <section>
     <h2>Counterweight sizing</h2>
-    <p>Front-bottom pocket sits ~100 mm forward of the pivot. Static balance needs ~7 g; dynamic cases (cable pull, hand bump applying ~1–2 N) set the real target.</p>
+    <p>Front-bottom pocket sits ~100 mm forward of the pivot. Goal: push the COM to roughly the geometric midpoint (~50 mm) so the device shrugs off a 1–2 N cable-pull or hand-bump.</p>
     <table>
-      <thead><tr><th>x_cw</th><th>Static</th><th>+50% margin</th></tr></thead>
+      <thead><tr><th>CW mass at x = 100 mm</th><th>New COM</th><th>Notes</th></tr></thead>
       <tbody>
-        <tr><td>60 mm</td><td>~12 g</td><td>~18 g</td></tr>
-        <tr><td>90 mm</td><td>~8 g</td><td>~12 g</td></tr>
-        <tr><td>100 mm</td><td>~7 g</td><td>~11 g</td></tr>
-        <tr><td colspan="2"><strong>Practical target</strong></td><td><strong>20–25 g</strong></td></tr>
+        <tr><td>40 g</td><td>~41 mm</td><td>Just out of the rear-third danger zone</td></tr>
+        <tr><td><strong>60 g</strong></td><td><strong>~45 mm</strong></td><td><strong>Target — comfortable margin</strong></td></tr>
+        <tr><td>80 g</td><td>~49 mm</td><td>Near geometric middle; overkill but safe</td></tr>
       </tbody>
     </table>
   </section>
 
   <section>
     <h2>Material choice</h2>
-    <p>Requirements: dense (pocket ≤ 15 cm³), non-conductive (LED data and I²S clock run nearby), easy to install.</p>
+    <p>Requirements: dense (60 g needs to fit a small pocket), non-conductive (LED data and I²S clock run nearby), easy to install.</p>
     <ul>
-      <li><strong>Tungsten putty — pick.</strong> ~10 g/cm³. Polymer binder insulates each particle, so bulk resistance is in the MΩ range. Conforms to the pocket; no fastener.</li>
+      <li><strong>Tungsten putty — pick.</strong> ~10 g/cm³, so 60 g fits in ~6 cm³. Polymer binder insulates each particle, bulk resistance in the MΩ range. Conforms to the pocket; no fastener.</li>
       <li><strong>Lead shot (bagged) — fallback.</strong> Cheaper, but conductive and toxic; needs full encapsulation.</li>
-      <li><strong>Hematite beads — alt.</strong> Fully non-conductive, ~5 g/cm³. Needs ~4 cm³ for 20 g.</li>
+      <li><strong>Hematite beads — alt.</strong> Fully non-conductive, ~5 g/cm³. 60 g needs ~12 cm³ — tight but feasible.</li>
     </ul>
   </section>
 
