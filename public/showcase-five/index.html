@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>EarFit: AirPods Pro tip size predictor</title>
-<meta name="description" content="A concept prototype that predicts your AirPods Pro tip size from a photo of your ear, using iris-diameter calibration and four hand-placed ear landmarks.">
+<meta name="description" content="A concept prototype that predicts your AirPods Pro tip size from a side-profile photo of your head using four hand-placed ear landmarks and a published anthropometric distribution.">
 <meta name="robots" content="noindex, nofollow">
 <meta name="googlebot" content="noindex, nofollow">
 <style>
@@ -55,9 +55,9 @@
   .step h2.stepheading{margin:0 0 12px;font-size:24px;letter-spacing:-.015em}
   .step p.steptext{margin:0 0 18px;font-size:16px}
 
-  .legend{display:flex;flex-wrap:wrap;gap:14px;margin:14px 0 22px}
-  .legend-item{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--ink-soft)}
-  .legend-dot{display:inline-block;width:12px;height:12px;border-radius:50%}
+  .legend{display:flex;flex-wrap:wrap;gap:10px 16px;margin:8px 0 12px}
+  .legend-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-soft)}
+  .legend-dot{display:inline-block;width:10px;height:10px;border-radius:50%}
 
   .btn{
     display:inline-block;background:var(--ink);color:#fff;border:none;border-radius:980px;
@@ -67,6 +67,10 @@
   .btn:hover{opacity:.85}
   .btn.secondary{background:transparent;color:var(--ink);border:1px solid var(--line);margin-left:10px}
   .btn:disabled{opacity:.4;cursor:not-allowed}
+  .btn.auto{background:var(--link);margin:0}
+  .btn.auto:hover{opacity:.9}
+  .auto-row{display:flex;align-items:center;gap:12px;margin:6px 0 10px;flex-wrap:wrap}
+  .auto-status{font-size:13px;color:var(--muted)}
   .uploader{
     display:flex;flex-direction:column;align-items:center;justify-content:center;
     background:#fff;border:2px dashed var(--line);border-radius:14px;
@@ -77,13 +81,43 @@
   .uploader .icon{font-size:36px;color:var(--muted);margin-bottom:8px;line-height:1}
   .uploader .hint{font-size:13px;color:var(--muted);margin-top:6px}
 
-  .canvas-wrap{background:#fff;border-radius:14px;overflow:hidden;border:1px solid var(--line);position:relative}
-  svg.canvas{display:block;width:100%;height:auto;background:#000;touch-action:none}
-  .handle{cursor:grab}
-  .handle:active{cursor:grabbing}
+  .samples-wrap{margin-top:24px}
+  .samples-label{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-weight:600;margin-bottom:12px}
+  .samples{display:flex;flex-wrap:wrap;gap:12px}
+  .sample{
+    width:84px;height:84px;border-radius:14px;overflow:hidden;cursor:pointer;
+    background:#fff;border:2px solid transparent;padding:0;transition:border-color .15s, transform .15s;
+    position:relative;
+  }
+  .sample img{display:block;width:100%;height:100%;object-fit:cover}
+  .sample:hover{border-color:var(--ink-soft);transform:translateY(-2px)}
+  .sample .badge{
+    position:absolute;left:6px;bottom:6px;background:rgba(0,0,0,0.65);color:#fff;
+    font-size:10px;font-weight:600;letter-spacing:.04em;border-radius:6px;padding:2px 6px;
+  }
+  @media (max-width:680px){
+    .sample{width:72px;height:72px}
+  }
 
-  .ref-diagram{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;margin:10px 0 18px}
-  .ref-diagram svg{display:block;width:100%;height:auto;max-width:320px;margin:0 auto}
+  .canvas-wrap{
+    background:#000;border-radius:14px;overflow:hidden;border:1px solid var(--line);position:relative;
+    display:flex;justify-content:center;align-items:center;
+    max-height:48vh;
+  }
+  svg.canvas{
+    display:block;
+    max-width:100%;max-height:48vh;
+    width:auto;height:auto;
+    background:#000;touch-action:none;
+  }
+  @media (max-width:680px){
+    .canvas-wrap, svg.canvas{max-height:50vh}
+  }
+  .handle{cursor:crosshair}
+  body.is-dragging, body.is-dragging *{cursor:crosshair !important}
+
+  .ref-diagram{background:#fff;border:1px solid var(--line);border-radius:12px;padding:6px;margin:4px 0 10px;display:flex;justify-content:center}
+  .ref-diagram svg{display:block;width:100%;height:auto;max-width:130px}
 
   .result{display:grid;grid-template-columns:160px 1fr;gap:28px;align-items:center;background:#fff;border-radius:14px;padding:24px;margin:8px 0 22px;border:1px solid var(--line)}
   .result .size{font-size:96px;font-weight:600;letter-spacing:-.04em;line-height:1;text-align:center;color:var(--ink)}
@@ -118,52 +152,56 @@
 <header>
   <span class="eyebrow">Prototype</span>
   <h1>EarFit</h1>
-  <p class="lede">Predict your AirPods Pro tip size from a photo of your ear. Upload a side-profile photo, place a few landmarks, and the tool estimates which silicone tip should fit you best.</p>
-  <p class="note">Concept prototype by Nick Kuebler. Not affiliated with Apple. Uses your iris as a millimeter scale reference and four hand-placed ear landmarks to estimate your ear canal entrance, then maps the result to a tip size using a published anthropometric ear-canal distribution.</p>
+  <p class="lede">Predict your AirPods Pro tip size from a side-profile photo of your head. Drag four landmarks onto your ear and the tool estimates which silicone tip should fit you best.</p>
+  <p class="note">Concept prototype by Nick Kuebler. Not affiliated with Apple. Uses the mixed-sex adult mean auricle length (~60 mm) as a millimeter scale anchor and four hand-placed ear landmarks to estimate your ear canal entrance, then maps the result to a tip size using a published anthropometric ear-canal distribution.</p>
 </header>
 
 <section class="tool">
 
   <!-- ===== Step 1: Upload ===== -->
   <div class="step" data-step="1">
-    <h3 class="steplabel">Step 1 of 4</h3>
+    <h3 class="steplabel">Step 1 of 3</h3>
     <h2 class="stepheading">Upload a side-profile photo</h2>
-    <p class="steptext">Take a 3/4 view photo of your head so that both your ear and at least one eye are clearly visible. A pure side view makes the iris hard to see, which we need for scale.</p>
+    <p class="steptext">Take a side-profile photo of your head so your full ear is clearly visible. Hair tucked behind the ear works best.</p>
     <label class="uploader" id="uploader">
       <div class="icon">↑</div>
       <div><strong>Click to upload a photo</strong></div>
       <div class="hint">PNG or JPG · stays in your browser, never uploaded anywhere</div>
       <input type="file" accept="image/*" id="fileinput">
     </label>
-  </div>
 
-  <!-- ===== Step 2: Iris calibration ===== -->
-  <div class="step" data-step="2" hidden>
-    <h3 class="steplabel">Step 2 of 4</h3>
-    <h2 class="stepheading">Mark your iris for scale</h2>
-    <p class="steptext">Drag the two blue dots to the <strong>horizontal edges of your iris</strong> (the colored circle around your pupil). Adult iris diameter is 11.7 mm and is consistent across people, so this gives us a millimeter scale for the rest of the photo.</p>
-    <div class="canvas-wrap">
-      <svg class="canvas" id="canvas2" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid meet">
-        <image id="photo2" href="" x="0" y="0" width="800" height="600" preserveAspectRatio="xMidYMid meet"/>
-        <line id="iris-line" x1="380" y1="280" x2="420" y2="280" stroke="#0066cc" stroke-width="2"/>
-        <circle class="handle" data-id="iris-l" cx="380" cy="280" r="12" fill="#0066cc" stroke="#fff" stroke-width="2"/>
-        <circle class="handle" data-id="iris-r" cx="420" cy="280" r="12" fill="#0066cc" stroke="#fff" stroke-width="2"/>
-      </svg>
+    <div class="samples-wrap">
+      <div class="samples-label">Or try a sample photo</div>
+      <div class="samples">
+        <button class="sample" data-sample="/showcase-five/samples/nick.jpg" title="Nick">
+          <img src="/showcase-five/samples/nick.jpg" alt="Nick side profile sample">
+        </button>
+        <button class="sample" data-sample="/showcase-five/samples/sample2.jpg" title="Sample 1">
+          <img src="/showcase-five/samples/sample2.jpg" alt="Side profile sample 1">
+        </button>
+        <button class="sample" data-sample="/showcase-five/samples/sample4.jpg" title="Sample 2">
+          <img src="/showcase-five/samples/sample4.jpg" alt="Side profile sample 2">
+        </button>
+        <button class="sample" data-sample="/showcase-five/samples/sample3.jpg" title="Sample 3">
+          <img src="/showcase-five/samples/sample3.jpg" alt="Side profile sample 3">
+        </button>
+        <button class="sample" data-sample="/showcase-five/samples/sample1.jpg" title="Sample 4">
+          <img src="/showcase-five/samples/sample1.jpg" alt="Side profile sample 4">
+        </button>
+      </div>
     </div>
-    <button class="btn" onclick="goStep(3)">Next</button>
-    <button class="btn secondary" onclick="goStep(1)">Back</button>
   </div>
 
-  <!-- ===== Step 3: Ear landmarks ===== -->
-  <div class="step" data-step="3" hidden>
-    <h3 class="steplabel">Step 3 of 4</h3>
+  <!-- ===== Step 2: Ear landmarks ===== -->
+  <div class="step" data-step="2" hidden>
+    <h3 class="steplabel">Step 2 of 3</h3>
     <h2 class="stepheading">Mark four ear landmarks</h2>
     <p class="steptext">Drag each colored dot to the matching point on your ear:</p>
     <div class="legend">
       <div class="legend-item"><span class="legend-dot" style="background:#e8a23a"></span>Top of helix (highest point of ear)</div>
       <div class="legend-item"><span class="legend-dot" style="background:#d96833"></span>Bottom of lobe</div>
-      <div class="legend-item"><span class="legend-dot" style="background:#c33b5b"></span>Tragus (small flap covering canal entrance)</div>
-      <div class="legend-item"><span class="legend-dot" style="background:#7a4cb3"></span>Antitragus (bump just below the tragus)</div>
+      <div class="legend-item"><span class="legend-dot" style="background:#c33b5b"></span>Tragus (at the <strong>front edge</strong> of the dark canal opening)</div>
+      <div class="legend-item"><span class="legend-dot" style="background:#7a4cb3"></span>Antitragus (at the <strong>back edge</strong> of the dark canal opening)</div>
     </div>
 
     <div class="ref-diagram" title="Reference ear with landmark locations">
@@ -197,23 +235,28 @@
       </svg>
     </div>
 
+    <div class="auto-row">
+      <button class="btn auto" id="auto-btn" onclick="autoPlaceDots()">✨ Place the dots for me</button>
+      <span class="auto-status" id="auto-status"></span>
+    </div>
+
     <div class="canvas-wrap">
       <svg class="canvas" id="canvas3" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid meet">
         <image id="photo3" href="" x="0" y="0" width="800" height="600" preserveAspectRatio="xMidYMid meet"/>
         <!-- Ear landmarks -->
-        <circle class="handle" data-id="ear-helix"      cx="500" cy="220" r="12" fill="#e8a23a" stroke="#fff" stroke-width="2"/>
-        <circle class="handle" data-id="ear-lobe"       cx="500" cy="420" r="12" fill="#d96833" stroke="#fff" stroke-width="2"/>
-        <circle class="handle" data-id="ear-tragus"     cx="470" cy="320" r="12" fill="#c33b5b" stroke="#fff" stroke-width="2"/>
-        <circle class="handle" data-id="ear-antitragus" cx="475" cy="360" r="12" fill="#7a4cb3" stroke="#fff" stroke-width="2"/>
+        <circle class="handle" data-id="ear-helix"      cx="500" cy="220" r="7" fill="#e8a23a" stroke="#fff" stroke-width="1.5"/>
+        <circle class="handle" data-id="ear-lobe"       cx="500" cy="420" r="7" fill="#d96833" stroke="#fff" stroke-width="1.5"/>
+        <circle class="handle" data-id="ear-tragus"     cx="470" cy="320" r="7" fill="#c33b5b" stroke="#fff" stroke-width="1.5"/>
+        <circle class="handle" data-id="ear-antitragus" cx="475" cy="360" r="7" fill="#7a4cb3" stroke="#fff" stroke-width="1.5"/>
       </svg>
     </div>
     <button class="btn" onclick="compute()">Predict tip size</button>
-    <button class="btn secondary" onclick="goStep(2)">Back</button>
+    <button class="btn secondary" onclick="goStep(1)">Back</button>
   </div>
 
-  <!-- ===== Step 4: Result ===== -->
-  <div class="step" data-step="4" hidden>
-    <h3 class="steplabel">Step 4 of 4</h3>
+  <!-- ===== Step 3: Result ===== -->
+  <div class="step" data-step="3" hidden>
+    <h3 class="steplabel">Step 3 of 3</h3>
     <h2 class="stepheading">Your fit prediction</h2>
 
     <div class="result">
@@ -240,8 +283,9 @@
 <section>
   <h2>How it works</h2>
 
-  <h3>1. Iris calibration</h3>
-  <p>The horizontal diameter of an adult human iris is <strong>11.7 mm</strong>, with a standard deviation of about 0.4 mm. This is so consistent across people that ophthalmologists use it as a built-in scale reference in clinical imaging. By marking the iris in your photo, we get the millimeter-per-pixel conversion for everything else in the image.</p>
+  <h3>1. Scale calibration via ear length</h3>
+  <p>On a side-profile photo there's no reliable frontal reference (the iris is foreshortened to an edge), so the tool anchors the millimeter scale to the <strong>mixed-sex adult mean auricle length of ~60 mm</strong> (Alvord & Farmer, 1993, pooled). The helix-top and lobe-bottom landmarks set the pixel length of your ear, and that's compared against the population mean to derive mm-per-pixel.</p>
+  <p>Limitations: this assumes your ear length is near the mixed-sex mean (male mean ~64 mm, female mean ~58 mm — using 60 mm trades a bit of accuracy in either direction to avoid systematic male bias). It also assumes the ear is not foreshortened by head tilt; photos where the chin is high or the camera is below ear level will shift every measurement by the same ratio. A future version could pair the photo with a single ruler-measured ear length to remove this assumption entirely.</p>
 
   <h3>2. Ear dimensions extracted</h3>
   <p>From the four hand-placed ear landmarks we compute:</p>
@@ -259,7 +303,7 @@
 </section>
 
 <section>
-  <h2>Where this is honest about its limits</h2>
+  <h2>Limits</h2>
   <ul>
     <li><strong>The canal-entrance proxy from a 2D photo is rough.</strong> A real ear canal opening is roughly elliptical and partially occluded by the tragus. The tragus-to-antitragus distance is a 2D shadow of the real 3D opening.</li>
     <li><strong>Tip choice isn't just canal diameter.</strong> Seal depends on canal shape, ear-canal cartilage compliance, and how the tip settles after insertion. A real fit-test is acoustic, not geometric.</li>
@@ -295,14 +339,56 @@
     viewBoxW: 800,
     viewBoxH: 600,
     points: {
-      'iris-l':        { x: 380, y: 280 },
-      'iris-r':        { x: 420, y: 280 },
       'ear-helix':     { x: 500, y: 220 },
       'ear-lobe':      { x: 500, y: 420 },
       'ear-tragus':    { x: 470, y: 320 },
       'ear-antitragus':{ x: 475, y: 360 },
     },
-    mmPerPx: null, // set after iris calibration
+    mmPerPx: null,
+    currentSampleKey: null,
+  };
+
+  // ===================== REFERENCE DATABASE =====================
+  // Hand-annotated landmark positions for each bundled sample, as normalized
+  // (0..1) image coordinates. Used by the "Place the dots for me" button.
+  // For arbitrary user uploads we don't have ground truth, so we fall back
+  // to a graceful "I don't know this photo" message.
+  const REFERENCE_DB = {
+    // Tragus and antitragus annotated at the canal-opening edges (inner-facing
+    // tips of each feature), NOT the outer extents. Aim for tragus-antitragus
+    // distance ~ 10-13% of ear length, matching real anatomy.
+    'nick.jpg': {
+      'ear-helix':      { x: 0.540, y: 0.500 },
+      'ear-lobe':       { x: 0.560, y: 0.740 },
+      'ear-tragus':     { x: 0.495, y: 0.615 },
+      'ear-antitragus': { x: 0.505, y: 0.645 },
+    },
+    'sample1.jpg': {
+      'ear-helix':      { x: 0.520, y: 0.500 },
+      'ear-lobe':       { x: 0.530, y: 0.620 },
+      'ear-tragus':     { x: 0.495, y: 0.555 },
+      'ear-antitragus': { x: 0.500, y: 0.575 },
+    },
+    'sample2.jpg': {
+      'ear-helix':      { x: 0.180, y: 0.270 },
+      'ear-lobe':       { x: 0.220, y: 0.550 },
+      'ear-tragus':     { x: 0.270, y: 0.430 },
+      'ear-antitragus': { x: 0.275, y: 0.460 },
+    },
+    'sample3.jpg': {
+      'ear-helix':      { x: 0.550, y: 0.430 },
+      'ear-lobe':       { x: 0.560, y: 0.600 },
+      'ear-tragus':     { x: 0.495, y: 0.515 },
+      'ear-antitragus': { x: 0.500, y: 0.530 },
+    },
+    'sample4.jpg': {
+      // Glasses arm hides the upper helix in this photo; helix is estimated
+      // at the true position behind the glasses rather than the visible top.
+      'ear-helix':      { x: 0.345, y: 0.460 },
+      'ear-lobe':       { x: 0.385, y: 0.625 },
+      'ear-tragus':     { x: 0.412, y: 0.560 },
+      'ear-antitragus': { x: 0.415, y: 0.580 },
+    },
   };
 
   // ===================== STEP CONTROL =====================
@@ -310,7 +396,6 @@
     document.querySelectorAll('.step').forEach(el => {
       el.hidden = parseInt(el.dataset.step, 10) !== n;
     });
-    if (n === 2 || n === 3) syncIrisLine();
     window.scrollTo({ top: document.querySelector('.tool').offsetTop - 24, behavior: 'smooth' });
   }
   window.goStep = goStep;
@@ -325,39 +410,51 @@
   });
 
   function loadImage(file) {
+    state.currentSampleKey = null; // user upload, not in reference DB
     const reader = new FileReader();
-    reader.onload = ev => {
-      state.photoDataUrl = ev.target.result;
-      const img = new Image();
-      img.onload = () => {
-        state.photoNaturalW = img.naturalWidth;
-        state.photoNaturalH = img.naturalHeight;
-        // Adjust viewBox to match image aspect ratio (preserve quality)
-        const aspect = img.naturalWidth / img.naturalHeight;
-        state.viewBoxW = 800;
-        state.viewBoxH = Math.round(800 / aspect);
-        document.getElementById('canvas2').setAttribute('viewBox', `0 0 ${state.viewBoxW} ${state.viewBoxH}`);
-        document.getElementById('canvas3').setAttribute('viewBox', `0 0 ${state.viewBoxW} ${state.viewBoxH}`);
-        document.getElementById('photo2').setAttribute('width', state.viewBoxW);
-        document.getElementById('photo2').setAttribute('height', state.viewBoxH);
-        document.getElementById('photo3').setAttribute('width', state.viewBoxW);
-        document.getElementById('photo3').setAttribute('height', state.viewBoxH);
-        document.getElementById('photo2').setAttribute('href', state.photoDataUrl);
-        document.getElementById('photo3').setAttribute('href', state.photoDataUrl);
-        // Re-center landmarks to sensible defaults
-        state.points['iris-l']         = { x: state.viewBoxW * 0.30, y: state.viewBoxH * 0.45 };
-        state.points['iris-r']         = { x: state.viewBoxW * 0.36, y: state.viewBoxH * 0.45 };
-        state.points['ear-helix']      = { x: state.viewBoxW * 0.70, y: state.viewBoxH * 0.30 };
-        state.points['ear-lobe']       = { x: state.viewBoxW * 0.70, y: state.viewBoxH * 0.75 };
-        state.points['ear-tragus']     = { x: state.viewBoxW * 0.66, y: state.viewBoxH * 0.52 };
-        state.points['ear-antitragus'] = { x: state.viewBoxW * 0.665,y: state.viewBoxH * 0.62 };
-        applyPoints();
-        goStep(2);
-      };
-      img.src = state.photoDataUrl;
-    };
+    reader.onload = ev => loadFromSrc(ev.target.result);
     reader.readAsDataURL(file);
   }
+
+  function loadFromSrc(src) {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => {
+      state.photoDataUrl = src;
+      state.photoNaturalW = img.naturalWidth;
+      state.photoNaturalH = img.naturalHeight;
+      // Adjust viewBox to match image aspect ratio (preserve quality)
+      const aspect = img.naturalWidth / img.naturalHeight;
+      state.viewBoxW = 800;
+      state.viewBoxH = Math.round(800 / aspect);
+      const c3 = document.getElementById('canvas3');
+      const p3 = document.getElementById('photo3');
+      c3.setAttribute('viewBox', `0 0 ${state.viewBoxW} ${state.viewBoxH}`);
+      p3.setAttribute('width', state.viewBoxW);
+      p3.setAttribute('height', state.viewBoxH);
+      p3.setAttribute('href', src);
+      // Re-center landmarks to sensible defaults
+      state.points['ear-helix']      = { x: state.viewBoxW * 0.70, y: state.viewBoxH * 0.30 };
+      state.points['ear-lobe']       = { x: state.viewBoxW * 0.70, y: state.viewBoxH * 0.75 };
+      state.points['ear-tragus']     = { x: state.viewBoxW * 0.66, y: state.viewBoxH * 0.52 };
+      state.points['ear-antitragus'] = { x: state.viewBoxW * 0.665,y: state.viewBoxH * 0.62 };
+      applyPoints();
+      goStep(2);
+    };
+    img.src = src;
+  }
+
+  // Sample photo click handlers
+  document.querySelectorAll('.sample').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      const src = btn.dataset.sample;
+      // Extract the sample key (filename) for the reference DB lookup
+      const key = src.split('/').pop();
+      state.currentSampleKey = key;
+      loadFromSrc(src);
+    });
+  });
 
   function applyPoints() {
     document.querySelectorAll('.handle').forEach(h => {
@@ -367,18 +464,6 @@
       h.setAttribute('cx', p.x);
       h.setAttribute('cy', p.y);
     });
-    syncIrisLine();
-  }
-
-  function syncIrisLine() {
-    const line = document.getElementById('iris-line');
-    if (!line) return;
-    const a = state.points['iris-l'];
-    const b = state.points['iris-r'];
-    line.setAttribute('x1', a.x);
-    line.setAttribute('y1', a.y);
-    line.setAttribute('x2', b.x);
-    line.setAttribute('y2', b.y);
   }
 
   // ===================== DRAG =====================
@@ -401,6 +486,7 @@
       if (!target) return;
       e.preventDefault();
       dragging = target;
+      document.body.classList.add('is-dragging');
     }
     function onMove(e) {
       if (!dragging) return;
@@ -410,9 +496,11 @@
       state.points[id] = { x, y };
       dragging.setAttribute('cx', x);
       dragging.setAttribute('cy', y);
-      if (id === 'iris-l' || id === 'iris-r') syncIrisLine();
     }
-    function onUp() { dragging = null; }
+    function onUp() {
+      dragging = null;
+      document.body.classList.remove('is-dragging');
+    }
     svg.addEventListener('mousedown', onDown);
     svg.addEventListener('touchstart', onDown, { passive: false });
     window.addEventListener('mousemove', onMove);
@@ -420,11 +508,39 @@
     window.addEventListener('mouseup', onUp);
     window.addEventListener('touchend', onUp);
   }
-  bindDrag(document.getElementById('canvas2'));
   bindDrag(document.getElementById('canvas3'));
 
+  // ===================== AUTO-PLACE (reference database) =====================
+  // For samples that ship with the prototype, we have hand-annotated landmark
+  // positions stored in REFERENCE_DB (normalized 0..1 coordinates). For
+  // arbitrary user uploads, we don't have ground truth and tell the user so.
+  function autoPlaceDots() {
+    const status = document.getElementById('auto-status');
+    if (!state.photoDataUrl) {
+      alert('Upload a photo first.');
+      return;
+    }
+    const key = state.currentSampleKey;
+    const ref = key ? REFERENCE_DB[key] : null;
+    if (!ref) {
+      status.textContent = "This photo isn't in the reference set. Place the dots manually.";
+      return;
+    }
+    const W = state.viewBoxW, H = state.viewBoxH;
+    state.points['ear-helix']      = { x: ref['ear-helix'].x      * W, y: ref['ear-helix'].y      * H };
+    state.points['ear-lobe']       = { x: ref['ear-lobe'].x       * W, y: ref['ear-lobe'].y       * H };
+    state.points['ear-tragus']     = { x: ref['ear-tragus'].x     * W, y: ref['ear-tragus'].y     * H };
+    state.points['ear-antitragus'] = { x: ref['ear-antitragus'].x * W, y: ref['ear-antitragus'].y * H };
+    applyPoints();
+    status.textContent = 'Placed from reference. Drag any dot to fine-tune.';
+  }
+  window.autoPlaceDots = autoPlaceDots;
+
   // ===================== COMPUTE + PREDICT =====================
-  const IRIS_MM = 11.7;
+  // 60 mm is the mixed-sex adult auricle-length mean (Alvord & Farmer 1993,
+  // pooled). Using 63 mm biases predictions upward because that's closer to
+  // the male-only mean. 60 mm gives more honest predictions across both sexes.
+  const MEAN_EAR_LENGTH_MM = 60;
 
   function dist(a, b) {
     return Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2);
@@ -432,13 +548,12 @@
 
   function compute() {
     const p = state.points;
-    const irisPx = dist(p['iris-l'], p['iris-r']);
-    if (irisPx < 6) {
-      alert('Mark the iris first (Step 2). Drag the two blue dots to the edges of your iris so we have a scale reference.');
-      goStep(2);
+    const earPx = dist(p['ear-helix'], p['ear-lobe']);
+    if (earPx < 30) {
+      alert('Place the helix-top and lobe-bottom landmarks on your ear before predicting.');
       return;
     }
-    const mmPerPx = IRIS_MM / irisPx;
+    const mmPerPx = MEAN_EAR_LENGTH_MM / earPx;
     state.mmPerPx = mmPerPx;
 
     const earLengthMm  = dist(p['ear-helix'],  p['ear-lobe']) * mmPerPx;
@@ -447,43 +562,57 @@
     // Sanity bounds — clamp clearly out-of-range to avoid silly outputs
     const canalClamped = Math.min(12, Math.max(3, canalProxyMm));
 
-    // Tip size mapping (canal entrance diameter → tip size)
-    let tipSize, tipDiameterMm, tipReasoning;
-    if (canalClamped < 5.5) {
+    // Tip size mapping (canal entrance diameter → tip size).
+    // Thresholds tuned so M is the most common prediction (matches Apple's
+    // real-world tip distribution where M is shipped pre-installed and fits
+    // ~40-50% of users). Mean canal entrance ~7 mm, SD ~1.2 mm.
+    let tipSize, tipDiameterMm;
+    if (canalClamped < 5.0) {
       tipSize = 'XS'; tipDiameterMm = 9;
-    } else if (canalClamped < 6.8) {
+    } else if (canalClamped < 6.2) {
       tipSize = 'S'; tipDiameterMm = 10;
-    } else if (canalClamped < 8.2) {
+    } else if (canalClamped < 8.8) {
       tipSize = 'M'; tipDiameterMm = 11;
     } else {
       tipSize = 'L'; tipDiameterMm = 12;
     }
 
-    // Population percentile (normal distribution, mean 7mm, SD 1.2mm)
+    // Population percentile (normal distribution, mean 7mm, SD 1.2mm).
+    // Cap displayed percentile between 1 and 99 — anything outside that range
+    // is more honestly described as "off the chart" than as a precise %.
     const z = (canalClamped - 7.0) / 1.2;
-    const pct = Math.round(normCdf(z) * 100);
+    const pctRaw = normCdf(z) * 100;
+    const pct = Math.max(1, Math.min(99, Math.round(pctRaw)));
+
+    // If the canal proxy is anatomically extreme (typical adult max ~9 mm),
+    // the photo probably isn't ideal — flag it instead of pretending the
+    // number is precise.
+    const isExtreme = canalClamped > 9.0 || canalClamped < 4.5;
+    const extremeNote = isExtreme
+      ? ` <em style="color:var(--muted)">This reading is outside the typical adult range, which usually means the photo is foreshortened (head tilted) or part of the ear is obscured. Take a fresh side-profile photo with hair behind the ear and the camera level with the ear, and the prediction should land in the normal range.</em>`
+      : '';
 
     // Reasoning text
     const reasoning =
       `Your estimated ear canal entrance is <strong>${canalClamped.toFixed(1)} mm</strong>, ` +
-      `which sits at the <strong>${pct}th percentile</strong> of the adult population. ` +
+      `which sits at the <strong>${pct}${pctRaw >= 99 ? 'th+' : pctRaw <= 1 ? 'th−' : 'th'} percentile</strong> of the adult population. ` +
       `AirPods Pro ${tipSize} tips (~${tipDiameterMm} mm outer diameter) seal best for canals in this range, ` +
-      `compressing about 2 mm against the canal wall.`;
+      `compressing about 2 mm against the canal wall.` +
+      extremeNote;
     document.getElementById('result-size').textContent = tipSize;
     document.getElementById('result-reasoning').innerHTML = reasoning;
 
     // Measurements table
     const table = document.getElementById('result-table');
     table.innerHTML = `
-      <tr><td>Iris reference</td><td>${IRIS_MM} mm (standard adult horizontal iris)</td></tr>
-      <tr><td>Scale</td><td>${(mmPerPx * 100).toFixed(2)} mm per 100 SVG units</td></tr>
-      <tr><td>Ear length (helix → lobe)</td><td>${earLengthMm.toFixed(1)} mm</td></tr>
+      <tr><td>Scale reference</td><td>Adult mean ear length anchored at ${MEAN_EAR_LENGTH_MM} mm</td></tr>
+      <tr><td>Ear length (helix → lobe)</td><td>${earLengthMm.toFixed(1)} mm (set by scale anchor)</td></tr>
       <tr><td>Canal entrance proxy (tragus → antitragus)</td><td>${canalClamped.toFixed(1)} mm</td></tr>
       <tr><td>Population percentile</td><td>${pct}th</td></tr>
     `;
 
     drawDistribution(canalClamped);
-    goStep(4);
+    goStep(3);
   }
   window.compute = compute;
 
