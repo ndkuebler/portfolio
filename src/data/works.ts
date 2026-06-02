@@ -24,8 +24,18 @@ export const works: WorkProject[] = [
     image: "/work/airdj-hero-card.jpg",
   },
   {
-    slug: "watershield",
+    slug: "myleague",
     number: "02",
+    title: "MyLeague",
+    description:
+      "A web app that lets people see where they stand and connect with others within their league.",
+    tags: ["Web App", "Claude API", "Supabase"],
+    year: "2026",
+    image: "/work/myleague-self-check.jpg",
+  },
+  {
+    slug: "watershield",
+    number: "03",
     title: "WaterShield",
     description: "A fender system that keeps longboard riders dry in wet conditions.",
     tags: ["Product Design", "Prototyping"],
@@ -34,7 +44,7 @@ export const works: WorkProject[] = [
   },
   {
     slug: "ringallets",
-    number: "03",
+    number: "04",
     title: "Ringallets",
     description: "A portable gymnastics rings training tool for any skill level.",
     tags: ["Product Design", "Training Tool"],
@@ -43,7 +53,7 @@ export const works: WorkProject[] = [
   },
   {
     slug: "marble-launcher",
-    number: "04",
+    number: "05",
     title: "Marble Launcher",
     description: "A perpetual marble launcher inspired by the Stanford Dish telescope.",
     tags: ["Mechanical Engineering", "ME102"],
