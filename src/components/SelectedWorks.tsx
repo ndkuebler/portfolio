@@ -135,7 +135,7 @@ export function SelectedWorks() {
                 </div>
                 <div className="w-full md:w-3/5">
                   <div
-                    className={`relative w-full overflow-hidden rounded-lg bg-black ${
+                    className={`relative w-full overflow-hidden rounded-lg bg-[#0a0a0a] ${
                       project.slug === "air-dj"
                         ? "aspect-video"
                         : "aspect-[4/3]"
