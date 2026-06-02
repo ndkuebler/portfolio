@@ -238,6 +238,38 @@ export default function MyLeaguePage() {
         </div>
       </section>
 
+      {/* ===== DATING POOL ===== */}
+      <section className="bg-[#0a0a0a] px-6 sm:px-10 lg:px-14 py-20 border-t border-[#f5f5f5]/[0.08]">
+        <div className="mx-auto max-w-[1200px]">
+          <h2 className="text-xs uppercase tracking-[0.25em] text-[#f5f5f5]/40 mb-12">
+            Your floor and ceiling
+          </h2>
+          <p className="max-w-[720px] text-[1.0625rem] leading-[1.7] text-[#f5f5f5]/75 mb-10">
+            From the score, MyLeague generates a realistic range. The floor is the
+            lowest you can reasonably expect to date. The ceiling is the highest. This
+            is the actual output for the same user whose 8.0 result is shown above.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="overflow-hidden rounded-xl border border-[#f5f5f5]/[0.08] bg-[#f5f0e6]">
+              <img
+                loading="lazy"
+                src="/work/myleague-pool-top.jpg"
+                alt="Dating pool top with target range"
+                className="w-full h-auto object-contain"
+              />
+            </div>
+            <div className="overflow-hidden rounded-xl border border-[#f5f5f5]/[0.08] bg-[#f5f0e6]">
+              <img
+                loading="lazy"
+                src="/work/myleague-pool-range.jpg"
+                alt="Floor and ceiling of the dating pool"
+                className="w-full h-auto object-contain"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ===== RESULTS ===== */}
       <section className="bg-[#0a0a0a] px-6 sm:px-10 lg:px-14 py-20 border-t border-[#f5f5f5]/[0.08]">
         <div className="mx-auto max-w-[1200px]">
