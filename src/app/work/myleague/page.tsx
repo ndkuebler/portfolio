@@ -349,6 +349,25 @@ export default function MyLeaguePage() {
         </div>
       </section>
 
+      {/* ===== LIMITATIONS ===== */}
+      <section className="bg-[#0a0a0a] px-6 sm:px-10 lg:px-14 py-20 border-t border-[#f5f5f5]/[0.08]">
+        <div className="mx-auto max-w-[1200px]">
+          <h2 className="text-xs uppercase tracking-[0.25em] text-[#f5f5f5]/40 mb-6">
+            Limitations
+          </h2>
+          <p className="max-w-[720px] text-[1.125rem] leading-[1.7] text-[#f5f5f5]/80">
+            The model is not perfect. A person can land a tier above or a tier below
+            where they would actually score in real life, and the generated floor and
+            ceiling photos can drift, especially at the extremes of the scale.
+          </p>
+          <p className="max-w-[720px] text-[1.125rem] leading-[1.7] text-[#f5f5f5]/80 mt-6">
+            Nothing the model returns is medical advice or a verdict on anyone&apos;s
+            appearance. MyLeague is one more data point about how a person reads in
+            photos. The goal is calibration, not judgment.
+          </p>
+        </div>
+      </section>
+
       {/* ===== BOTTOM BACK + VISIT ===== */}
       <section className="bg-[#0a0a0a] flex flex-wrap justify-center items-center gap-3 pb-8">
         <BackButton slug="myleague" />
