@@ -356,9 +356,9 @@ export default function MyLeaguePage() {
             Limitations
           </h2>
           <p className="max-w-[720px] text-[1.125rem] leading-[1.7] text-[#f5f5f5]/80">
-            The model is not perfect. A person can land a tier above or a tier below
-            where they would actually score in real life, and the generated floor and
-            ceiling photos can drift, especially at the extremes of the scale.
+            The model is not perfect. A person can score slightly higher or slightly
+            lower than where they should actually land. There are also subjective
+            components of beauty that the rubric does not capture.
           </p>
           <p className="max-w-[720px] text-[1.125rem] leading-[1.7] text-[#f5f5f5]/80 mt-6">
             Nothing the model returns is medical advice or a verdict on anyone&apos;s
