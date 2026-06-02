@@ -368,6 +368,24 @@ export default function MyLeaguePage() {
         </div>
       </section>
 
+      {/* ===== WHAT'S NEXT ===== */}
+      <section className="bg-[#0a0a0a] px-6 sm:px-10 lg:px-14 py-20 border-t border-[#f5f5f5]/[0.08]">
+        <div className="mx-auto max-w-[1200px]">
+          <h2 className="text-xs uppercase tracking-[0.25em] text-[#f5f5f5]/40 mb-6">
+            What&apos;s next
+          </h2>
+          <p className="max-w-[720px] text-[1.125rem] leading-[1.7] text-[#f5f5f5]/80">
+            The natural extension is a dating product where matches are constrained to
+            people inside the same league, give or take one tier in either direction.
+            The infrastructure already exists. Photo scoring, the rubric, and the floor
+            and ceiling generation could plug straight into a matching layer.
+          </p>
+          <p className="max-w-[720px] text-[1.125rem] leading-[1.7] text-[#f5f5f5]/80 mt-6">
+            It is not the current priority, but it stays on the table.
+          </p>
+        </div>
+      </section>
+
       {/* ===== BOTTOM BACK + VISIT ===== */}
       <section className="bg-[#0a0a0a] flex flex-wrap justify-center items-center gap-3 pb-8">
         <BackButton slug="myleague" />
