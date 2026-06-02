@@ -130,12 +130,12 @@ export default function MyLeaguePage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Self Check */}
             <div>
-              <div className="overflow-hidden rounded-xl border border-[#f5f5f5]/[0.08] bg-[#f5f0e6]">
+              <div className="overflow-hidden rounded-xl border border-[#f5f5f5]/[0.08] bg-[#f5f0e6] max-h-[65vh] flex items-center justify-center">
                 <img
                   loading="lazy"
                   src="/work/myleague-self-check.jpg"
                   alt="Self check tab"
-                  className="w-full h-auto object-contain"
+                  className="max-h-[65vh] max-w-full object-contain"
                 />
               </div>
               <h3 className="mt-4 text-[1rem] font-semibold text-[#f5f5f5]">Self check</h3>
@@ -147,12 +147,12 @@ export default function MyLeaguePage() {
 
             {/* Match */}
             <div>
-              <div className="overflow-hidden rounded-xl border border-[#f5f5f5]/[0.08] bg-[#f5f0e6]">
+              <div className="overflow-hidden rounded-xl border border-[#f5f5f5]/[0.08] bg-[#f5f0e6] max-h-[65vh] flex items-center justify-center">
                 <img
                   loading="lazy"
                   src="/work/myleague-match.jpg"
                   alt="Match tab"
-                  className="w-full h-auto object-contain"
+                  className="max-h-[65vh] max-w-full object-contain"
                 />
               </div>
               <h3 className="mt-4 text-[1rem] font-semibold text-[#f5f5f5]">Match</h3>
@@ -163,12 +163,12 @@ export default function MyLeaguePage() {
 
             {/* Photogenic */}
             <div>
-              <div className="overflow-hidden rounded-xl border border-[#f5f5f5]/[0.08] bg-[#f5f0e6]">
+              <div className="overflow-hidden rounded-xl border border-[#f5f5f5]/[0.08] bg-[#f5f0e6] max-h-[65vh] flex items-center justify-center">
                 <img
                   loading="lazy"
                   src="/work/myleague-photogenic.jpg"
                   alt="Photogenic tab"
-                  className="w-full h-auto object-contain"
+                  className="max-h-[65vh] max-w-full object-contain"
                 />
               </div>
               <h3 className="mt-4 text-[1rem] font-semibold text-[#f5f5f5]">Photogenic</h3>
@@ -180,12 +180,12 @@ export default function MyLeaguePage() {
 
             {/* Leaderboards */}
             <div>
-              <div className="overflow-hidden rounded-xl border border-[#f5f5f5]/[0.08] bg-[#f5f0e6]">
+              <div className="overflow-hidden rounded-xl border border-[#f5f5f5]/[0.08] bg-[#f5f0e6] max-h-[65vh] flex items-center justify-center">
                 <img
                   loading="lazy"
                   src="/work/myleague-leaderboards.jpg"
                   alt="Leaderboards tab"
-                  className="w-full h-auto object-contain"
+                  className="max-h-[65vh] max-w-full object-contain"
                 />
               </div>
               <h3 className="mt-4 text-[1rem] font-semibold text-[#f5f5f5]">Leaderboards</h3>
@@ -210,28 +210,28 @@ export default function MyLeaguePage() {
             stay shareable.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="overflow-hidden rounded-xl border border-[#f5f5f5]/[0.08] bg-[#f5f0e6]">
+            <div className="overflow-hidden rounded-xl border border-[#f5f5f5]/[0.08] bg-[#f5f0e6] max-h-[65vh] flex items-center justify-center">
               <img
                 loading="lazy"
                 src="/work/myleague-result-1.jpg"
                 alt="Score result top"
-                className="w-full h-auto object-contain"
+                className="max-h-[65vh] max-w-full object-contain"
               />
             </div>
-            <div className="overflow-hidden rounded-xl border border-[#f5f5f5]/[0.08] bg-[#f5f0e6]">
+            <div className="overflow-hidden rounded-xl border border-[#f5f5f5]/[0.08] bg-[#f5f0e6] max-h-[65vh] flex items-center justify-center">
               <img
                 loading="lazy"
                 src="/work/myleague-result-2.jpg"
                 alt="Score result strengths"
-                className="w-full h-auto object-contain"
+                className="max-h-[65vh] max-w-full object-contain"
               />
             </div>
-            <div className="overflow-hidden rounded-xl border border-[#f5f5f5]/[0.08] bg-[#f5f0e6]">
+            <div className="overflow-hidden rounded-xl border border-[#f5f5f5]/[0.08] bg-[#f5f0e6] max-h-[65vh] flex items-center justify-center">
               <img
                 loading="lazy"
                 src="/work/myleague-result-3.jpg"
                 alt="Score result category breakdown"
-                className="w-full h-auto object-contain"
+                className="max-h-[65vh] max-w-full object-contain"
               />
             </div>
           </div>
@@ -250,20 +250,20 @@ export default function MyLeaguePage() {
             is the actual output for the same user whose 8.0 result is shown above.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="overflow-hidden rounded-xl border border-[#f5f5f5]/[0.08] bg-[#f5f0e6]">
+            <div className="overflow-hidden rounded-xl border border-[#f5f5f5]/[0.08] bg-[#f5f0e6] max-h-[65vh] flex items-center justify-center">
               <img
                 loading="lazy"
                 src="/work/myleague-pool-top.jpg"
                 alt="Dating pool top with target range"
-                className="w-full h-auto object-contain"
+                className="max-h-[65vh] max-w-full object-contain"
               />
             </div>
-            <div className="overflow-hidden rounded-xl border border-[#f5f5f5]/[0.08] bg-[#f5f0e6]">
+            <div className="overflow-hidden rounded-xl border border-[#f5f5f5]/[0.08] bg-[#f5f0e6] max-h-[65vh] flex items-center justify-center">
               <img
                 loading="lazy"
                 src="/work/myleague-pool-range.jpg"
                 alt="Floor and ceiling of the dating pool"
-                className="w-full h-auto object-contain"
+                className="max-h-[65vh] max-w-full object-contain"
               />
             </div>
           </div>
