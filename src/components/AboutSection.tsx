@@ -70,10 +70,10 @@ export function AboutSection() {
               I&apos;m Nick. I am a product designer/engineer and focus on physical products.
             </p>
             <p className="text-[1.125rem] leading-[1.7] text-[#f5f5f5]/80 mb-6">
-              I enjoy building things that are aesthetically pleasing, address real user
-              needs, and improve quality of life. I also compete on the Stanford gymnastics
-              team. I like playing board games with friends, and mixing music. I used to be
-              really good at Origami.
+              I&apos;m on a mission to become the first real-life Tony Stark. I also
+              compete on the Stanford Gymnastics team. I like playing board games with
+              friends, mixing music, and being outdoors. I used to be really good at
+              origami.
             </p>
             <p className="text-[1.125rem] leading-[1.7] text-[#f5f5f5]/80 mb-10">
               If you want to collaborate or talk through a project, contact me.
