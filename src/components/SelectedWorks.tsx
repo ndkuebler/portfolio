@@ -90,13 +90,18 @@ export function SelectedWorks() {
             {/* Top bar: number + title | tags | year */}
             <div className="mx-auto w-full max-w-[1400px] px-6 sm:px-10 lg:px-14">
               <div className="flex items-center justify-between py-5 sm:py-6">
-                <div className="flex items-center gap-3">
+                <div className="flex items-baseline gap-3 flex-wrap">
                   <span className="text-[0.75rem] font-normal tabular-nums text-[#f5f5f5]/40">
                     {project.number}
                   </span>
                   <span className="text-[1.125rem] sm:text-[1.5rem] font-semibold tracking-wide text-[#f5f5f5] uppercase">
                     {project.title}
                   </span>
+                  {project.subtitle && (
+                    <span className="text-[0.6875rem] sm:text-[0.75rem] font-medium uppercase tracking-[0.18em] text-violet-300/85">
+                      {project.subtitle}
+                    </span>
+                  )}
                 </div>
 
                 <div className="hidden md:flex items-center gap-4">

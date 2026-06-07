@@ -14,6 +14,7 @@ const PHOTOS = [
   { src: "/nick.webp", alt: "Nick in the workshop" },
   { src: "/concepts/nkhbar.webp", alt: "Nick on high bar" },
   { src: "/concepts/nickcube.webp", alt: "Nick portrait" },
+  { src: "/concepts/nkgrad.jpg", alt: "Nick with friends at Stanford graduation" },
 ];
 
 const EMAIL = "nkuebler@stanford.edu";
