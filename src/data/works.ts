@@ -42,7 +42,7 @@ export const works: WorkProject[] = [
       "A zip-up hoodie designed for the residents of Norcliffe and Adelfa, distributed to all 157 students across both houses.",
     tags: ["Apparel Design", "Graphic Design", "Dorm Merch"],
     year: "2026",
-    image: "/work/dorm-apparel-1.jpg",
+    image: "/work/dorm-apparel-3.jpg",
   },
   {
     slug: "myleague",
