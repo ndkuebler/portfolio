@@ -199,6 +199,12 @@ export function ResumeModal({ open, onClose, pdfUrl = "/nick-resume.pdf" }: Prop
               "Team USA 5x Junior National Team Member",
             ]} />
 
+            <p className="mt-4 text-sm font-semibold">Stanford Athletic Board Awards</p>
+            <Bullets items={[
+              "2025-2026 Jake Gimble Award, given to the senior who best demonstrates competitive attitude in sport",
+              "2023-2024 Block S Outstanding Sophomore",
+            ]} />
+
             <p className="mt-4 text-sm font-semibold">Tasteful & Rapid Physical Product Design</p>
             <Bullets items={[
               "I ship ideas to working physical products in a week e.g. Watershield",
