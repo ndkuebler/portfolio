@@ -49,7 +49,7 @@ export const works: WorkProject[] = [
     number: "04",
     title: "MyLeague",
     description:
-      "A web app that lets people see where they stand and connect with others within their league.",
+      "A web app that helps people understand their league in the dating pool so they can calibrate expectations and find matches who actually fit.",
     tags: ["Web App", "Claude API", "Supabase"],
     year: "2026",
     image: "/work/myleague-self-check.jpg",
