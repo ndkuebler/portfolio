@@ -35,8 +35,18 @@ export const works: WorkProject[] = [
     image: "/work/airdj-hero-card.jpg",
   },
   {
-    slug: "myleague",
+    slug: "stanford-dorm-apparel",
     number: "03",
+    title: "Stanford Dorm Apparel",
+    description:
+      "A zip-up hoodie designed for the residents of Norcliffe and Adelfa, distributed to all 157 students across both houses.",
+    tags: ["Apparel Design", "Graphic Design", "Dorm Merch"],
+    year: "2026",
+    image: "/work/dorm-apparel-1.jpg",
+  },
+  {
+    slug: "myleague",
+    number: "04",
     title: "MyLeague",
     description:
       "A web app that lets people see where they stand and connect with others within their league.",
@@ -46,7 +56,7 @@ export const works: WorkProject[] = [
   },
   {
     slug: "watershield",
-    number: "04",
+    number: "05",
     title: "WaterShield",
     description: "A fender system that keeps longboard riders dry in wet conditions.",
     tags: ["Product Design", "Prototyping"],
@@ -55,7 +65,7 @@ export const works: WorkProject[] = [
   },
   {
     slug: "ringallets",
-    number: "05",
+    number: "06",
     title: "Ringallets",
     description: "A portable gymnastics rings training tool for any skill level.",
     tags: ["Product Design", "Training Tool"],
@@ -64,7 +74,7 @@ export const works: WorkProject[] = [
   },
   {
     slug: "marble-launcher",
-    number: "06",
+    number: "07",
     title: "Marble Launcher",
     description: "A perpetual marble launcher inspired by the Stanford Dish telescope.",
     tags: ["Mechanical Engineering", "ME102"],
