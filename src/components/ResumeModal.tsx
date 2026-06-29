@@ -102,23 +102,26 @@ export function ResumeModal({ open, onClose, pdfUrl = "/nick-resume.pdf" }: Prop
             ]} />
           </Section>
 
-          {/* Products & Portfolio */}
-          <Section title="Products & Portfolio">
-            <p className="text-sm text-[#0a0a0a]/80">
-              <a href="https://nkuebler.com" target="_blank" rel="noopener noreferrer" className="underline">
-                nkuebler.com
-              </a>
-              {" "}· Product portfolio & original design concepts
-            </p>
+          {/* Projects */}
+          <Section title="Projects">
             <Bullets items={[
+              <>
+                <strong>Somni:</strong> Stanford Design 161B senior capstone. Designed and built a bedside dream journaling device that listens for the user&apos;s phone alarm, records the dream the moment they wake, transcribes it with OpenAI Whisper, analyzes it with Claude (themes, emotions, lucidity, symbols), and syncs everything to a companion PWA. Hardware (Pi Zero 2 W, 40 LED ring, USB mic, 3D printed crescent moon enclosure), firmware, and full stack web app all built end to end.
+              </>,
               <>
                 <strong>Air DJ:</strong> Designed and built a gesture-controlled DJ board that replaces every knob and fader with a hand motion tracked through a webcam. Trained a custom gesture classifier on self-collected data, mapped poses to virtual MIDI for VirtualDJ, and authored an intuitive vocabulary (pinch to play, crossed fingers to crossfade, among 13 other gestures).
               </>,
               <>
-                <strong>Ringallets:</strong> Designed and prototyped a gymnastics training tool that bridges the gap between parallettes and rings, preserving correct mechanics without instability. Iterated through CAD modeling, failure point analysis, and tested with professional gymnasts.
+                <strong>Stanford Dorm Apparel:</strong> Sole designer of the zip-up hoodie for Norcliffe and Adelfa at Lagunita Court, distributed to all 157 residents in June 2026. Front wordmark in deep blue with four colored letters in each house name representing the Avatar four nations; minimalist four-element emblem on the back.
               </>,
               <>
-                <strong>WaterShield:</strong> Designed a compact longboard wheel fender to prevent water upsplash during wet conditions. Defined user pain points, iterated attachment geometry for clearance and durability, and validated through real-world ride testing. I use this on my way to class when it's raining.
+                <strong>MyLeague:</strong> Designed and built a web app that scores facial aesthetics with Claude and helps users calibrate their league in the dating pool. 1,143 photos uploaded in the first 28 days from only two QR codes posted on campus; 5x+ repeat sessions per first-time user.
+              </>,
+              <>
+                <strong>WaterShield:</strong> Designed a compact longboard wheel fender to prevent water upsplash during wet conditions. Defined user pain points, iterated attachment geometry for clearance and durability, and validated through real-world ride testing. I use this on my way to class when it&apos;s raining.
+              </>,
+              <>
+                <strong>Ringallets:</strong> Designed and prototyped a gymnastics training tool that bridges the gap between parallettes and rings, preserving correct mechanics without instability. Iterated through CAD modeling, failure point analysis, and tested with professional gymnasts.
               </>,
               <>
                 <strong>Marble Launcher:</strong> Designed and prototyped a mechanical desktop perpetual marble launcher that stores, displaces, and launches marbles one at a time using rotary input and spring-driven reset.
